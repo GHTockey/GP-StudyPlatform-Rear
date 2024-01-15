@@ -1,0 +1,36 @@
+#端口号
+server:
+  port: 9000
+
+spring:
+  application:
+    name: user-service          #服务名
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/gp_user?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 114514
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848   #nacos服务地址
+# 输出SQL语句
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出日志
+#    map-underscore-to-camel-case: false  #驼峰命名 默认为true
+# 自定义
+tce:
+  jwt:
+    secret: sc@Login(Auth}*^31)&czxy% # 登录校验的密钥（自定义内容）
+    pubKeyPath: D:/rsa/rsa.pub # 公钥地址
+    priKeyPath: D:/rsa/rsa.pri # 私钥地址
+    expire: 360 # 过期时间,单位分钟
+  filter:
+    allowPaths:
+      - /user/login
+      - /user/checkUsername
+      - /user/register
+      - swagger
+      - /api-docs
+      - webjars
