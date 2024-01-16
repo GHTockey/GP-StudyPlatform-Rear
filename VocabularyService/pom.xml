@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>WordService</artifactId>
+    <artifactId>VocabularyService</artifactId>
 
     <dependencies>
         <!--web起步依赖-->

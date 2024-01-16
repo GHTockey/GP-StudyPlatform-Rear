@@ -1,6 +1,5 @@
 package cn.tockey.service.impl;
 
-import cn.tockey.domain.User;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.domain.Words;
 import cn.tockey.mapper.VocabularyMapper;

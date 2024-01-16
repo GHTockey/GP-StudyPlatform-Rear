@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class WordServiceApplication {
+public class VocabularyServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(WordServiceApplication.class, args);
+        SpringApplication.run(VocabularyServiceApplication.class, args);
     }
 }

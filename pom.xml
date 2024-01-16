@@ -12,8 +12,9 @@
         <module>GatewayService</module>
         <module>UserService</module>
         <module>domain_module</module>
-        <module>WordService</module>
+        <module>VocabularyService</module>
         <module>ImageUploadService</module>
+        <module>ClassesService</module>
     </modules>
 
     <parent>

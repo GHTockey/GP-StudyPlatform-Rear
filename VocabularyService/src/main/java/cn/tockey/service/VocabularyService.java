@@ -1,6 +1,5 @@
 package cn.tockey.service;
 
-import cn.tockey.domain.User;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.vo.VocabularyAddVo;
 import com.baomidou.mybatisplus.extension.service.IService;

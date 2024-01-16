@@ -38,7 +38,6 @@ public class VocabularyController {
         }
     }
 
-    ;
 
     // 修改词集
     @PutMapping
@@ -51,7 +50,6 @@ public class VocabularyController {
         }
     }
 
-    ;
 
     // 删除词集
     @DeleteMapping("/{id}")
@@ -64,7 +62,6 @@ public class VocabularyController {
         }
     }
 
-    ;
 
     // 获取词集
     @GetMapping("/{id}")
@@ -77,7 +74,6 @@ public class VocabularyController {
         }
     }
 
-    ;
 
     // 获取用户的词集列表
     @GetMapping("/list/{uid}")
@@ -89,6 +85,4 @@ public class VocabularyController {
             return BaseResult.error("获取失败");
         }
     }
-
-    ;
 }
