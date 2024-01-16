@@ -1,10 +1,8 @@
-#端口号
 server:
   port: 9010
-
 spring:
   application:
-    name: image-upload-service          #服务名
+    name: other-service          #服务名
   cloud:
     nacos:
       discovery:
@@ -18,9 +16,7 @@ spring:
 tce:
   qiniu:
     ak: L3k3LGHWOcfYdJntQTA8np-1esildPY7LlFcIPQE # Access Key
-#    ak: mpw:4DCxKlYwqvOntibyixE5kS3VvUSFdWvGwI3SlLLkpxuV+EWwDF5bV8kiy3yb5aE4 # Access Key
     sk: go9SqdbTzIQ0enEfYflL0U3JEyS10vaqY26zn-cY # Secret Key
-#    sk: mpw:TseGG8VPcMpbjWHVNOa3D9I2ASexLimJLvDNjwhrgI64eaiiXo+yVE0hG7Uo0oFg # Secret Key
     bucket: tockey
     baseUrl: https://img.tockey.cn/
     path: gp/

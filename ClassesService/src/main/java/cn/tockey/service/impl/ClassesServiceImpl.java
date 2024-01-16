@@ -7,7 +7,6 @@ import cn.tockey.feign.UserFeign;
 import cn.tockey.mapper.ClassesMapper;
 import cn.tockey.mapper.UserClassesMapper;
 import cn.tockey.service.ClassesService;
-import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

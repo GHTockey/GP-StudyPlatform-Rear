@@ -13,7 +13,7 @@
         <module>UserService</module>
         <module>domain_module</module>
         <module>VocabularyService</module>
-        <module>ImageUploadService</module>
+        <module>OtherService</module>
         <module>ClassesService</module>
     </modules>
 

@@ -1,20 +1,21 @@
 package cn.tockey.service.impl;
 
 import cn.tockey.config.MyQiniuProperties;
-import cn.tockey.service.ImageUploadService;
+import cn.tockey.service.OtherService;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import org.springframework.stereotype.Service;
-import com.qiniu.storage.Region;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 @Service
-public class ImageUploadServiceImpl implements ImageUploadService {
+public class OtherServiceImpl implements OtherService {
     @Resource
     private MyQiniuProperties myQiniuProperties;
 

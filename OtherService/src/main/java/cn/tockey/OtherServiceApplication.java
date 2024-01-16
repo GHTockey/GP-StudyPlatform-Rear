@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class ImageUploadServiceApplication {
+public class OtherServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ImageUploadServiceApplication.class, args);
+        SpringApplication.run(OtherServiceApplication.class, args);
     }
 }

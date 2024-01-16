@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -57,5 +58,12 @@ public class UserController {
         User user = userService.getOne(new QueryWrapper<User>().eq("id", id));
         if (user == null) return BaseResult.error("用户名不存在");
         return BaseResult.ok("获取成功", user);
-    };
+    }
+
+    // 搜索用户
+    @GetMapping("/search/{keyword}")
+    BaseResult<List<User>> searchUser(@PathVariable String keyword) {
+        List<User> userList = userService.list(new QueryWrapper<User>().like("username", keyword));
+        return BaseResult.ok("搜索成功", userList);
+    }
 }

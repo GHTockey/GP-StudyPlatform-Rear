@@ -5,6 +5,7 @@ import cn.tockey.domain.Vocabulary;
 import cn.tockey.service.VocabularyService;
 import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.VocabularyAddVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -84,5 +85,12 @@ public class VocabularyController {
         } else {
             return BaseResult.error("获取失败");
         }
+    }
+
+    // 搜索词集
+    @GetMapping("/search/{keyword}")
+    BaseResult<List<Vocabulary>> searchVocabulary(@PathVariable String keyword) {
+        List<Vocabulary> vocabularyList = vocabularyService.list(new QueryWrapper<Vocabulary>().like("title", keyword));
+        return BaseResult.ok("搜索成功", vocabularyList);
     }
 }

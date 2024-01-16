@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ImageUploadService</artifactId>
+    <artifactId>OtherService</artifactId>
 
     <dependencies>
         <!-- 七牛云上传 -->
