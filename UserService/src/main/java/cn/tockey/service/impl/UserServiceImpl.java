@@ -3,14 +3,12 @@ package cn.tockey.service.impl;
 import cn.tockey.config.JwtProperties;
 import cn.tockey.domain.User;
 import cn.tockey.mapper.UserMapper;
-import cn.tockey.repository.UserRepository;
 import cn.tockey.service.UserService;
 import cn.tockey.utils.JwtUtils;
 import cn.tockey.vo.UserRegVo;
 import cn.tockey.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +21,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Resource
     private JwtProperties jwtProperties;
-    @Resource
-    private UserRepository userRepository;
 
+    // 登录
     @Override
     public User login(UserVo loginUser){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -36,12 +33,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user;
     }
 
+    // 注册
     @Override
     public boolean register(UserRegVo registerUser) {
-        userRepository.insertNewUserProcedure(registerUser.getUsername(), registerUser.getPassword(), registerUser.getAvatar(), registerUser.getEmail());
+        userMapper.insertNewUserProcedure(registerUser.getUsername(), registerUser.getPassword(), registerUser.getAvatar(), registerUser.getEmail());
         return true;
     }
 
+    // 生成token
     @Override
     public String generateToken(User user) {
         String token = JwtUtils.generateToken(user.getUsername(), jwtProperties.getExpire(), jwtProperties.getPrivateKey());
