@@ -1,6 +1,7 @@
 package cn.tockey.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -27,4 +28,7 @@ public class Role {
      * 角色名称
      */
     private String name;
+    // 角色描述
+    @TableField("`desc`")
+    private String desc;
 }

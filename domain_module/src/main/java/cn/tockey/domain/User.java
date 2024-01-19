@@ -20,5 +20,7 @@ public class User {
 
     // 关联
     @TableField(exist = false)
-    private List<Permission> permissionList;
+    private List<Permission> permissionList; // 权限列表
+    @TableField(exist = false)
+    private List<Role> roleList; // 角色列表
 }

@@ -1,9 +1,12 @@
 package cn.tockey.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * <p>
@@ -37,4 +40,9 @@ public class Permission {
      * 权限地址
      */
     private String path;
+
+
+    // 关联
+    @TableField(exist = false)
+    private List<Permission> children; // 树形结构的子节点
 }

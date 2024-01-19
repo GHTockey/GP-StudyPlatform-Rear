@@ -3,6 +3,9 @@ package cn.tockey.mapper;
 import cn.tockey.domain.Permission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
-
+    // 根据角色id获取权限 mapper
+    @Select("SELECT permission.* FROM user_role userRole\n" +
+            "JOIN role_permission rolePerm ON userRole.rid=rolePerm.rid\n" +
+            "JOIN permission ON rolePerm.pid = permission.id\n" +
+            "WHERE userRole.uid = #{uid}")
+    List<Permission> getPermissionByUid(String uid);
 }

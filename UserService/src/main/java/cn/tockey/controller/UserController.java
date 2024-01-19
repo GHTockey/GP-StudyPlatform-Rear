@@ -4,9 +4,11 @@ package cn.tockey.controller;
 import cn.tockey.domain.User;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
+import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserRegVo;
 import cn.tockey.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -65,5 +67,12 @@ public class UserController {
     BaseResult<List<User>> searchUser(@PathVariable String keyword) {
         List<User> userList = userService.list(new QueryWrapper<User>().like("username", keyword));
         return BaseResult.ok("搜索成功", userList);
+    }
+
+    // 获取用户列表
+    @PostMapping("/list/{num}/{size}")
+    BaseResult<Page<User>> getUserList(@PathVariable int num, @PathVariable int size, @RequestBody UserListVo userListVo) {
+        Page<User> page = userService.getUserList(num, size, userListVo);
+        return BaseResult.ok("获取成功", page);
     }
 }
