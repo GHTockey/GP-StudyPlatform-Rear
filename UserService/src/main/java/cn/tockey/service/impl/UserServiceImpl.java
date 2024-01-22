@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
         if (userListVo.getUsername() != null && !userListVo.getUsername().isEmpty()) {
-            queryWrapper.like("username", userListVo.getUsername());
+            queryWrapper.like("users.username", userListVo.getUsername());
         }
         if (userListVo.getRid() != null) {
             queryWrapper.eq("user_role.rid", userListVo.getRid());

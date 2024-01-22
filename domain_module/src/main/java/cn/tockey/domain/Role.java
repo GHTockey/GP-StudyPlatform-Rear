@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * <p>
  * 
@@ -31,4 +33,8 @@ public class Role {
     // 角色描述
     @TableField("`desc`")
     private String desc;
+
+    // 关联
+    @TableField(exist = false)
+    private List<String> userIds; // 属于该角色的用户id
 }

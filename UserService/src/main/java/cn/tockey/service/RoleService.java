@@ -3,6 +3,8 @@ package cn.tockey.service;
 import cn.tockey.domain.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -12,5 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-01-16
  */
 public interface RoleService extends IService<Role> {
-
+    // 查询角色列表
+    List<Role> getRoleList();
 }
