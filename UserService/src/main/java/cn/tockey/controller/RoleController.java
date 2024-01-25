@@ -1,8 +1,10 @@
 package cn.tockey.controller;
 
 import cn.tockey.domain.Role;
+import cn.tockey.domain.RolePermission;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserRole;
+import cn.tockey.service.RolePermissionService;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
@@ -32,6 +34,8 @@ public class RoleController {
     private UserRoleService userRoleService;
     @Resource
     private UserService userService;
+    @Resource
+    private RolePermissionService rolePermissionService;
 
     // 获取角色列表
     @GetMapping("/list")
@@ -56,19 +60,38 @@ public class RoleController {
     }
 
     // 删除角色
-    @DeleteMapping("/{id}")
-    BaseResult<String> deleteRole(@PathVariable String id){
-        // 检查关联
-        List<UserRole> userRoleList = userRoleService.list(new QueryWrapper<UserRole>().eq("rid", id));
+    @DeleteMapping("/{rid}")
+    BaseResult<String> deleteRole(@PathVariable String rid){
+        // 检查关联用户
+        List<UserRole> userRoleList = userRoleService.list(new QueryWrapper<UserRole>().eq("rid", rid));
         ArrayList<String> userNames = new ArrayList<>();
         for (UserRole userRole : userRoleList) {
             User user = userService.getOne(new QueryWrapper<User>().eq("id", userRole.getUid()));
             userNames.add(user.getUsername());
         }
-        if (userNames.size() > 0) return BaseResult.error("删除失败,该角色已被用户:" + userNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "关联");
+        if (!userNames.isEmpty()) return BaseResult.error("删除失败,该角色已被用户:" + userNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "关联");
 
-        boolean removed = roleService.removeById(id);
+        // 检查关联权限
+        List<RolePermission> rolePermList = rolePermissionService.list(new QueryWrapper<RolePermission>().eq("rid", rid));
+        if (!rolePermList.isEmpty()) return BaseResult.error("删除失败，该角色已关联"+rolePermList.size()+"项权限，请先删除关联的权限");
+
+        boolean removed = roleService.removeById(rid);
         if (removed) return BaseResult.ok("删除成功");
         return BaseResult.error("删除失败");
+    }
+
+    // 设置角色权限权限
+    @PostMapping("/perm/set/{rid}")
+    BaseResult<String> setRolePermission(@PathVariable Integer rid, @RequestBody ArrayList<Integer> permIds) {
+        // 删除旧权限
+        rolePermissionService.remove(new QueryWrapper<RolePermission>().eq("rid", rid));
+        // 添加新权限
+        for (Integer permId : permIds) {
+            RolePermission rolePerm = new RolePermission();
+            rolePerm.setRid(rid);
+            rolePerm.setPid(permId);
+            rolePermissionService.save(rolePerm);
+        }
+        return BaseResult.ok("设置成功");
     }
 }

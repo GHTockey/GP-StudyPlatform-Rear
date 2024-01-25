@@ -1,7 +1,11 @@
 package cn.tockey.controller;
 
 
+import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
+import cn.tockey.domain.UserRole;
+import cn.tockey.service.RoleService;
+import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.UserListVo;
@@ -12,7 +16,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -20,6 +26,10 @@ import java.util.List;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private UserRoleService userRoleService;
+    @Resource
+    private RoleService roleService;
 
     // 登录
     @PostMapping("/login")
@@ -74,5 +84,38 @@ public class UserController {
     BaseResult<Page<User>> getUserList(@PathVariable int num, @PathVariable int size, @RequestBody UserListVo userListVo) {
         Page<User> page = userService.getUserList(num, size, userListVo);
         return BaseResult.ok("获取成功", page);
+    }
+
+    // 添加用户
+    @PostMapping
+    BaseResult<String> addUser(@RequestBody User user) {
+        boolean saved = userService.save(user);
+        if (saved) return BaseResult.ok("添加成功");
+        return BaseResult.error("添加失败");
+    }
+
+    // 修改用户
+    @PutMapping
+    BaseResult<String> updateUser(@RequestBody User user) {
+        boolean updated = userService.updateById(user);
+        if (updated) return BaseResult.ok("修改成功");
+        return BaseResult.error("修改失败");
+    }
+
+    // 删除用户
+    @DeleteMapping("/{id}")
+    BaseResult<String> deleteUser(@PathVariable String id) {
+        // 检查关联角色
+        List<UserRole> userRoleRelations = userRoleService.list(new QueryWrapper<UserRole>().eq("uid", id));
+        ArrayList<String> UserRoleNames = new ArrayList<>();
+        for (UserRole userRoleRelation : userRoleRelations) {
+            Role role = roleService.getOne(new QueryWrapper<Role>().eq("id", userRoleRelation.getRid()));
+            UserRoleNames.add(role.getName());
+        }
+        if (!userRoleRelations.isEmpty()) return BaseResult.error("删除失败,该用户已被角色:" + UserRoleNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "关联");
+
+        boolean removed = userService.removeById(id);
+        if (removed) return BaseResult.ok("删除成功");
+        return BaseResult.error("删除失败");
     }
 }

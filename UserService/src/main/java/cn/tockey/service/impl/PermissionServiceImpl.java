@@ -1,7 +1,9 @@
 package cn.tockey.service.impl;
 
 import cn.tockey.domain.Permission;
+import cn.tockey.domain.RolePermission;
 import cn.tockey.mapper.PermissionMapper;
+import cn.tockey.mapper.RolePermissionMapper;
 import cn.tockey.service.PermissionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,12 +26,26 @@ import java.util.List;
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService {
     @Resource
     private PermissionMapper permissionMapper;
+    @Resource
+    private RolePermissionMapper rolePermissionMapper;
 
-    // 根据角色id获取权限 serviceImpl
+    // 根据用户id获取权限列表 serviceImpl
     @Override
     public List<Permission> getPermissionByUid(String uid) {
         // 前端自行递归处理数据 24 01-19 22:30
         List<Permission> permissionList = permissionMapper.getPermissionByUid(uid);
+        return permissionList;
+    }
+
+    // 根据角色id获取权限列表 serviceImpl
+    @Override
+    public List<Permission> getPermissionByRid(Integer rid) {
+        List<RolePermission> rolePermList = rolePermissionMapper.selectList(new QueryWrapper<RolePermission>().eq("rid", rid));
+        ArrayList<Permission> permissionList = new ArrayList<>();
+        for (RolePermission rolePermission : rolePermList) {
+            Permission permission = permissionMapper.selectOne(new QueryWrapper<Permission>().eq("id", rolePermission.getPid()));
+            permissionList.add(permission);
+        }
         return permissionList;
     }
 

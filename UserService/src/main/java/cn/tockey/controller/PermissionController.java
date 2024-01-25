@@ -33,10 +33,18 @@ public class PermissionController {
     @Resource
     private RoleService roleService;
 
-    // 根据角色id获取权限 controller
+    // 根据用户id获取权限 controller
     @GetMapping("/user/{uid}")
     BaseResult<List<Permission>> getPermissionByUid(@PathVariable String uid) {
         List<Permission> permissionList = permissionService.getPermissionByUid(uid);
+        if (permissionList != null) return BaseResult.ok("获取成功", permissionList);
+        return BaseResult.error("获取失败");
+    }
+
+    // 根据角色id获取权限 controller
+    @GetMapping("/role/{rid}")
+    BaseResult<List<Permission>> getPermissionByRid(@PathVariable Integer rid) {
+        List<Permission> permissionList = permissionService.getPermissionByRid(rid);
         if (permissionList != null) return BaseResult.ok("获取成功", permissionList);
         return BaseResult.error("获取失败");
     }

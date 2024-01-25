@@ -18,7 +18,7 @@ import java.util.List;
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
     // 根据角色id获取权限 mapper
-    @Select("SELECT permission.* FROM user_role userRole\n" +
+    @Select("SELECT distinct permission.* FROM user_role userRole\n" +
             "JOIN role_permission rolePerm ON userRole.rid=rolePerm.rid\n" +
             "JOIN permission ON rolePerm.pid = permission.id\n" +
             "WHERE userRole.uid = #{uid}")
