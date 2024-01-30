@@ -9,6 +9,7 @@ import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
+import cn.tockey.vo.SetRolePermVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tockey
@@ -61,7 +62,7 @@ public class RoleController {
 
     // 删除角色
     @DeleteMapping("/{rid}")
-    BaseResult<String> deleteRole(@PathVariable String rid){
+    BaseResult<String> deleteRole(@PathVariable String rid) {
         // 检查关联用户
         List<UserRole> userRoleList = userRoleService.list(new QueryWrapper<UserRole>().eq("rid", rid));
         ArrayList<String> userNames = new ArrayList<>();
@@ -69,29 +70,27 @@ public class RoleController {
             User user = userService.getOne(new QueryWrapper<User>().eq("id", userRole.getUid()));
             userNames.add(user.getUsername());
         }
-        if (!userNames.isEmpty()) return BaseResult.error("删除失败,该角色已被用户:" + userNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "关联");
+        if (!userNames.isEmpty())
+            return BaseResult.error("删除失败,该角色已被用户:" + userNames.stream().map(name -> "【" + name + "】").collect(Collectors.joining()) + "关联");
 
         // 检查关联权限
         List<RolePermission> rolePermList = rolePermissionService.list(new QueryWrapper<RolePermission>().eq("rid", rid));
-        if (!rolePermList.isEmpty()) return BaseResult.error("删除失败，该角色已关联"+rolePermList.size()+"项权限，请先删除关联的权限");
+        if (!rolePermList.isEmpty())
+            return BaseResult.error("删除失败，该角色已关联" + rolePermList.size() + "项权限，请先删除关联的权限");
 
         boolean removed = roleService.removeById(rid);
         if (removed) return BaseResult.ok("删除成功");
         return BaseResult.error("删除失败");
     }
 
-    // 设置角色权限权限
+    // 设置角色权限
     @PostMapping("/perm/set/{rid}")
-    BaseResult<String> setRolePermission(@PathVariable Integer rid, @RequestBody ArrayList<Integer> permIds) {
-        // 删除旧权限
-        rolePermissionService.remove(new QueryWrapper<RolePermission>().eq("rid", rid));
-        // 添加新权限
-        for (Integer permId : permIds) {
-            RolePermission rolePerm = new RolePermission();
-            rolePerm.setRid(rid);
-            rolePerm.setPid(permId);
-            rolePermissionService.save(rolePerm);
-        }
-        return BaseResult.ok("设置成功");
+    BaseResult<String> setRolePermission(
+            @PathVariable Integer rid,
+            @RequestBody SetRolePermVo setRolePermVo
+            ) {
+        int i = roleService.addRole(rid, setRolePermVo);
+        if (i > 0) return BaseResult.ok("设置成功");
+        return BaseResult.error("设置失败");
     }
 }

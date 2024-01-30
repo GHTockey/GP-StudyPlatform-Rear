@@ -24,4 +24,7 @@ public class RolePermission {
      * 权限ID
      */
     private Integer pid;
+
+    // 是否半选
+    private Integer halfCheck;
 }

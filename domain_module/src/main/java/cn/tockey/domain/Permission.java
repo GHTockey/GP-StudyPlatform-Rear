@@ -45,4 +45,6 @@ public class Permission {
     // 关联
     @TableField(exist = false)
     private List<Permission> children; // 树形结构的子节点
+    @TableField(exist = false)
+    private Integer halfCheck; // 树形结构的半选状态
 }

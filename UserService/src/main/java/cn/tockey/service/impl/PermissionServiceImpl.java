@@ -44,17 +44,20 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         ArrayList<Permission> permissionList = new ArrayList<>();
         for (RolePermission rolePermission : rolePermList) {
             Permission permission = permissionMapper.selectOne(new QueryWrapper<Permission>().eq("id", rolePermission.getPid()));
+            permission.setHalfCheck(rolePermission.getHalfCheck());
             permissionList.add(permission);
         }
         return permissionList;
     }
 
+    //
     @Override
     public int addPermission(Permission permission) {
         int i = permissionMapper.insert(permission);
         return i;
     }
 
+    // 根据权限id获取所有的父级id serviceImpl
     @Override
     public List<Integer> getAllPidById(Integer id) {
         ArrayList<Integer> ids = new ArrayList<>();
@@ -62,6 +65,16 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         return permPidHandler;
     }
 
+    // 根据权限id获取所有的子级id serviceImpl
+    @Override
+    public List<Integer> getAllChildIdById(Integer id){
+        ArrayList<Integer> ids = new ArrayList<>();
+        List<Integer> permCidHandler = getPermCidHandler(id, ids);
+        return permCidHandler;
+    }
+
+
+    // 递归获取所有父级id
     private List<Integer> getPermPidHandler(int id, List<Integer> ids){
         Permission perm = permissionMapper.selectOne(new QueryWrapper<Permission>().eq("id", id));
         if(perm.getParentId() != 0){
@@ -69,5 +82,18 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         }
         ids.add(perm.getParentId());
         return ids;
-    };
+    }
+    // 递归获取所有子级id
+    private List<Integer> getPermCidHandler(int id, List<Integer> ids){
+        List<Permission> permissionList = permissionMapper.selectList(new QueryWrapper<Permission>().eq("parent_id", id));
+        if(permissionList != null){
+            for (Permission permission : permissionList) {
+                ids.add(permission.getId());
+                getPermCidHandler(permission.getId(), ids);
+            }
+            //ids.add(permission.getId());
+            //getPermCidHandler(permission.getId(), ids);
+        }
+        return ids;
+    }
 }

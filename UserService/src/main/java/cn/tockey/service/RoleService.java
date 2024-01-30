@@ -1,6 +1,7 @@
 package cn.tockey.service;
 
 import cn.tockey.domain.Role;
+import cn.tockey.vo.SetRolePermVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,4 +17,7 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
     // 查询角色列表
     List<Role> getRoleList();
+
+    // 添加角色权限
+    int addRole(Integer rid, SetRolePermVo setRolePermVo);
 }

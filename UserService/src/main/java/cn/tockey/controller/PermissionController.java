@@ -105,6 +105,12 @@ public class PermissionController {
         }
         if(!roleNames.isEmpty()) return BaseResult.error("该权限已被角色:" + roleNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "使用，无法删除");
 
+        // 获取所有的子级id
+        List<Integer> allChildIdById = permissionService.getAllChildIdById(Integer.parseInt(id));
+        // 删除所有的子级id
+        boolean removed = permissionService.removeByIds(allChildIdById);
+
+        // 删除自己
         boolean deleted = permissionService.removeById(id);
         if (deleted) return BaseResult.ok("删除成功");
         return BaseResult.error("删除失败");
