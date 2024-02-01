@@ -12,7 +12,7 @@ public interface UserService extends IService<User> {
     User login(UserVo loginUser);
 
     // 注册
-    boolean register(UserRegVo registerUser);
+    Integer register(User user);
 
     // 生成token
     String generateToken(User user);

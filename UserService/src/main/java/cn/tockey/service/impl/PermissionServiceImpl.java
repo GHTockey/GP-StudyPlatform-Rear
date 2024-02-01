@@ -54,6 +54,15 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public int addPermission(Permission permission) {
         int i = permissionMapper.insert(permission);
+        // 将关联表中的父级id设置为半选中
+        if(permission.getParentId() != 0){
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setHalfCheck(1);
+            rolePermissionMapper.update(
+                    rolePermission,
+                    new QueryWrapper<RolePermission>().eq("pid", permission.getParentId())
+            );
+        }
         return i;
     }
 

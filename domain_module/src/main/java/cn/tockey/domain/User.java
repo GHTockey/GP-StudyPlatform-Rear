@@ -12,7 +12,7 @@ import java.util.List;
 @TableName("users")
 public class User {
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Integer id;
     private String username;
     private String password;
     private String avatar;

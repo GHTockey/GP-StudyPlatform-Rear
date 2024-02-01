@@ -41,6 +41,9 @@ public class Permission {
      */
     private String path;
 
+    // 类型
+    private String type;
+
 
     // 关联
     @TableField(exist = false)

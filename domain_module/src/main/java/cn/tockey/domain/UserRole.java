@@ -1,6 +1,7 @@
 package cn.tockey.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -12,13 +13,14 @@ import lombok.Data;
  * @since 2024-01-16
  */
 @Data
+@AllArgsConstructor
 @TableName("user_role")
 public class UserRole {
 
     /**
      * 用户ID
      */
-    private String uid;
+    private Integer uid;
 
     /**
      * 角色ID

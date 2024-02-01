@@ -21,6 +21,6 @@ public interface PermissionMapper extends BaseMapper<Permission> {
     @Select("SELECT distinct permission.* FROM user_role userRole\n" +
             "JOIN role_permission rolePerm ON userRole.rid=rolePerm.rid\n" +
             "JOIN permission ON rolePerm.pid = permission.id\n" +
-            "WHERE userRole.uid = #{uid}")
+            "WHERE userRole.uid = #{uid} and permission.type = 'page'")
     List<Permission> getPermissionByUid(String uid);
 }

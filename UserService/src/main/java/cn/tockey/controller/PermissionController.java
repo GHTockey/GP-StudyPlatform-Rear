@@ -93,6 +93,13 @@ public class PermissionController {
         return BaseResult.ok("获取成功", allPidById);
     }
 
+    // 获取所有的子级id
+    @GetMapping("/Descendant/{id}")
+    BaseResult<List<Integer>> getAllChildIdById(@PathVariable Integer id){
+        List<Integer> allChildIdById = permissionService.getAllChildIdById(id);
+        return BaseResult.ok("获取成功", allChildIdById);
+    }
+
     // 删除权限
     @DeleteMapping("/{id}")
     BaseResult<String> deletePermission(@PathVariable String id){

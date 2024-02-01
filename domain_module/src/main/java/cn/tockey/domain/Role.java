@@ -36,5 +36,5 @@ public class Role {
 
     // 关联
     @TableField(exist = false)
-    private List<String> userIds; // 属于该角色的用户id
+    private List<Integer> userIds; // 属于该角色的用户id
 }

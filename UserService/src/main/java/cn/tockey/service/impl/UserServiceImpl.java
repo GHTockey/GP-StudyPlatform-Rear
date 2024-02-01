@@ -9,6 +9,7 @@ import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.utils.JwtUtils;
+import cn.tockey.utils.UserIdGenerator;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserRegVo;
 import cn.tockey.vo.UserVo;
@@ -48,9 +49,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 注册
     @Override
-    public boolean register(UserRegVo registerUser) {
-        userMapper.insertNewUserProcedure(registerUser.getUsername(), registerUser.getPassword(), registerUser.getAvatar(), registerUser.getEmail());
-        return true;
+    public Integer register(User registerUser) {
+        int inserted = userMapper.insert(registerUser);
+        return inserted;
     }
 
     // 生成token

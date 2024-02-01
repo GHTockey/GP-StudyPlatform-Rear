@@ -44,9 +44,9 @@ public class UserController {
 
     // 注册
     @PostMapping("/register")
-    BaseResult<String> register(@RequestBody UserRegVo registerUser) {
-        boolean registerResult = userService.register(registerUser);
-        if (registerResult) {
+    BaseResult<String> register(@RequestBody User registerUser) {
+        int registerResult = userService.register(registerUser);
+        if (registerResult != 0) {
             return BaseResult.ok("注册成功");
         } else {
             return BaseResult.error("注册失败");
@@ -89,8 +89,15 @@ public class UserController {
     // 添加用户
     @PostMapping
     BaseResult<String> addUser(@RequestBody User user) {
-        boolean saved = userService.save(user);
-        if (saved) return BaseResult.ok("添加成功");
+        int saved = userService.register(user);
+        // 处理角色关联
+        if (user.getRoleList() != null && !user.getRoleList().isEmpty()) {
+            for (Role role : user.getRoleList()) {
+                userRoleService.save(new UserRole(user.getId(), role.getId()));
+            }
+        }
+
+        if (saved != 0) return BaseResult.ok("添加成功");
         return BaseResult.error("添加失败");
     }
 
@@ -98,6 +105,15 @@ public class UserController {
     @PutMapping
     BaseResult<String> updateUser(@RequestBody User user) {
         boolean updated = userService.updateById(user);
+        // 处理角色关联
+        if (user.getRoleList() != null ) {
+            // 先删除关联
+            userRoleService.remove(new QueryWrapper<UserRole>().eq("uid", user.getId()));
+            // 再添加关联
+            for (Role role : user.getRoleList()) {
+                userRoleService.save(new UserRole(user.getId(), role.getId()));
+            }
+        }
         if (updated) return BaseResult.ok("修改成功");
         return BaseResult.error("修改失败");
     }

@@ -15,6 +15,7 @@
         <module>VocabularyService</module>
         <module>OtherService</module>
         <module>ClassesService</module>
+        <module>IconService</module>
     </modules>
 
     <parent>
