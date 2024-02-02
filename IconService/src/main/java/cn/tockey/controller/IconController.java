@@ -1,11 +1,15 @@
 package cn.tockey.controller;
 
 import cn.tockey.domain.Icon;
+import cn.tockey.domain.PermIcon;
 import cn.tockey.service.IconService;
+import cn.tockey.service.PermIconService;
 import cn.tockey.vo.BaseResult;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +25,8 @@ import java.util.List;
 public class IconController {
     @Resource
     private IconService iconService;
+    @Resource
+    private PermIconService permIconService;
 
     // 获取图标列表
     @GetMapping("/list")
@@ -40,9 +46,15 @@ public class IconController {
     }
 
     // 删除图标
-    @DeleteMapping("/{id}")
-    BaseResult<String> deleteIcon(@PathVariable Integer id){
-        boolean removed = iconService.removeById(id);
+    @DeleteMapping("/{ids}")
+    BaseResult<String> deleteIcon(@PathVariable Integer[] ids){
+        // 删除前检查 权限关联
+        for (Integer id : ids) {
+            List<PermIcon> useIcons = permIconService.list(new QueryWrapper<PermIcon>().eq("icon_id", id));
+            if(useIcons.size() > 0) return BaseResult.error("图标: " + id + " 已被" + useIcons.size() + "个权限使用, 无法删除");
+        }
+
+        boolean removed = iconService.removeByIds(Arrays.asList(ids));
         if(removed) return BaseResult.ok("删除成功");
         return BaseResult.error("删除失败");
     }
@@ -53,5 +65,15 @@ public class IconController {
         boolean updated = iconService.updateById(icon);
         if(updated) return BaseResult.ok("修改成功");
         return BaseResult.error("修改失败");
+    }
+
+    // 权限使用图标 【添加】
+    @PostMapping("/perm")
+    BaseResult<String> addPermIcon(@RequestBody PermIcon permIcon){
+        PermIcon exitsPermIcon = permIconService.getOne(new QueryWrapper<PermIcon>().eq("perm_id", permIcon.getPermId()).eq("icon_id", permIcon.getIconId()));
+        if (exitsPermIcon != null) return BaseResult.error("已存在相同的权限图标");
+        boolean saved = permIconService.save(permIcon);
+        if(saved) return BaseResult.ok("添加成功");
+        return BaseResult.error("添加失败");
     }
 }
