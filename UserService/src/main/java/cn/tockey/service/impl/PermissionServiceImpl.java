@@ -1,7 +1,9 @@
 package cn.tockey.service.impl;
 
+import cn.tockey.domain.PermIcon;
 import cn.tockey.domain.Permission;
 import cn.tockey.domain.RolePermission;
+import cn.tockey.feign.IconFeign;
 import cn.tockey.mapper.PermissionMapper;
 import cn.tockey.mapper.RolePermissionMapper;
 import cn.tockey.service.PermissionService;
@@ -28,12 +30,25 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     private PermissionMapper permissionMapper;
     @Resource
     private RolePermissionMapper rolePermissionMapper;
+    @Resource
+    private IconFeign iconFeign;
+
+    // 关联图标 function (此方法会改变传入的permissionList)
+    private void permRelevanceIconHandler(List<Permission> permissionList) {
+        for (Permission permission : permissionList) {
+            PermIcon permIcon = iconFeign.getPermIconIdByPermId(permission.getId()).getData();
+            if (permIcon != null) permission.setIcon(iconFeign.getIconById(permIcon.getIconId()).getData());
+        }
+    }
+
 
     // 根据用户id获取权限列表 serviceImpl
     @Override
     public List<Permission> getPermissionByUid(String uid) {
         // 前端自行递归处理数据 24 01-19 22:30
         List<Permission> permissionList = permissionMapper.getPermissionByUid(uid);
+        // 关联图标
+        permRelevanceIconHandler(permissionList);
         return permissionList;
     }
 
@@ -47,10 +62,12 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             permission.setHalfCheck(rolePermission.getHalfCheck());
             permissionList.add(permission);
         }
+        // 关联图标
+        permRelevanceIconHandler(permissionList);
         return permissionList;
     }
 
-    //
+    // 添加权限 serviceImpl
     @Override
     public int addPermission(Permission permission) {
         int i = permissionMapper.insert(permission);
@@ -62,6 +79,12 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                     rolePermission,
                     new QueryWrapper<RolePermission>().eq("pid", permission.getParentId())
             );
+        }
+        // 添加关联图标
+        iconFeign.removePermIcon(permission.getId()); // 先删除原有关联
+        if(permission.getIcon() != null){
+            PermIcon permIcon = new PermIcon(permission.getId(), permission.getIcon().getId());
+            iconFeign.addPermIcon(permIcon);
         }
         return i;
     }
@@ -80,6 +103,14 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         ArrayList<Integer> ids = new ArrayList<>();
         List<Integer> permCidHandler = getPermCidHandler(id, ids);
         return permCidHandler;
+    }
+
+    @Override
+    public List<Permission> getPermissionList() {
+        List<Permission> permissionList = permissionMapper.selectList(null);
+        // 关联图标
+        permRelevanceIconHandler(permissionList);
+        return permissionList;
     }
 
 

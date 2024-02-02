@@ -50,4 +50,6 @@ public class Permission {
     private List<Permission> children; // 树形结构的子节点
     @TableField(exist = false)
     private Integer halfCheck; // 树形结构的半选状态
+    @TableField(exist = false)
+    private Icon icon; // 图标
 }

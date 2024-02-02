@@ -67,6 +67,23 @@ public class IconController {
         return BaseResult.error("修改失败");
     }
 
+    // 获取图标 【根据id】
+    @GetMapping("/{id}")
+    BaseResult<Icon> getIconById(@PathVariable Integer id){
+        Icon icon = iconService.getById(id);
+        if (icon != null) return BaseResult.ok("获取成功", icon);
+        return BaseResult.error("获取失败");
+    }
+
+
+    // 权限关联图标表
+    // 权限移除图标
+    @DeleteMapping("/perm/{permId}")
+    BaseResult<String> removePermIcon(@PathVariable Integer permId){
+        boolean removed = permIconService.remove(new QueryWrapper<PermIcon>().eq("perm_id", permId));
+        if(removed) return BaseResult.ok("移除成功");
+        return BaseResult.error("移除失败");
+    }
     // 权限使用图标 【添加】
     @PostMapping("/perm")
     BaseResult<String> addPermIcon(@RequestBody PermIcon permIcon){
@@ -75,5 +92,12 @@ public class IconController {
         boolean saved = permIconService.save(permIcon);
         if(saved) return BaseResult.ok("添加成功");
         return BaseResult.error("添加失败");
+    }
+    // 获取权限使用的图标ID 【根据权限id】
+    @GetMapping("/perm/{permId}")
+    BaseResult<PermIcon> getPermIconIdByPermId(@PathVariable Integer permId){
+        PermIcon permIcon = permIconService.getOne(new QueryWrapper<PermIcon>().eq("perm_id", permId));
+        if (permIcon != null) return BaseResult.ok("获取成功", permIcon);
+        return BaseResult.error("获取失败");
     }
 }

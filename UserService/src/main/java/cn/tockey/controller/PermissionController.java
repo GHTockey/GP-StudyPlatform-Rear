@@ -1,8 +1,10 @@
 package cn.tockey.controller;
 
+import cn.tockey.domain.PermIcon;
 import cn.tockey.domain.Permission;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.RolePermission;
+import cn.tockey.feign.IconFeign;
 import cn.tockey.service.PermissionService;
 import cn.tockey.service.RolePermissionService;
 import cn.tockey.service.RoleService;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tockey
@@ -32,12 +34,16 @@ public class PermissionController {
     private RolePermissionService rolePermissionService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private IconFeign iconFeign;
 
     // 根据用户id获取权限 controller
     @GetMapping("/user/{uid}")
     BaseResult<List<Permission>> getPermissionByUid(@PathVariable String uid) {
         List<Permission> permissionList = permissionService.getPermissionByUid(uid);
-        if (permissionList != null) return BaseResult.ok("获取成功", permissionList);
+        if (permissionList != null) {
+            return BaseResult.ok("获取成功", permissionList);
+        }
         return BaseResult.error("获取失败");
     }
 
@@ -45,21 +51,25 @@ public class PermissionController {
     @GetMapping("/role/{rid}")
     BaseResult<List<Permission>> getPermissionByRid(@PathVariable Integer rid) {
         List<Permission> permissionList = permissionService.getPermissionByRid(rid);
-        if (permissionList != null) return BaseResult.ok("获取成功", permissionList);
+        if (permissionList != null) {
+            return BaseResult.ok("获取成功", permissionList);
+        }
         return BaseResult.error("获取失败");
     }
 
     // 获取权限列表
     @GetMapping("/list")
-    BaseResult<List<Permission>> getPermissionList(){
-        List<Permission> permissionList = permissionService.list();
-        if (permissionList != null) return BaseResult.ok("获取成功", permissionList);
+    BaseResult<List<Permission>> getPermissionList() {
+        List<Permission> permissionList = permissionService.getPermissionList();
+        if (permissionList != null) {
+            return BaseResult.ok("获取成功", permissionList);
+        }
         return BaseResult.error("获取失败");
     }
 
     // 添加权限
     @PostMapping
-    BaseResult<String> addPermission(@RequestBody Permission permission){
+    BaseResult<String> addPermission(@RequestBody Permission permission) {
         Permission exitsPermName = permissionService.getOne(new QueryWrapper<Permission>().eq("name", permission.getName()));
         if (exitsPermName != null) return BaseResult.error("已存在相同名称的权限");
         Permission exitsPermPath = permissionService.getOne(new QueryWrapper<Permission>().eq("path", permission.getPath()));
@@ -71,7 +81,7 @@ public class PermissionController {
 
     // 获取权限
     @GetMapping("/{id}")
-    BaseResult<Permission> getPermission(@PathVariable String id){
+    BaseResult<Permission> getPermission(@PathVariable String id) {
         Permission permission = permissionService.getOne(new QueryWrapper<Permission>().eq("id", id));
         if (permission != null) return BaseResult.ok("获取成功", permission);
         return BaseResult.error("获取失败");
@@ -79,7 +89,7 @@ public class PermissionController {
 
     // 修改权限
     @PutMapping
-    BaseResult<String> updPermission(@RequestBody Permission permission){
+    BaseResult<String> updPermission(@RequestBody Permission permission) {
         if (permission.getId() == null) return BaseResult.error("id不能为空");
         boolean updated = permissionService.updateById(permission);
         if (updated) return BaseResult.ok("修改成功");
@@ -88,21 +98,21 @@ public class PermissionController {
 
     // 获取所有的父级id
     @GetMapping("/parents/{id}")
-    BaseResult<List<Integer>> getAllPidById(@PathVariable Integer id){
+    BaseResult<List<Integer>> getAllPidById(@PathVariable Integer id) {
         List<Integer> allPidById = permissionService.getAllPidById(id);
         return BaseResult.ok("获取成功", allPidById);
     }
 
     // 获取所有的子级id
     @GetMapping("/Descendant/{id}")
-    BaseResult<List<Integer>> getAllChildIdById(@PathVariable Integer id){
+    BaseResult<List<Integer>> getAllChildIdById(@PathVariable Integer id) {
         List<Integer> allChildIdById = permissionService.getAllChildIdById(id);
         return BaseResult.ok("获取成功", allChildIdById);
     }
 
     // 删除权限
     @DeleteMapping("/{id}")
-    BaseResult<String> deletePermission(@PathVariable String id){
+    BaseResult<String> deletePermission(@PathVariable String id) {
         // 检查是否有角色使用该权限
         List<RolePermission> rolePermList = rolePermissionService.list(new QueryWrapper<RolePermission>().eq("pid", id));
         ArrayList<String> roleNames = new ArrayList<>();
@@ -110,7 +120,8 @@ public class PermissionController {
             Role role = roleService.getOne(new QueryWrapper<Role>().eq("id", rolePermission.getRid()));
             roleNames.add(role.getName());
         }
-        if(!roleNames.isEmpty()) return BaseResult.error("该权限已被角色:" + roleNames.stream().map(name->"【"+name+"】").collect(Collectors.joining()) + "使用，无法删除");
+        if (!roleNames.isEmpty())
+            return BaseResult.error("该权限已被角色:" + roleNames.stream().map(name -> "【" + name + "】").collect(Collectors.joining()) + "使用，无法删除");
 
         // 获取所有的子级id
         List<Integer> allChildIdById = permissionService.getAllChildIdById(Integer.parseInt(id));
