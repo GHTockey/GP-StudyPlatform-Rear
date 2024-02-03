@@ -91,8 +91,8 @@ public class PermissionController {
     @PutMapping
     BaseResult<String> updPermission(@RequestBody Permission permission) {
         if (permission.getId() == null) return BaseResult.error("id不能为空");
-        boolean updated = permissionService.updateById(permission);
-        if (updated) return BaseResult.ok("修改成功");
+        int upded = permissionService.updPermission(permission);
+        if (upded > 0) return BaseResult.ok("修改成功");
         return BaseResult.error("修改失败");
     }
 

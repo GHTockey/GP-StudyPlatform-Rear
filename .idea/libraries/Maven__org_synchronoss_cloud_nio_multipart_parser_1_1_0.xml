@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.synchronoss.cloud:nio-multipart-parser:1.1.0" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.synchronoss.cloud" artifactId="nio-multipart-parser" version="1.1.0" />
+    <CLASSES>
+      <root url="jar://D:/EXE/Java/maven/yycg_repository/org/synchronoss/cloud/nio-multipart-parser/1.1.0/nio-multipart-parser-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/EXE/Java/maven/yycg_repository/org/synchronoss/cloud/nio-multipart-parser/1.1.0/nio-multipart-parser-1.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/EXE/Java/maven/yycg_repository/org/synchronoss/cloud/nio-multipart-parser/1.1.0/nio-multipart-parser-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

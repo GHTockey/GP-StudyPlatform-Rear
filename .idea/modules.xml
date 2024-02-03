@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ClassesService.iml" filepath="$PROJECT_DIR$/ClassesService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GatewayService.iml" filepath="$PROJECT_DIR$/GatewayService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GraduationProjectRear.iml" filepath="$PROJECT_DIR$/GraduationProjectRear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IconService.iml" filepath="$PROJECT_DIR$/IconService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OtherService/OtherService.iml" filepath="$PROJECT_DIR$/OtherService/OtherService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UserService.iml" filepath="$PROJECT_DIR$/UserService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VocabularyService.iml" filepath="$PROJECT_DIR$/VocabularyService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain_module/domain_module.iml" filepath="$PROJECT_DIR$/domain_module/domain_module.iml" />
+    </modules>
+  </component>
+</project>

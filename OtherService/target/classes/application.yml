@@ -1,0 +1,22 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: other-service          #服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848   #nacos服务地址
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+# 自定义配置
+tce:
+  qiniu:
+    ak: L3k3LGHWOcfYdJntQTA8np-1esildPY7LlFcIPQE
+    sk: go9SqdbTzIQ0enEfYflL0U3JEyS10vaqY26zn-cY
+    bucket: tockey
+    baseUrl: https://img.tockey.cn/
+    path: gp/

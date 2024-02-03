@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="修改：移除所有模块已经提交的 application.yml 文件 (以确保数据库和对象存储秘钥不被泄露)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JRebelWorkspace">
+    <option name="jrebelEnabledAutocompile" value="true" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/EXE/Java/maven/apache-maven-3.9.5" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2a2FodtEC6qys7JD6gcMEfaYg6B" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_directory_selection&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/domain_module/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/IconService/src/main/java/cn/tockey&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17089844&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.34157833&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;de17efd2b81444c74d0d71512344531e&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RebelAgentSelection">
+    <selection>jr</selection>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\IconService\src\main\java\cn\tockey" />
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\IconService\src\main\resources" />
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\UserService\src\main\java\cn\tockey\config" />
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\ClassesService\src\main\java\cn\tockey" />
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\ImageUploadService\src\main\java\cn\tockey\config" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="cn.tockey.mapper" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.tockey.utils" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.IconService-9003">
+    <configuration name="ClassesService-9002" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ClassesService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.ClassesServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Gateway" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="GatewayService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.GatewayServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IconService-9003" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="IconService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.IconServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OtherService-9010" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="OtherService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.OtherServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserService-9000" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="UserService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.UserServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VocabularyService-9001" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="VocabularyService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.tockey.VocabularyServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.Gateway" />
+      <item itemvalue="Spring Boot.UserService-9000" />
+      <item itemvalue="Spring Boot.VocabularyService-9001" />
+      <item itemvalue="Spring Boot.ClassesService-9002" />
+      <item itemvalue="Spring Boot.IconService-9003" />
+      <item itemvalue="Spring Boot.OtherService-9010" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="" />
+      <created>1703508945683</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703508945683</updated>
+      <workItem from="1703508946812" duration="1119000" />
+      <workItem from="1703510073421" duration="1508000" />
+      <workItem from="1703550436282" duration="8053000" />
+      <workItem from="1703570299672" duration="8000" />
+      <workItem from="1703638194437" duration="5013000" />
+      <workItem from="1703680090115" duration="4020000" />
+      <workItem from="1703748118634" duration="95000" />
+      <workItem from="1703748221608" duration="85000" />
+      <workItem from="1703748319374" duration="78000" />
+      <workItem from="1703748410702" duration="75000" />
+      <workItem from="1703748493632" duration="12283000" />
+      <workItem from="1703808136269" duration="9885000" />
+      <workItem from="1704154011712" duration="45000" />
+      <workItem from="1704186278874" duration="5799000" />
+      <workItem from="1704240045123" duration="9425000" />
+      <workItem from="1704326563179" duration="9091000" />
+      <workItem from="1704413586215" duration="6000" />
+      <workItem from="1704456643714" duration="992000" />
+      <workItem from="1704672152521" duration="22000" />
+      <workItem from="1704700878534" duration="12688000" />
+      <workItem from="1704758744155" duration="4000" />
+      <workItem from="1704764528284" duration="8046000" />
+      <workItem from="1704845118056" duration="5281000" />
+      <workItem from="1704934145477" duration="10000" />
+      <workItem from="1704934167961" duration="69000" />
+      <workItem from="1704935487980" duration="84000" />
+      <workItem from="1705281680473" duration="15778000" />
+      <workItem from="1705363267065" duration="1911000" />
+      <workItem from="1705367854202" duration="9632000" />
+      <workItem from="1705449655906" duration="272000" />
+      <workItem from="1705449936792" duration="12944000" />
+      <workItem from="1705561300031" duration="628000" />
+      <workItem from="1705570110592" duration="858000" />
+      <workItem from="1705573327214" duration="3028000" />
+      <workItem from="1705635787949" duration="13800000" />
+      <workItem from="1705680001811" duration="123000" />
+      <workItem from="1705881984727" duration="1647000" />
+      <workItem from="1705885351921" duration="15580000" />
+      <workItem from="1705969514686" duration="46000" />
+      <workItem from="1705969942484" duration="622000" />
+      <workItem from="1705971361104" duration="19000" />
+      <workItem from="1705971490970" duration="28000" />
+      <workItem from="1706004287423" duration="4228000" />
+      <workItem from="1706054645264" duration="2096000" />
+      <workItem from="1706058909150" duration="12000" />
+      <workItem from="1706172639724" duration="5825000" />
+      <workItem from="1706229005192" duration="1300000" />
+      <workItem from="1706233622636" duration="2896000" />
+      <workItem from="1706529909245" duration="4329000" />
+      <workItem from="1706592866820" duration="5922000" />
+      <workItem from="1706614455505" duration="6407000" />
+      <workItem from="1706674665354" duration="8892000" />
+      <workItem from="1706765321207" duration="4265000" />
+      <workItem from="1706853320885" duration="10993000" />
+      <workItem from="1706933936937" duration="5439000" />
+    </task>
+    <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
+      <option name="closed" value="true" />
+      <created>1705367137314</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705367137314</updated>
+    </task>
+    <task id="LOCAL-00002" summary="修改：调用 MySQL 存储过程的方式改为 Mapper，不再使用 JAP">
+      <option name="closed" value="true" />
+      <created>1705453965541</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1705453965541</updated>
+    </task>
+    <task id="LOCAL-00003" summary="完成：采用自定义 Mapper SQL 语句+分页+条件构造器实现用户列表多表条件查询">
+      <option name="closed" value="true" />
+      <created>1705667515889</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705667515889</updated>
+    </task>
+    <task id="LOCAL-00004" summary="完成：Permission, Role 模块的 CURD">
+      <option name="closed" value="true" />
+      <created>1705930814482</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705930814482</updated>
+    </task>
+    <task id="LOCAL-00005" summary="完成：删除 permission 时将递归删除其所有的后代 + permission 的半选区分 + 若干细节">
+      <option name="closed" value="true" />
+      <created>1706597635833</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706597635833</updated>
+    </task>
+    <task id="LOCAL-00006" summary="完成：IconService CURD">
+      <option name="closed" value="true" />
+      <created>1706799103350</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706799103350</updated>
+    </task>
+    <task id="LOCAL-00007" summary="完成：IconService 删除校验关联权限+权限使用图标API">
+      <option name="closed" value="true" />
+      <created>1706857494236</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706857494236</updated>
+    </task>
+    <task id="LOCAL-00008" summary="分离：permission Controller 层的部分业务到 service 层">
+      <option name="closed" value="true" />
+      <created>1706884963303</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706884963303</updated>
+    </task>
+    <task id="LOCAL-00009" summary="修改：移除所有模块已经提交的 application.yml 文件 (以确保数据库和对象存储秘钥不被泄露)">
+      <option name="closed" value="true" />
+      <created>1706937314553</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706937314553</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="完成：ClassesService 模块的CURD" />
+    <MESSAGE value="修改：调用 MySQL 存储过程的方式改为 Mapper，不再使用 JAP" />
+    <MESSAGE value="完成：采用自定义 Mapper SQL 语句+分页+条件构造器实现用户列表多表条件查询" />
+    <MESSAGE value="完成：Permission, Role 模块的 CURD" />
+    <MESSAGE value="完成：删除 permission 时将递归删除其所有的后代 + permission 的半选区分 + 若干细节" />
+    <MESSAGE value="完成：IconService CURD" />
+    <MESSAGE value="完成：IconService 删除校验关联权限+权限使用图标API" />
+    <MESSAGE value="分离：permission Controller 层的部分业务到 service 层" />
+    <MESSAGE value="修改：移除所有模块已经提交的 application.yml 文件 (以确保数据库和对象存储秘钥不被泄露)" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改：移除所有模块已经提交的 application.yml 文件 (以确保数据库和对象存储秘钥不被泄露)" />
+  </component>
+</project>
