@@ -22,6 +22,8 @@ public interface PermissionService extends IService<Permission> {
 
     // 添加权限
     int addPermission(Permission permission);
+    // 修改权限
+    int updPermission(Permission permission);
 
     // 根据权限id获取所有的父级id
     List<Integer> getAllPidById(Integer id);

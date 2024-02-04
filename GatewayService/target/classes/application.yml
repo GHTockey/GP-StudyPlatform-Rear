@@ -1,4 +1,4 @@
-#¶Ë¿ÚºÅ
+#ç«¯å£å·
 server:
   port: 10010
 spring:
@@ -7,23 +7,23 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848   #nacos·şÎñµØÖ·
+        server-addr: 127.0.0.1:8848   #nacosæœåŠ¡åœ°å€
     gateway:
       discovery:
         locator:
-          enabled: true               #¿ªÆô·şÎñ×¢²áºÍ·¢ÏÖµÄ¹¦ÄÜ£¬×Ô¶¯´´½¨routerÒÔ·şÎñÃû¿ªÍ·µÄÇëÇóÂ·¾¶×ª·¢µ½¶ÔÓ¦µÄ·şÎñ
-          lowerCaseServiceId: true    #½«ÇëÇóÂ·¾¶ÉÏµÄ·şÎñÃûÅäÖÃÎªĞ¡Ğ´
-#      routes:
-#        # ½«ÇëÇóÂ·¾¶ÒÔ/consumer/**µÄÇëÇóÈ«²¿×ª·¢µ½service-consumer·şÎñ
-#        - id: student # Â·ÓÉµÄid£¬Ã»ÓĞ¹Ì¶¨¹æÔòµ«ÒªÇóÎ¨Ò»£¬½¨ÒéÅäºÏ·şÎñÃû
-#          uri: lb://student-service # Æ¥ÅäºóÌá¹©·şÎñµÄÂ·ÓÉµØÖ·, lb´ú±í´Ó×¢²áÖĞĞÄ»ñÈ¡·şÎñ
-#          predicates: # ¶ÏÑÔ
-#            - Path=/student/** #Â·¾¶ÏàÆ¥ÅäµÄ½øĞĞÂ·ÓÉ×ª·¢; ¡¾·ÃÎÊ /xxx/** Ê±»á×Ô¶¯×ª·¢µ½ xxx-service ·şÎñ¡¿
-#          filters:
-#            - StripPrefix=1 # ¹ıÂËÆ÷£¬È¥µôÇëÇóÂ·¾¶µÄµÚÒ»¸öÂ·¾¶
+          enabled: true               #å¼€å¯æœåŠ¡æ³¨å†Œå’Œå‘ç°çš„åŠŸèƒ½ï¼Œè‡ªåŠ¨åˆ›å»ºrouterä»¥æœåŠ¡åå¼€å¤´çš„è¯·æ±‚è·¯å¾„è½¬å‘åˆ°å¯¹åº”çš„æœåŠ¡
+          lowerCaseServiceId: true    #å°†è¯·æ±‚è·¯å¾„ä¸Šçš„æœåŠ¡åé…ç½®ä¸ºå°å†™
+      #      routes:
+      #        # å°†è¯·æ±‚è·¯å¾„ä»¥/consumer/**çš„è¯·æ±‚å…¨éƒ¨è½¬å‘åˆ°service-consumeræœåŠ¡
+      #        - id: student # è·¯ç”±çš„idï¼Œæ²¡æœ‰å›ºå®šè§„åˆ™ä½†è¦æ±‚å”¯ä¸€ï¼Œå»ºè®®é…åˆæœåŠ¡å
+      #          uri: lb://student-service # åŒ¹é…åæä¾›æœåŠ¡çš„è·¯ç”±åœ°å€, lbä»£è¡¨ä»æ³¨å†Œä¸­å¿ƒè·å–æœåŠ¡
+      #          predicates: # æ–­è¨€
+      #            - Path=/student/** #è·¯å¾„ç›¸åŒ¹é…çš„è¿›è¡Œè·¯ç”±è½¬å‘; ã€è®¿é—® /xxx/** æ—¶ä¼šè‡ªåŠ¨è½¬å‘åˆ° xxx-service æœåŠ¡ã€‘
+      #          filters:
+      #            - StripPrefix=1 # è¿‡æ»¤å™¨ï¼Œå»æ‰è¯·æ±‚è·¯å¾„çš„ç¬¬ä¸€ä¸ªè·¯å¾„
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"   # ÔÊĞíÄÇĞ©ÍøÕ¾µÄ¿çÓòÇëÇó
-            allowedMethods: "*"   # ÔÊĞíµÄ¿çÓòajaxµÄÇëÇó·½Ê½
-            allowedHeaders: "*"   # ÔÊĞíÔÚÇëÇóÖĞĞ¯´øµÄÍ·ĞÅÏ¢
+            allowedOrigins: "*"   # å…è®¸é‚£äº›ç½‘ç«™çš„è·¨åŸŸè¯·æ±‚
+            allowedMethods: "*"   # å…è®¸çš„è·¨åŸŸajaxçš„è¯·æ±‚æ–¹å¼
+            allowedHeaders: "*"   # å…è®¸åœ¨è¯·æ±‚ä¸­æºå¸¦çš„å¤´ä¿¡æ¯

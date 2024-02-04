@@ -2,6 +2,7 @@ package cn.tockey.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ import lombok.Data;
  * @since 2024-01-15
  */
 @Data
+@AllArgsConstructor
 @TableName("user_classes")
 public class UserClasses {
 

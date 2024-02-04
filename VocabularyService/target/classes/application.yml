@@ -1,10 +1,10 @@
-#¶Ë¿ÚºÅ
+#ç«¯å£å·
 server:
   port: 9001
 
 spring:
   application:
-    name: vocabulary-service          #·şÎñÃû
+    name: vocabulary-service          #æœåŠ¡å
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/gp_vocabulary?useUnicode=true&characterEncoding=utf8
@@ -13,9 +13,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848   #nacos·şÎñµØÖ·
-# Êä³öSQLÓï¾ä
+        server-addr: 127.0.0.1:8848   #nacosæœåŠ¡åœ°å€
+# è¾“å‡ºSQLè¯­å¥
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #Êä³öÈÕÖ¾
-#    map-underscore-to-camel-case: false  #ÍÕ·åÃüÃû Ä¬ÈÏÎªtrue
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #è¾“å‡ºæ—¥å¿—
+#    map-underscore-to-camel-case: false  #é©¼å³°å‘½å é»˜è®¤ä¸ºtrue

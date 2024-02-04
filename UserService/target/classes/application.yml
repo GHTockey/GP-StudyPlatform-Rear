@@ -1,10 +1,10 @@
-#¶Ë¿ÚºÅ
+#ç«¯å£å·
 server:
   port: 9000
 
 spring:
   application:
-    name: user-service          #·şÎñÃû
+    name: user-service          #æœåŠ¡å
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/gp_user?useUnicode=true&characterEncoding=utf8
@@ -13,19 +13,19 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848   #nacos·şÎñµØÖ·
-# Êä³öSQLÓï¾ä
+        server-addr: 127.0.0.1:8848   #nacosæœåŠ¡åœ°å€
+# è¾“å‡ºSQLè¯­å¥
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #Êä³öÈÕÖ¾
-#    map-underscore-to-camel-case: false  #ÍÕ·åÃüÃû Ä¬ÈÏÎªtrue
-# ×Ô¶¨Òå
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #è¾“å‡ºæ—¥å¿—
+#    map-underscore-to-camel-case: false  #é©¼å³°å‘½å é»˜è®¤ä¸ºtrue
+# è‡ªå®šä¹‰
 tce:
   jwt:
-    secret: sc@Login(Auth}*^31)&czxy% # µÇÂ¼Ğ£ÑéµÄÃÜÔ¿£¨×Ô¶¨ÒåÄÚÈİ£©
-    pubKeyPath: D:/rsa/rsa.pub # ¹«Ô¿µØÖ·
-    priKeyPath: D:/rsa/rsa.pri # Ë½Ô¿µØÖ·
-    expire: 360 # ¹ıÆÚÊ±¼ä,µ¥Î»·ÖÖÓ
+    secret: sc@Login(Auth}*^31)&czxy% # ç™»å½•æ ¡éªŒçš„å¯†é’¥ï¼ˆè‡ªå®šä¹‰å†…å®¹ï¼‰
+    pubKeyPath: D:/rsa/rsa.pub # å…¬é’¥åœ°å€
+    priKeyPath: D:/rsa/rsa.pri # ç§é’¥åœ°å€
+    expire: 360 # è¿‡æœŸæ—¶é—´,å•ä½åˆ†é’Ÿ
   filter:
     allowPaths:
       - /user/login

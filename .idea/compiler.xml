@@ -17,16 +17,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ClassesService" target="1.8" />
-      <module name="domain_module" target="1.8" />
       <module name="domain_module (1)" target="17" />
       <module name="domain_module (2)" target="1.8" />
-      <module name="GatewayService" target="1.8" />
-      <module name="GraduationProjectRear" target="1.8" />
-      <module name="IconService" target="1.8" />
-      <module name="OtherService" target="1.8" />
-      <module name="UserService" target="1.8" />
-      <module name="VocabularyService" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

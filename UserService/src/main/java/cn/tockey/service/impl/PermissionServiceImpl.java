@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,11 +32,40 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Resource
     private IconFeign iconFeign;
 
-    // 关联图标 function (此方法会改变传入的permissionList)
-    private void permRelevanceIconHandler(List<Permission> permissionList) {
+    // 递归获取所有父级id
+    private List<Integer> getPermPidHandler(int id, List<Integer> ids){
+        Permission perm = permissionMapper.selectOne(new QueryWrapper<Permission>().eq("id", id));
+        if(perm.getParentId() != 0){
+            getPermPidHandler(perm.getParentId(), ids);
+        }
+        ids.add(perm.getParentId());
+        return ids;
+    }
+    // 递归获取所有子级id
+    private List<Integer> getPermCidHandler(int id, List<Integer> ids){
+        List<Permission> permissionList = permissionMapper.selectList(new QueryWrapper<Permission>().eq("parent_id", id));
+        if(permissionList != null){
+            for (Permission permission : permissionList) {
+                ids.add(permission.getId());
+                getPermCidHandler(permission.getId(), ids);
+            }
+            //ids.add(permission.getId());
+            //getPermCidHandler(permission.getId(), ids);
+        }
+        return ids;
+    }
+    // 获取关联图标 function
+    private void permGetRelevanceIcon(List<Permission> permissionList) {
         for (Permission permission : permissionList) {
             PermIcon permIcon = iconFeign.getPermIconIdByPermId(permission.getId()).getData();
             if (permIcon != null) permission.setIcon(iconFeign.getIconById(permIcon.getIconId()).getData());
+        }
+    }
+    // 添加关联图标 function
+    private void permAddRelevanceIcon(Permission permission) {
+        if(permission.getIcon() != null){
+            PermIcon permIcon = new PermIcon(permission.getId(), permission.getIcon().getId());
+            iconFeign.addPermIcon(permIcon);
         }
     }
 
@@ -48,7 +76,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         // 前端自行递归处理数据 24 01-19 22:30
         List<Permission> permissionList = permissionMapper.getPermissionByUid(uid);
         // 关联图标
-        permRelevanceIconHandler(permissionList);
+        permGetRelevanceIcon(permissionList);
         return permissionList;
     }
 
@@ -63,7 +91,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             permissionList.add(permission);
         }
         // 关联图标
-        permRelevanceIconHandler(permissionList);
+        permGetRelevanceIcon(permissionList);
         return permissionList;
     }
 
@@ -82,10 +110,17 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         }
         // 添加关联图标
         iconFeign.removePermIcon(permission.getId()); // 先删除原有关联
-        if(permission.getIcon() != null){
-            PermIcon permIcon = new PermIcon(permission.getId(), permission.getIcon().getId());
-            iconFeign.addPermIcon(permIcon);
-        }
+        permAddRelevanceIcon(permission);
+        return i;
+    }
+
+    // 修改权限 serviceImpl
+    @Override
+    public int updPermission(Permission permission) {
+        int i = permissionMapper.updateById(permission);
+        // 添加关联图标
+        iconFeign.removePermIcon(permission.getId()); // 先删除原有关联
+        permAddRelevanceIcon(permission);
         return i;
     }
 
@@ -109,31 +144,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> getPermissionList() {
         List<Permission> permissionList = permissionMapper.selectList(null);
         // 关联图标
-        permRelevanceIconHandler(permissionList);
+        permGetRelevanceIcon(permissionList);
         return permissionList;
-    }
-
-
-    // 递归获取所有父级id
-    private List<Integer> getPermPidHandler(int id, List<Integer> ids){
-        Permission perm = permissionMapper.selectOne(new QueryWrapper<Permission>().eq("id", id));
-        if(perm.getParentId() != 0){
-            getPermPidHandler(perm.getParentId(), ids);
-        }
-        ids.add(perm.getParentId());
-        return ids;
-    }
-    // 递归获取所有子级id
-    private List<Integer> getPermCidHandler(int id, List<Integer> ids){
-        List<Permission> permissionList = permissionMapper.selectList(new QueryWrapper<Permission>().eq("parent_id", id));
-        if(permissionList != null){
-            for (Permission permission : permissionList) {
-                ids.add(permission.getId());
-                getPermCidHandler(permission.getId(), ids);
-            }
-            //ids.add(permission.getId());
-            //getPermCidHandler(permission.getId(), ids);
-        }
-        return ids;
     }
 }
