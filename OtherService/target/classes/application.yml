@@ -15,8 +15,8 @@ spring:
 # 自定义配置
 tce:
   qiniu:
-    ak: L3k3LGHWOcfYdJntQTA8np-1esildPY7LlFcIPQE
-    sk: go9SqdbTzIQ0enEfYflL0U3JEyS10vaqY26zn-cY
+    ak: 5D-6A4aW5hpxmha3DpQC0nTfahnfjMtd95NtcZOJ
+    sk: 6DdNoOiuzTJUHtnUKo4rHRRNsLhiG9pSxdnmHFpq
     bucket: tockey
     baseUrl: https://img.tockey.cn/
     path: gp/

@@ -16,13 +16,17 @@ import java.util.List;
  */
 public interface VocabularyService extends IService<Vocabulary> {
     // 添加词集
-    Integer addVocabulary(VocabularyAddVo vocabularyAddVo);
+    Integer addVocabulary(Vocabulary vocabulary);
     // 修改词集
     boolean updVocabulary(Vocabulary vocabulary);
     // 删除词集
     boolean delVocabulary(Integer id);
     // 获取词集
-    Vocabulary getVocabulary(Integer id);
+    Vocabulary getVocabularyById(Integer id);
     // 获取用户的词集列表
     List<Vocabulary> getUserVocabularyListByUid(String uid);
+    // 获取词集列表
+    List<Vocabulary> getVocabularyList();
+    // 搜索词集
+    List<Vocabulary> searchVocabulary(String keyword);
 }

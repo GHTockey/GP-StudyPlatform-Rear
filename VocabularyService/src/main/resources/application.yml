@@ -19,3 +19,10 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出日志
 #    map-underscore-to-camel-case: false  #驼峰命名 默认为true
+# 自定义
+tce:
+  jwt:
+    secret: sc@Login(Auth}*^31)&czxy% # 登录校验的密钥（自定义内容）
+    pubKeyPath: D:/rsa/rsa.pub # 公钥地址
+    priKeyPath: D:/rsa/rsa.pri # 私钥地址
+    expire: 360 # 过期时间,单位分钟

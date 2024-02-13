@@ -20,7 +20,7 @@ public class UserRole {
     /**
      * 用户ID
      */
-    private Integer uid;
+    private String uid;
 
     /**
      * 角色ID

@@ -41,7 +41,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         List<Role> roleList = roleMapper.selectList(null);
         // 关联
         for (Role role : roleList) {
-            ArrayList<Integer> userIds = new ArrayList<>();
+            ArrayList<String> userIds = new ArrayList<>();
             List<UserRole> userRoleList = userRoleMapper.selectList(new QueryWrapper<UserRole>().eq("rid", role.getId()));
             for (UserRole userRole : userRoleList) {
                 userIds.add(userRole.getUid());

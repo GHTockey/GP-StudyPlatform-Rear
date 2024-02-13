@@ -50,6 +50,29 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!--JavaBean工具类，用于JavaBean数据封装-->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+
+        <!--jwt工具-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
+        <!--joda 时间工具类 -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <!-- 用于解决java.lang.ClassNotFoundException: javax.xml.bind.JAXBException -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+
 
         <!--自定义项目-->
         <dependency>

@@ -36,6 +36,7 @@ public class UserController {
     BaseResult<String> login(@RequestBody UserVo loginUser) {
         User user = userService.login(loginUser);
         if (user != null) {
+            System.out.println("用户："+user);
             String token = userService.generateToken(user);
             return BaseResult.ok("登录成功", user).append("token", token);
         }

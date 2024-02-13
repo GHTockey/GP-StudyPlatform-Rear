@@ -16,7 +16,6 @@ import java.util.List;
 // 词集表
 @Data
 @TableName("vocabulary")
-@AllArgsConstructor
 @NoArgsConstructor
 public class Vocabulary {
     @TableId(value = "id", type = IdType.AUTO)
@@ -34,5 +33,9 @@ public class Vocabulary {
 
     // 关联
     @TableField(exist = false)
-    private List<Words> wordsList = new ArrayList<>();
+    private List<Words> wordsList = new ArrayList<>(); // 词语列表
+    @TableField(exist = false)
+    private User author; // 作者
+    @TableField(exist = false)
+    private List<User> userList = new ArrayList<>(); // 学习的用户列表
 }

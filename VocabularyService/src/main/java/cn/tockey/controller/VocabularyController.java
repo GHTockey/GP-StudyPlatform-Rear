@@ -6,6 +6,7 @@ import cn.tockey.service.VocabularyService;
 import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.VocabularyAddVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,9 +28,10 @@ public class VocabularyController {
     private VocabularyService vocabularyService;
 
     // 添加词集
+    @ApiOperation("添加词集")
     @PostMapping
-    BaseResult<HashMap<String, Integer>> addVocabulary(@RequestBody VocabularyAddVo vocabularyAddVo) {
-        int insertResult = vocabularyService.addVocabulary(vocabularyAddVo);
+    BaseResult<HashMap<String, Integer>> addVocabulary(@RequestBody Vocabulary vocabulary) {
+        int insertResult = vocabularyService.addVocabulary(vocabulary);
         HashMap<String, Integer> obj = new HashMap<>();
         obj.put("vid", insertResult);
         if (insertResult != 0) {
@@ -41,6 +43,7 @@ public class VocabularyController {
 
 
     // 修改词集
+    @ApiOperation("修改词集")
     @PutMapping
     BaseResult<String> updVocabulary(@RequestBody Vocabulary vocabulary) {
         boolean updateResult = vocabularyService.updVocabulary(vocabulary);
@@ -53,6 +56,7 @@ public class VocabularyController {
 
 
     // 删除词集
+    @ApiOperation("删除词集")
     @DeleteMapping("/{id}")
     BaseResult<String> delVocabulary(@PathVariable Integer id) {
         boolean deleteResult = vocabularyService.delVocabulary(id);
@@ -65,9 +69,10 @@ public class VocabularyController {
 
 
     // 获取词集
+    @ApiOperation("获取词集")
     @GetMapping("/{id}")
     BaseResult<Vocabulary> getVocabulary(@PathVariable Integer id) {
-        Vocabulary vocabulary = vocabularyService.getVocabulary(id);
+        Vocabulary vocabulary = vocabularyService.getVocabularyById(id);
         if (vocabulary != null) {
             return BaseResult.ok("获取成功", vocabulary);
         } else {
@@ -75,8 +80,20 @@ public class VocabularyController {
         }
     }
 
+    @ApiOperation("获取词集列表")
+    @GetMapping("/list")
+    BaseResult<List<Vocabulary>> getVocabularyList() {
+        List<Vocabulary> result = vocabularyService.getVocabularyList();
+        if (result != null) {
+            return BaseResult.ok("获取成功", result);
+        } else {
+            return BaseResult.error("获取失败");
+        }
+    }
+
 
     // 获取用户的词集列表
+    @ApiOperation("获取用户的词集列表")
     @GetMapping("/list/{uid}")
     BaseResult<User> getUserVocabularyListByUid(@PathVariable String uid) {
         List<Vocabulary> result = vocabularyService.getUserVocabularyListByUid(uid);
@@ -88,9 +105,10 @@ public class VocabularyController {
     }
 
     // 搜索词集
+    @ApiOperation("搜索词集")
     @GetMapping("/search/{keyword}")
     BaseResult<List<Vocabulary>> searchVocabulary(@PathVariable String keyword) {
-        List<Vocabulary> vocabularyList = vocabularyService.list(new QueryWrapper<Vocabulary>().like("title", keyword));
+        List<Vocabulary> vocabularyList = vocabularyService.searchVocabulary(keyword);
         return BaseResult.ok("搜索成功", vocabularyList);
     }
 }

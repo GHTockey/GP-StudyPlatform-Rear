@@ -9,9 +9,7 @@ import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.utils.JwtUtils;
-import cn.tockey.utils.UserIdGenerator;
 import cn.tockey.vo.UserListVo;
-import cn.tockey.vo.UserRegVo;
 import cn.tockey.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     // 生成token
     @Override
     public String generateToken(User user) {
-        String token = JwtUtils.generateToken(user.getUsername(), jwtProperties.getExpire(), jwtProperties.getPrivateKey());
+        String token = JwtUtils.generateToken(user, jwtProperties.getExpire(), jwtProperties.getPrivateKey());
         return token;
     }
 

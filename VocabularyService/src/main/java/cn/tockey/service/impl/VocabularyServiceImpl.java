@@ -1,10 +1,18 @@
 package cn.tockey.service.impl;
 
+import cn.tockey.domain.User;
+import cn.tockey.domain.UserVocabulary;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.domain.Words;
+import cn.tockey.feign.UserFeign;
+import cn.tockey.mapper.UserVocabularyMapper;
 import cn.tockey.mapper.VocabularyMapper;
 import cn.tockey.mapper.WordsMapper;
 import cn.tockey.service.VocabularyService;
+import cn.tockey.utils.JwtProperties;
+import cn.tockey.utils.JwtUtils;
+import cn.tockey.utils.RsaUtils;
+import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.VocabularyAddVo;
 import cn.tockey.vo.WordVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -31,28 +41,60 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     private VocabularyMapper vocabularyMapper;
     @Resource
     private WordsMapper wordsMapper;
+    @Resource
+    private JwtProperties jwtProperties;
+    @Resource
+    private HttpServletRequest httpServletRequest;
+    @Resource
+    private UserFeign userFeign;
+    @Resource
+    private UserVocabularyMapper userVocabularyMapper;
 
-    @Override
-    public Integer addVocabulary(VocabularyAddVo vocabularyAddVo) {
-        Vocabulary vocabulary = new Vocabulary(
-                null,
-                vocabularyAddVo.getTitle(),
-                vocabularyAddVo.getDesc(),
-                vocabularyAddVo.getCover(),
-                vocabularyAddVo.getWordsList().size(),
-                vocabularyAddVo.getAuthorId(),
-                new Date(),
-                null,
-                null
-        );
-        int insertResult = vocabularyMapper.insert(vocabulary);
-        for (WordVo words : vocabularyAddVo.getWordsList()) {
-            Words newWords = new Words(0, vocabulary.getId(), words.getWord(), words.getDefinition());
-            wordsMapper.insert(newWords);
-        }
-        return vocabulary.getId();
+
+
+    // jwt 解析用户信息
+    public User parseUserByToken(String token) throws Exception {
+        User user = JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), User.class);
+        System.out.println("token解析；当前用户："+user);
+        return user;
+    }
+    // 关联 程序
+    private void relevanceHandler(Vocabulary vocabulary) {
+            // 关联作者
+            User author = userFeign.getUserInfoById(vocabulary.getAuthorId()).getData();
+            vocabulary.setAuthor(author);
+            // 关联学习词集的用户列表
+            List<UserVocabulary> userVoc = userVocabularyMapper.selectList(new QueryWrapper<UserVocabulary>().eq("vid", vocabulary.getId()));
+            for (UserVocabulary userVocabulary : userVoc) {
+                User user = userFeign.getUserInfoById(userVocabulary.getUid()).getData();
+                vocabulary.getUserList().add(user);
+            }
     }
 
+
+
+    // 添加词集 serviceImpl
+    @Override
+    public Integer addVocabulary(Vocabulary vocabulary) {
+        try {
+            User currentUser = parseUserByToken(httpServletRequest.getHeader("Authorization"));
+            // 拼接数据
+            vocabulary.setCount(vocabulary.getWordsList().size()); // 数量
+            vocabulary.setCreateTime(new Date()); // 创建时间
+            int insertResult = vocabularyMapper.insert(vocabulary);
+            // 添加词条
+            for (Words words : vocabulary.getWordsList()) {
+                Words newWords = new Words(0, vocabulary.getId(), words.getWord(), words.getDefinition());
+                wordsMapper.insert(newWords);
+            }
+            return vocabulary.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    // 修改词集 serviceImpl
     @Override
     public boolean updVocabulary(Vocabulary vocabulary) {
         QueryWrapper<Vocabulary> queryWrapper = new QueryWrapper<>();
@@ -72,6 +114,7 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         return updateResult == 1;
     }
 
+    // 删除词集 serviceImpl
     @Override
     public boolean delVocabulary(Integer id) {
         wordsMapper.delete(new QueryWrapper<Words>().eq("v_id", id));
@@ -79,19 +122,41 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         return vocDelResult == 1;
     }
 
+    // 获取词集 serviceImpl
     @Override
-    public Vocabulary getVocabulary(Integer id) {
+    public Vocabulary getVocabularyById(Integer id) {
         Vocabulary vocabulary = vocabularyMapper.selectById(id);
         if(vocabulary!=null){
+            // 关联词语列表
             List<Words> wordsList = wordsMapper.selectList(new QueryWrapper<Words>().eq("v_id", id));
             vocabulary.setWordsList(wordsList);
+            // 关联程序
+            relevanceHandler(vocabulary);
         }
         return vocabulary;
     }
 
+    // 获取用户的词集列表 serviceImpl
     @Override
     public List<Vocabulary> getUserVocabularyListByUid(String uid) {
         List<Vocabulary> vocabularyList = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().eq("author_id", uid));
         return vocabularyList;
+    }
+
+    // 获取词集列表 serviceImpl
+    @Override
+    public List<Vocabulary> getVocabularyList() {
+        List<Vocabulary> vocabularyList = vocabularyMapper.selectList(null);
+        return vocabularyList;
+    }
+
+    // 搜索词集 serviceImpl
+    @Override
+    public List<Vocabulary> searchVocabulary(String keyword) {
+        List<Vocabulary> list = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().like("title", keyword));
+        for (Vocabulary vocabulary : list) {
+            relevanceHandler(vocabulary);
+        }
+        return list;
     }
 }

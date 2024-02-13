@@ -12,10 +12,11 @@ import java.util.List;
 @TableName("users")
 public class User {
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private String id;
     private String username;
     private String password;
     private String avatar;
+    private String sex;
     private String email;
 
     // 关联

@@ -27,3 +27,18 @@ spring:
             allowedOrigins: "*"   # 允许那些网站的跨域请求
             allowedMethods: "*"   # 允许的跨域ajax的请求方式
             allowedHeaders: "*"   # 允许在请求中携带的头信息
+# 自定义
+tce:
+  jwt:
+    secret: sc@Login(Auth}*^31)&czxy% # 登录校验的密钥（自定义内容）
+    pubKeyPath: D:/rsa/rsa.pub # 公钥地址
+    priKeyPath: D:/rsa/rsa.pri # 私钥地址
+    expire: 360 # 过期时间,单位分钟
+  filter:
+    allowPaths:
+      - /user/login
+      - /user/checkUsername
+      - /user/register
+      - swagger
+      - /api-docs
+      - webjars

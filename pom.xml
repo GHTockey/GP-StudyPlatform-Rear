@@ -62,6 +62,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+<!--            Spring Security-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-security</artifactId>-->
+<!--                <version>2.3.5.RELEASE</version>-->
+<!--            </dependency>-->
+
 
             <!-- mybatis-plus -->
             <dependency>
