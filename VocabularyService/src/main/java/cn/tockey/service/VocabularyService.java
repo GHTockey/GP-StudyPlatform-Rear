@@ -1,5 +1,6 @@
 package cn.tockey.service;
 
+import cn.tockey.domain.UserVocabulary;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.vo.VocabularyAddVo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -29,4 +30,6 @@ public interface VocabularyService extends IService<Vocabulary> {
     List<Vocabulary> getVocabularyList();
     // 搜索词集
     List<Vocabulary> searchVocabulary(String keyword);
+    // 用户学习词集 【关联表】
+    Integer userRelevanceVoc(UserVocabulary userVocabulary);
 }

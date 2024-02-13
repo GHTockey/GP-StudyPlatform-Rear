@@ -35,6 +35,22 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     @Resource
     private UserFeign userFeign;
 
+
+    // 关联 程序
+    private void relevanceHandler(Classes classes) {
+        // 关联用户(成员)列表
+        List<UserClasses> userClassesList = userClassesMapper.selectList(new QueryWrapper<UserClasses>().eq("cid", classes.getId()));
+        for (UserClasses userClasses : userClassesList) {
+            User user = userFeign.getUserInfoById(userClasses.getUid()).getData();
+            classes.getUserList().add(user);
+        }
+        //关联创建者
+        User creator = userFeign.getUserInfoById(classes.getCreatorUid()).getData();
+        classes.setCreator(creator);
+    }
+
+
+
     // 添加班级 serviceImpl
     @Override
     public Classes addClasses(Classes classes) {
@@ -47,13 +63,7 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     @Override
     public Classes getClassesById(String id) {
         Classes classes = classesMapper.selectOne(new QueryWrapper<Classes>().eq("id", id));
-        List<UserClasses> userClassesList = userClassesMapper.selectList(new QueryWrapper<UserClasses>().eq("cid", id));
-        ArrayList<User> userList = new ArrayList<>();
-        for (UserClasses userClasses : userClassesList) {
-            User user = userFeign.getUserInfoById(userClasses.getUid()).getData();
-            userList.add(user);
-        }
-        classes.setUserList(userList);
+        if(classes != null) relevanceHandler(classes);
         return classes;
     }
 
@@ -76,17 +86,7 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     public List<Classes> getClassesList() {
         List<Classes> classesList = classesMapper.selectList(null);
         for (Classes classes : classesList) {
-            // 关联创建者
-            if (classes.getCreatorUid() != null) {
-                User user = userFeign.getUserInfoById(classes.getCreatorUid()).getData();
-                classes.setCreator(user);
-            }
-            // 关联成员列表
-            List<UserClasses> userClassesRelevance = userClassesMapper.selectList(new QueryWrapper<UserClasses>().eq("cid", classes.getId()));
-            for (UserClasses userClasses : userClassesRelevance) {
-                User user = userFeign.getUserInfoById(userClasses.getUid()).getData();
-                classes.getUserList().add(user);
-            }
+            relevanceHandler(classes);
         }
         return classesList;
     }
@@ -96,5 +96,15 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     public Integer userAddClasses(UserClasses userClasses) {
         int inserted = userClassesMapper.insert(userClasses);
         return inserted;
+    }
+
+    // 搜索班级
+    @Override
+    public List<Classes> searchClassesList(String keyword) {
+        List<Classes> classesList = classesMapper.selectList(new QueryWrapper<Classes>().like("name", keyword));
+        for (Classes classes : classesList) {
+            relevanceHandler(classes);
+        }
+        return classesList;
     }
 }

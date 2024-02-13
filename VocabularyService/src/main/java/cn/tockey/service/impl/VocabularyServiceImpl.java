@@ -59,7 +59,7 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         return user;
     }
     // 关联 程序
-    private void relevanceHandler(Vocabulary vocabulary) {
+    private void relevanceHandler(Vocabulary vocabulary, Boolean isRelevanceWord) {
             // 关联作者
             User author = userFeign.getUserInfoById(vocabulary.getAuthorId()).getData();
             vocabulary.setAuthor(author);
@@ -68,6 +68,12 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
             for (UserVocabulary userVocabulary : userVoc) {
                 User user = userFeign.getUserInfoById(userVocabulary.getUid()).getData();
                 vocabulary.getUserList().add(user);
+            }
+            // 按需关联词语列表
+            if (isRelevanceWord) {
+                // 关联词语列表
+                List<Words> wordsList = wordsMapper.selectList(new QueryWrapper<Words>().eq("v_id", vocabulary.getId()));
+                vocabulary.setWordsList(wordsList);
             }
     }
 
@@ -128,10 +134,10 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         Vocabulary vocabulary = vocabularyMapper.selectById(id);
         if(vocabulary!=null){
             // 关联词语列表
-            List<Words> wordsList = wordsMapper.selectList(new QueryWrapper<Words>().eq("v_id", id));
+            List<Words> wordsList = wordsMapper.selectList(new QueryWrapper<Words>().eq("v_id", vocabulary.getId()));
             vocabulary.setWordsList(wordsList);
             // 关联程序
-            relevanceHandler(vocabulary);
+            relevanceHandler(vocabulary,true);
         }
         return vocabulary;
     }
@@ -140,6 +146,9 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     @Override
     public List<Vocabulary> getUserVocabularyListByUid(String uid) {
         List<Vocabulary> vocabularyList = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().eq("author_id", uid));
+        for (Vocabulary vocabulary : vocabularyList) {
+            relevanceHandler(vocabulary, false);
+        }
         return vocabularyList;
     }
 
@@ -147,6 +156,9 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     @Override
     public List<Vocabulary> getVocabularyList() {
         List<Vocabulary> vocabularyList = vocabularyMapper.selectList(null);
+        for (Vocabulary vocabulary : vocabularyList) {
+            relevanceHandler(vocabulary, false);
+        }
         return vocabularyList;
     }
 
@@ -155,8 +167,14 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     public List<Vocabulary> searchVocabulary(String keyword) {
         List<Vocabulary> list = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().like("title", keyword));
         for (Vocabulary vocabulary : list) {
-            relevanceHandler(vocabulary);
+            relevanceHandler(vocabulary, false);
         }
         return list;
+    }
+
+    // 用户学习词集 【关联表】 serviceImpl
+    @Override
+    public Integer userRelevanceVoc(UserVocabulary userVocabulary) {
+        return userVocabularyMapper.insert(userVocabulary);
     }
 }

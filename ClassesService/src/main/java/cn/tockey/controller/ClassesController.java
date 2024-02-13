@@ -58,7 +58,7 @@ public class ClassesController {
     // 搜索班级
     @GetMapping("/search/{keyword}")
     BaseResult<List<Classes>> searchClasses(@PathVariable String keyword) {
-        List<Classes> classesList = classesService.list(new QueryWrapper<Classes>().like("name", keyword));
+        List<Classes> classesList = classesService.searchClassesList(keyword);
         return BaseResult.ok("搜索成功", classesList);
     }
 

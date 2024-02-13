@@ -27,4 +27,6 @@ public interface ClassesService extends IService<Classes> {
     List<Classes> getClassesList();
     // 用户加入班级 【关联表】
     Integer userAddClasses(UserClasses userClasses);
+    // 搜索班级
+    List<Classes> searchClassesList(String keyword);
 }
