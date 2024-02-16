@@ -1,9 +1,11 @@
 package cn.tockey.service.impl;
 
 import cn.tockey.config.JwtProperties;
+import cn.tockey.domain.Classes;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserRole;
+import cn.tockey.feign.ClassesFeign;
 import cn.tockey.mapper.UserMapper;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
@@ -32,6 +34,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserRoleService userRoleService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private ClassesFeign classesFeign;
 
     // 登录
     @Override
@@ -87,5 +91,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         return page;
+    }
+
+    // 根据ID获取用户信息 serviceImpl
+    @Override
+    public User getUserInfoById(String id) {
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", id));
+        System.out.println(user);
+        // 关联班级
+        if(user != null){
+            Classes classes = classesFeign.getCLassesByUid(user.getId()).getData();
+            user.setClasses(classes);
+        }
+        return user;
     }
 }

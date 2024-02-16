@@ -1,7 +1,10 @@
 package cn.tockey.controller;
 
 import cn.tockey.domain.Classes;
+import cn.tockey.domain.UserClasses;
+import cn.tockey.domain.Vocabulary;
 import cn.tockey.service.ClassesService;
+import cn.tockey.service.UserClassesService;
 import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,8 @@ import java.util.List;
 public class ClassesController {
     @Resource
     private ClassesService classesService;
+    @Resource
+    private UserClassesService userClassesService;
 
     // 添加班级
     @PostMapping
@@ -31,9 +36,9 @@ public class ClassesController {
         return BaseResult.error("添加失败");
     }
 
-    // 获取班级
+    // 根据ID获取班级信息
     @GetMapping("/{id}")
-    BaseResult<Classes> getClasses(@PathVariable String id) {
+    BaseResult<Classes> getClassesById(@PathVariable String id) {
         Classes classes = classesService.getClassesById(id);
         if (classes != null) return BaseResult.ok("获取成功", classes);
         return BaseResult.error("获取失败");
@@ -67,5 +72,39 @@ public class ClassesController {
     BaseResult<List<Classes>> getClassesList() {
         List<Classes> classesList = classesService.getClassesList();
         return BaseResult.ok("获取成功", classesList);
+    }
+
+    // 根据班级ID获取所有成员的词集列表
+    @GetMapping("/user/voc/list/{cid}")
+    BaseResult<List<Vocabulary>> getVocListByClassesUser(@PathVariable String cid){
+        List<Vocabulary> list = classesService.getVocListByClassesUser(cid);
+        return BaseResult.ok("获取成功",list);
+    }
+
+    // 班级移除用户 【关联表】
+    @PostMapping("/user/remove")
+    BaseResult<String> classesRemUser(@RequestBody UserClasses userClasses){
+        Integer i = classesService.classesRemUser(userClasses);
+        if (i>0) return BaseResult.ok("移除成功");
+        return BaseResult.error("移除失败");
+    }
+
+    // 用户加入班级 【关联表】
+    @PostMapping("/user/push")
+    BaseResult<String> userAddClasses(@RequestBody UserClasses userClasses){
+        // 限制一个用户只能加入一个班级
+        UserClasses checkUserClasses = userClassesService.getOne(new QueryWrapper<UserClasses>().eq("uid", userClasses.getUid()));
+        if (checkUserClasses != null) return BaseResult.error("您只能加入一个班级");
+        Integer i = classesService.userAddClasses(userClasses);
+        if (i>0) return BaseResult.ok("加入成功");
+        return BaseResult.error("加入失败");
+    }
+
+    // 根据用户ID获取班级
+    @GetMapping("/user/{uid}")
+    BaseResult<Classes> getCLassesByUid(@PathVariable String uid){
+        Classes classes = classesService.getCLassesByUid(uid);
+        if (classes != null) return BaseResult.ok("获取成功",classes);
+        return BaseResult.error("获取失败");
     }
 }

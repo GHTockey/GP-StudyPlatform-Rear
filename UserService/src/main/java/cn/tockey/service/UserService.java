@@ -19,4 +19,7 @@ public interface UserService extends IService<User> {
 
     // 获取用户列表
     Page<User> getUserList(int pageNum, int pageSize, UserListVo userListVo);
+
+    // 根据ID获取用户信息
+    User getUserInfoById(String id);
 }

@@ -24,4 +24,6 @@ public class User {
     private List<Permission> permissionList; // 权限列表
     @TableField(exist = false)
     private List<Role> roleList; // 角色列表
+    @TableField(exist = false)
+    private Classes classes; // 班级
 }

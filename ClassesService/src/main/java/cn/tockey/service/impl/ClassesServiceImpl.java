@@ -3,7 +3,9 @@ package cn.tockey.service.impl;
 import cn.tockey.domain.Classes;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserClasses;
+import cn.tockey.domain.Vocabulary;
 import cn.tockey.feign.UserFeign;
+import cn.tockey.feign.VocabularyFeign;
 import cn.tockey.mapper.ClassesMapper;
 import cn.tockey.mapper.UserClassesMapper;
 import cn.tockey.service.ClassesService;
@@ -34,6 +36,8 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     private UserClassesMapper userClassesMapper;
     @Resource
     private UserFeign userFeign;
+    @Resource
+    private VocabularyFeign vocabularyFeign;
 
 
     // 关联 程序
@@ -55,6 +59,9 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     @Override
     public Classes addClasses(Classes classes) {
         int i = classesMapper.insert(classes);
+        // 创建时将创建者设为成员
+        UserClasses userClasses = new UserClasses(classes.getId(),classes.getCreatorUid());
+        userClassesMapper.insert(userClasses);
         if (i == 1) return classes;
         return null;
     }
@@ -71,6 +78,8 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
     @Override
     public Integer delClassesById(String id) {
         int i = classesMapper.deleteById(id);
+         // 班级成员解除关系
+        userClassesMapper.delete(new QueryWrapper<UserClasses>().eq("cid",id));
         return i;
     }
 
@@ -98,6 +107,12 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
         return inserted;
     }
 
+    // 班级移除用户 【关联表】 serviceImpl
+    @Override
+    public Integer classesRemUser(UserClasses userClasses) {
+        return userClassesMapper.delete(new QueryWrapper<UserClasses>().eq("cid", userClasses.getCid()).eq("uid",userClasses.getUid()));
+    }
+
     // 搜索班级
     @Override
     public List<Classes> searchClassesList(String keyword) {
@@ -106,5 +121,27 @@ public class ClassesServiceImpl extends ServiceImpl<ClassesMapper, Classes> impl
             relevanceHandler(classes);
         }
         return classesList;
+    }
+
+    // 根据班级ID获取所有成员的词集列表
+    @Override
+    public List<Vocabulary> getVocListByClassesUser(String cid) {
+        // 得到该班级的成员列表
+        List<UserClasses> userClassesList = userClassesMapper.selectList(new QueryWrapper<UserClasses>().eq("cid", cid));
+        ArrayList<Vocabulary> list = new ArrayList<>();
+        for (UserClasses userClasses : userClassesList) {
+            List<Vocabulary> vocabularyList = vocabularyFeign.getUserVocabularyListByUid(userClasses.getUid()).getData();
+            list.addAll(vocabularyList);
+        }
+        return list;
+    }
+
+    // 根据用户ID获取班级 serviceImpl
+    @Override
+    public Classes getCLassesByUid(String uid) {
+        UserClasses userClasses = userClassesMapper.selectOne(new QueryWrapper<UserClasses>().eq("uid", uid));
+        if(userClasses == null) return null;
+        Classes classes = classesMapper.selectOne(new QueryWrapper<Classes>().eq("id", userClasses.getCid()));
+        return classes;
     }
 }

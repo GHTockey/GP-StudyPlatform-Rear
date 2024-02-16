@@ -95,7 +95,7 @@ public class VocabularyController {
     // 获取用户的词集列表
     @ApiOperation("获取用户的词集列表")
     @GetMapping("/list/{uid}")
-    BaseResult<User> getUserVocabularyListByUid(@PathVariable String uid) {
+    BaseResult<List<Vocabulary>> getUserVocabularyListByUid(@PathVariable String uid) {
         List<Vocabulary> result = vocabularyService.getUserVocabularyListByUid(uid);
         if (result != null) {
             return BaseResult.ok("获取成功", result);

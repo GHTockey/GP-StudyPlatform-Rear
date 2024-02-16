@@ -68,7 +68,7 @@ public class UserController {
     // 根据ID获取用户
     @GetMapping("/{id}")
     BaseResult<User> getUserInfoById(@PathVariable String id){
-        User user = userService.getOne(new QueryWrapper<User>().eq("id", id));
+        User user = userService.getUserInfoById(id);
         if (user == null) return BaseResult.error("用户名不存在");
         return BaseResult.ok("获取成功", user);
     }
