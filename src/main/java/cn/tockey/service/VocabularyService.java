@@ -31,4 +31,8 @@ public interface VocabularyService extends IService<Vocabulary> {
     List<Vocabulary> searchVocabulary(String keyword);
     // 用户学习词集 【关联表】
     Integer userRelevanceVoc(UserVocabulary userVocabulary);
+    // 用户取消学习词集 【关联表】
+    Integer userCancelRelevanceVoc(UserVocabulary userVocabulary);
+    // 获取用户学习的词集列表
+    List<Vocabulary> getUserRelevanceVocListByUid(String uid);
 }

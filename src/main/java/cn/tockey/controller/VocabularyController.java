@@ -4,6 +4,7 @@ import cn.tockey.domain.UserVocabulary;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.service.VocabularyService;
 import cn.tockey.vo.BaseResult;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,11 +111,29 @@ public class VocabularyController {
     }
 
     // 用户学习词集
-    //@ApiOperation("用户学习词集")
     @PostMapping("/learn")
     BaseResult<String> learnVocabulary(@RequestBody UserVocabulary userVocabulary) {
         Integer i = vocabularyService.userRelevanceVoc(userVocabulary);
         if (i > 0) return BaseResult.ok("已加入学习");
+        return BaseResult.error("失败");
+    }
+
+    // 获取用户学习的词集列表
+    @GetMapping("/learn/{uid}")
+    BaseResult<List<Vocabulary>> getUserRelevanceVocListByUid(@PathVariable String uid) {
+        List<Vocabulary> result = vocabularyService.getUserRelevanceVocListByUid(uid);
+        if (result != null) {
+            return BaseResult.ok("获取成功", result);
+        } else {
+            return BaseResult.error("获取失败");
+        }
+    }
+
+    // 用户取消学习词集
+    @PutMapping("/cancel")
+    BaseResult<String> cancelLearnVocabulary(@RequestBody UserVocabulary userVocabulary) {
+        Integer i = vocabularyService.userCancelRelevanceVoc(userVocabulary);
+        if (i > 0) return BaseResult.ok("操作成功");
         return BaseResult.error("失败");
     }
 }

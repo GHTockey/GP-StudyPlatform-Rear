@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/registry",
                         "/user/checkUsername/**", // 放行检查用户名
                         "/swagger-ui/**", // 放行swagger
+                        "/doc/**",
                         "/v3/api-docs/**"
                 );
     }

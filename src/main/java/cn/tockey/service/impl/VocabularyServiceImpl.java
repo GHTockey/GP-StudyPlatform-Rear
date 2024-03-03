@@ -17,6 +17,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,15 +44,13 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     @Resource
     private UserVocabularyMapper userVocabularyMapper;
 
-
-
     // jwt 解析用户信息
     public User parseUserByToken(String token) throws Exception {
         User user = JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), User.class);
         System.out.println("token解析；当前用户："+user);
         return user;
     }
-    // 关联 程序
+    // 词集的关联程序
     private void relevanceHandler(Vocabulary vocabulary, Boolean isRelevanceWord) {
             // 关联作者
             User author = userService.getUserInfoById(vocabulary.getAuthorId());
@@ -183,4 +182,29 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         vocabularyMapper.updateById(vocabulary);
         return userVocabularyMapper.insert(userVocabulary);
     }
+
+    // 用户取消学习词集 【关联表】 serviceImpl
+    @Override
+    public Integer userCancelRelevanceVoc(UserVocabulary userVocabulary) {
+        int i = userVocabularyMapper.delete(new QueryWrapper<UserVocabulary>().eq("uid", userVocabulary.getUid()).eq("vid", userVocabulary.getVid()));
+        // 更新词集学习人数
+        Vocabulary vocabulary = vocabularyMapper.selectOne(new QueryWrapper<Vocabulary>().eq("id", userVocabulary.getVid()));
+        vocabulary.setStuNum(vocabulary.getStuNum()-1);
+        vocabularyMapper.updateById(vocabulary);
+        return i;
+    }
+
+    // 获取用户学习的词集列表 serviceImpl
+    @Override
+    public List<Vocabulary> getUserRelevanceVocListByUid(String uid) {
+        List<UserVocabulary> userVocabularies = userVocabularyMapper.selectList(new QueryWrapper<UserVocabulary>().eq("uid", uid));
+        ArrayList<Vocabulary> list = new ArrayList<>();
+        for (UserVocabulary userVocabulary : userVocabularies) {
+            Vocabulary vocabulary = vocabularyMapper.selectOne(new QueryWrapper<Vocabulary>().eq("id", userVocabulary.getVid()));
+            relevanceHandler(vocabulary, false);
+            list.add(vocabulary);
+        }
+        return list;
+    }
+
 }
