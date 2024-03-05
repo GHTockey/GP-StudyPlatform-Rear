@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/SocketMessageVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/HTMLParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/HTMLParse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +24,7 @@
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -281,7 +277,7 @@
       <workItem from="1709603923297" duration="10000" />
       <workItem from="1709603941758" duration="4000" />
       <workItem from="1709604484061" duration="61000" />
-      <workItem from="1709604574984" duration="13477000" />
+      <workItem from="1709604574984" duration="20273000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />
