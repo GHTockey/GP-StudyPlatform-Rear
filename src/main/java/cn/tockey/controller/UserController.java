@@ -2,6 +2,7 @@ package cn.tockey.controller;
 
 
 
+import cn.tockey.config.WebSocketServer;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserRole;
@@ -30,10 +31,13 @@ public class UserController {
     private UserRoleService userRoleService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private WebSocketServer webSocketServer;
 
     // 登录
     @PostMapping("/login")
     BaseResult<String> login(@RequestBody UserVo loginUser) {
+        //webSocketServer.sendToOne('');
         User user = userService.login(loginUser);
         if (user != null) {
             System.out.println("用户："+user);

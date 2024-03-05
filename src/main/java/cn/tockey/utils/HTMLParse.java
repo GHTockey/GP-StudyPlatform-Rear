@@ -18,8 +18,8 @@ public class HTMLParse {
 
         for (Element li : lis) {
             li.getElementsByTag("a").forEach(a -> {
-                System.out.println("链接：" + url + a.attr("href"));
-                System.out.println("图片：" + url +a.getElementsByTag("img").attr("src"));
+                System.out.println("链接：" + a.attr("href"));
+                System.out.println("图片：" +a.getElementsByTag("img").attr("src"));
                 System.out.println("标题：" + a.getElementsByTag("p").text());
             });
             System.out.println("=====================================");

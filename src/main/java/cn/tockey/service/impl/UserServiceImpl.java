@@ -95,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserInfoById(String id) {
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", id));
-        System.out.println(user);
+        //System.out.println(user);
         // 关联班级
         if(user != null){
             Classes classes = classesService.getCLassesByUid(user.getId());
