@@ -1,22 +1,24 @@
 package cn.tockey.config;
 
 
-import cn.tockey.service.UserService;
-import cn.tockey.vo.SocketMessageVo;
+import cn.tockey.domain.UserMessage;
+import cn.tockey.service.UserMessageService;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
 //@Slf4j // 使用lombok的日志注解
+@Component
 @ServerEndpoint("/webSocket/{uid}") // ws://localhost:8080/webSocket/userId;
 public class WebSocketServer {
     // 当前在线连接数
@@ -26,6 +28,26 @@ public class WebSocketServer {
     // 用户会话
     private String uid;
     private Session session;
+    //@Resource
+    //private UserMessageService userMessageService; // 注入无效：null。原因
+    // 解决:
+    private static UserMessageService userMessageService;
+    @Autowired
+    public void setUserMessageService(UserMessageService userMessageService) {
+        WebSocketServer.userMessageService = userMessageService;
+    }
+
+    // 在线用户刷新 Handler
+    private void onlineUserRefresh() {
+        UserMessage userMessage = new UserMessage();
+        userMessage.setType(3);
+        ArrayList<String> onlineUidList = new ArrayList<>();
+        onlineSecClientMap.forEach((uidTemp,sessionTemp)->{
+            onlineUidList.add(uidTemp);
+        });
+        userMessage.setMessage(JSON.toJSONString(onlineUidList));
+        sendToAll(userMessage);
+    }
 
 
     // 连接建立成功事件 【前端 new WebSocket 触发】
@@ -35,26 +57,23 @@ public class WebSocketServer {
         onlineCount.incrementAndGet();
         this.uid = uid;
         this.session = session;
+        
         //sendToOne();
         System.out.println("【websocket消息】有新的连接，总数为:" + onlineCount);
 
-        // 有新的连接相当于用户上线 （给前端发送系统消息通知前端在线用户的数据刷新）
-        SocketMessageVo messageVo = new SocketMessageVo();
-        messageVo.setType(2);
-        ArrayList<String> onlineUidList = new ArrayList<>();
-        onlineSecClientMap.forEach((uidTemp,sessionTemp)->{
-            onlineUidList.add(uidTemp);
-        });
-        messageVo.setMessage(JSON.toJSONString(onlineUidList));
-        sendToAll(messageVo);
+        // 有新的连接相当于用户上线 【给前端发送系统消息通知前端在线用户的数据刷新】
+        onlineUserRefresh();
     }
 
-    // 连接关闭的时间
+    // 连接断开事件
     @OnClose
     public void onClose(@PathParam("uid") String uid, Session session) {
         onlineSecClientMap.remove(uid);
         onlineCount.decrementAndGet(); // -1
         System.out.println("【websocket消息】连接断开，总数为:" + onlineCount);
+
+        // 有连接断开相当于用户下线 【给前端发送系统消息通知前端在线用户的数据刷新】
+        onlineUserRefresh();
     }
 
     // 错误事件
@@ -70,43 +89,48 @@ public class WebSocketServer {
         System.out.println("【websocket消息】收到客户端消息:" + msgVo + " [sec]:" + session);
         //System.out.println(session.getAsyncRemote().sendText("2295"));
         JSONObject msgObj = JSON.parseObject(msgVo);
-        //sendToOne(msgObj.getString("receiver_id"), msgObj.getString("message"));
-        SocketMessageVo messageVo = new SocketMessageVo(
-                msgObj.getString("sender_id"),
-                msgObj.getString("receiver_id"),
+        //sendToOne(msgObj.getString("receiverId"), msgObj.getString("message"));
+        UserMessage userMessage = new UserMessage(
+                null,
+                msgObj.getString("senderId"),
+                msgObj.getString("receiverId"),
                 msgObj.getString("message"),
+                new Date(),
+                1,
                 msgObj.getInteger("type")
         );
-        sendToOne(messageVo);
+        sendToOne(userMessage);
     }
 
     // 发送事件 【群发】 广播消息
-    private void sendToAll(SocketMessageVo socketMessageVo) {
+    private void sendToAll(UserMessage userMessage) {
         onlineSecClientMap.forEach((onlineUid, toSession) -> {
             // 不发给自己
-            if (!uid.equalsIgnoreCase(onlineUid)) {
-                System.out.println("服务端向客户端发送消息");
-                toSession.getAsyncRemote().sendText(JSON.toJSONString(socketMessageVo));
-            }
+            //if (!uid.equalsIgnoreCase(onlineUid)) {
+                System.out.println("服务端向客户端广播消息，消息类型："+userMessage.getType());
+                toSession.getAsyncRemote().sendText(JSON.toJSONString(userMessage));
+            //}
         });
     }
 
     // 发送事件 【指定发送】
-    private void sendToOne(SocketMessageVo msgVo) {
+    public void sendToOne(UserMessage userMessage) {
         // 在在线客户端获取目标会话
-        Session toSession = onlineSecClientMap.get(msgVo.getReceiver_id());
+        Session toSession = onlineSecClientMap.get(userMessage.getReceiverId());
+        System.out.println(
+                "【websocket消息】" +
+                        userMessage.getSenderId() + "=>" + userMessage.getReceiverId()
+                        + "单独发送:" + userMessage
+        );
+        // 存储到数据库
+        userMessageService.save(userMessage);
         // 目标是否存在
         if (toSession == null) {
             System.out.println("【websocket消息】目标不存在");
             return;
         }
-        System.out.println(
-                "【websocket消息】" +
-                        msgVo.getSender_id() + "=>" + msgVo.getReceiver_id()
-                        + "单独发送:" + msgVo
-        );
         // 异步发送
-        toSession.getAsyncRemote().sendText(JSON.toJSONString(msgVo));
+        toSession.getAsyncRemote().sendText(JSON.toJSONString(userMessage));
         // 同步发送
         //toSession.getBasicRemote().sendText(message);
     }

@@ -22,10 +22,11 @@ public class LoginInterceptors implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
         // 解析token
         try {
-            User user = JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), User.class);
+            JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), Object.class);
             // 如果解析成功，返回true，放行
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             // 如果解析失败，返回false，拦截
             response.setStatus(401);
             response.setContentType("application/json;charset=utf-8");

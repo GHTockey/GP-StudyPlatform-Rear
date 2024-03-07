@@ -5,6 +5,7 @@ package cn.tockey.controller;
 import cn.tockey.config.WebSocketServer;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
+import cn.tockey.domain.UserMessage;
 import cn.tockey.domain.UserRole;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
@@ -40,9 +41,12 @@ public class UserController {
         //webSocketServer.sendToOne('');
         User user = userService.login(loginUser);
         if (user != null) {
-            System.out.println("用户："+user);
-            String token = userService.generateToken(user);
-            return BaseResult.ok("登录成功", user).append("token", token);
+            User userDetail = userService.getUserInfoById(user.getId());
+            userDetail.setPassword(null);
+            System.out.println("用户登录："+user);
+            String token = userService.generateToken(userDetail);
+            System.out.println("token:"+token);
+            return BaseResult.ok("登录成功", userDetail).append("token", token);
         }
         return BaseResult.error("登录失败,用户名或密码错误");
     }
@@ -138,5 +142,49 @@ public class UserController {
         boolean removed = userService.removeById(id);
         if (removed) return BaseResult.ok("删除成功");
         return BaseResult.error("删除失败");
+    }
+
+    // 根据ID列表获取用户列表 controller
+    @PostMapping("/list")
+    BaseResult<List<User>> getUserListByIdList(@RequestBody List<String> ids){
+        List<User> userList = userService.getUserListByIdList(ids);
+        return BaseResult.ok("获取成功",userList);
+    }
+
+    // 根据班级ID获取成员列表
+    @GetMapping("/list/byCid/{cid}")
+    BaseResult<List<User>> getUserListByCid(@PathVariable Integer cid){
+        List<User> list = userService.getUserListByCid(cid);
+        return BaseResult.ok("获取成功",list);
+    }
+
+    // 【聊天记录】
+    // 新增聊天记录
+    @PostMapping("/chatRecord")
+    BaseResult<String> addChatRecord(@RequestBody UserMessage userMessage) {
+        int saved = userService.addChatRecord(userMessage);
+        if (saved != 0) return BaseResult.ok("添加成功");
+        return BaseResult.error("添加失败");
+    }
+    // 获取聊天记录
+    @GetMapping("/chatRecord/{fromUid}/{toUid}")
+    BaseResult<List<UserMessage>> getChatRecord(@PathVariable String fromUid, @PathVariable String toUid) {
+        List<UserMessage> list = userService.getChatRecord(fromUid, toUid);
+        return BaseResult.ok("获取成功", list);
+    }
+
+    // 将未读消息置为已读
+    @PutMapping("/chatRecord/read/{fromUid}/{toUid}")
+    BaseResult<String> setRead(@PathVariable String fromUid, @PathVariable String toUid) {
+        int updated = userService.setRead(fromUid, toUid);
+        if (updated != 0) return BaseResult.ok("ok");
+        return BaseResult.ok("ok2");
+    }
+
+    // 获取未读消息
+    @GetMapping("/chatRecord/unread/{uid}")
+    BaseResult<List<UserMessage>> getUnreadMessage(@PathVariable String uid) {
+        List<UserMessage> list = userService.getUnreadMessage(uid);
+        return BaseResult.ok("获取成功", list);
     }
 }
