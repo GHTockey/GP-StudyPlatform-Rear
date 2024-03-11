@@ -16,18 +16,11 @@ public class OtherController {
 
     @PostMapping("/image/upload")
     BaseResult<String> uploadImage( MultipartFile file) {
-        //String string = imageUploadService.uploadImage(file.getInputStream(), file.getOriginalFilename());
-        //String originalFilename = file.getOriginalFilename();
-        //System.out.println(file.getInputStream()+"----"+ originalFilename);
-
-        //String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-        //String fileKey = UUID.randomUUID().toString() + suffix;
-        //System.out.println(fileKey);
-
         try {
             String updRes = otherService.uploadImage(file);
             return BaseResult.ok("上传成功", updRes);
         } catch (IOException e) {
+            e.printStackTrace();
             return BaseResult.error("上传失败");
         }
 

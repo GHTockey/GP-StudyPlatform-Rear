@@ -28,7 +28,7 @@
         <!--    <artifactId>spring-boot-starter-security</artifactId>-->
         <!--    &lt;!&ndash;<version>3.2.0</version>&ndash;&gt;-->
         <!--</dependency>-->
-        <!-- web socket-->
+        <!-- webSocket-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>

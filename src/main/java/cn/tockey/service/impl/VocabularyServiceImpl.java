@@ -207,4 +207,15 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         return list;
     }
 
+    // 获取学习数最多的词集列表 (前5) serviceImpl
+    @Override
+    public List<Vocabulary> getMostStudyVocList() {
+        List<Vocabulary> list = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().orderByDesc("stu_num").last("limit 5"));
+        for (Vocabulary vocabulary : list) {
+            relevanceHandler(vocabulary, false);
+        }
+        return list;
+    }
+
+
 }

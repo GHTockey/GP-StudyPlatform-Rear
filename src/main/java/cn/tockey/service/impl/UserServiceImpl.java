@@ -21,7 +21,6 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -182,10 +181,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 获取未读消息 serviceImpl
     @Override
-    public List<UserMessage> getUnreadMessage(String uid) {
+    public List<UserMessage>
+    getUnreadMessage(String uid) {
         QueryWrapper<UserMessage> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("receiver_id", uid);
         queryWrapper.eq("is_read", 1);
         return userMessageMapper.selectList(queryWrapper);
+    }
+
+    // 获取活跃用户列表 前5 serviceImpl todo 待实现
+    @Override
+    public List<User> getActiveUserList() {
+        return null;
     }
 }

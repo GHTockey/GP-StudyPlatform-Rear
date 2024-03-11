@@ -102,6 +102,17 @@ public class VocabularyController {
         }
     }
 
+    // 获取用户学习的词集列表
+    @GetMapping("/learn/{uid}")
+    BaseResult<List<Vocabulary>> getUserRelevanceVocListByUid(@PathVariable String uid) {
+        List<Vocabulary> result = vocabularyService.getUserRelevanceVocListByUid(uid);
+        if (result != null) {
+            return BaseResult.ok("获取成功", result);
+        } else {
+            return BaseResult.error("获取失败");
+        }
+    }
+
     // 搜索词集
     //@ApiOperation("搜索词集")
     @GetMapping("/search/{keyword}")
@@ -118,22 +129,22 @@ public class VocabularyController {
         return BaseResult.error("失败");
     }
 
-    // 获取用户学习的词集列表
-    @GetMapping("/learn/{uid}")
-    BaseResult<List<Vocabulary>> getUserRelevanceVocListByUid(@PathVariable String uid) {
-        List<Vocabulary> result = vocabularyService.getUserRelevanceVocListByUid(uid);
-        if (result != null) {
-            return BaseResult.ok("获取成功", result);
-        } else {
-            return BaseResult.error("获取失败");
-        }
-    }
-
     // 用户取消学习词集
     @PutMapping("/cancel")
     BaseResult<String> cancelLearnVocabulary(@RequestBody UserVocabulary userVocabulary) {
         Integer i = vocabularyService.userCancelRelevanceVoc(userVocabulary);
         if (i > 0) return BaseResult.ok("操作成功");
         return BaseResult.error("失败");
+    }
+
+    // 获取学习数最多的词集列表 (前5)
+    @GetMapping("/most")
+    BaseResult<List<Vocabulary>> getMostStudyVocList() {
+        List<Vocabulary> result = vocabularyService.getMostStudyVocList();
+        if (result != null) {
+            return BaseResult.ok("获取成功", result);
+        } else {
+            return BaseResult.error("获取失败");
+        }
     }
 }

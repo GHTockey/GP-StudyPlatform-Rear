@@ -122,8 +122,10 @@ public class WebSocketServer {
                         userMessage.getSenderId() + "=>" + userMessage.getReceiverId()
                         + "单独发送:" + userMessage
         );
-        // 存储到数据库
-        userMessageService.save(userMessage);
+        if(userMessage.getType() != 4){
+            // 存储到数据库
+            userMessageService.save(userMessage);
+        }
         // 目标是否存在
         if (toSession == null) {
             System.out.println("【websocket消息】目标不存在");

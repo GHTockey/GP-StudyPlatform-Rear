@@ -32,4 +32,6 @@ public interface UserService extends IService<User> {
     Integer setRead(String fromUid, String toUid);
     // 获取未读消息
     List<UserMessage> getUnreadMessage(String uid);
+    // 获取活跃用户列表 前5
+    List<User> getActiveUserList();
 }
