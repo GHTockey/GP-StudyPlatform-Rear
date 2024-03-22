@@ -17,7 +17,8 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
     // 查询角色列表
     List<Role> getRoleList();
-
     // 添加角色权限
     int addRole(Integer rid, SetRolePermVo setRolePermVo);
+    // 根据UID获取角色列表 (仅type=page)
+    List<Role> getRoleListByUid(String uid);
 }

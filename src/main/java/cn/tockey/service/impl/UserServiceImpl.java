@@ -5,6 +5,7 @@ import cn.tockey.domain.*;
 import cn.tockey.mapper.UserClassesMapper;
 import cn.tockey.mapper.UserMapper;
 import cn.tockey.mapper.UserMessageMapper;
+import cn.tockey.mapper.UserVocabularyMapper;
 import cn.tockey.service.ClassesService;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
@@ -42,6 +43,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMessageMapper userMessageMapper;
     @Resource
     private WebSocketServer webSocketServer;
+    @Resource
+    private UserVocabularyMapper userVocabularyMapper;
+
+
+    // 关联处理程序
+    private void relevanceHandler(User user, Boolean relevanceClasses, Boolean relevanceRole) {
+        if (relevanceClasses) {
+            // 关联班级
+            Classes classes = classesService.getCLassesByUid(user.getId());
+            user.setClasses(classes);
+        }
+        if (relevanceRole) {
+            // 关联角色
+            List<UserRole> userRoleList = userRoleService.getUserRole(user.getId());
+            ArrayList<Role> roleList = new ArrayList<>();
+            for (UserRole userRole : userRoleList) {
+                Role role = roleService.getOne(new QueryWrapper<Role>().eq("id", userRole.getRid()));
+                roleList.add(role);
+            }
+            user.setRoleList(roleList);
+        }
+    }
+
 
     // 登录
     @Override
@@ -85,13 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 关联
         for (User user : page.getRecords()) {
-            List<UserRole> userRoleList = userRoleService.getUserRole(user.getId());
-            ArrayList<Role> roleList = new ArrayList<>();
-            for (UserRole userRole : userRoleList) {
-                Role role = roleService.getOne(new QueryWrapper<Role>().eq("id", userRole.getRid()));
-                roleList.add(role);
-            }
-            if (!roleList.isEmpty()) user.setRoleList(roleList);
+            relevanceHandler(user, true, true);
         }
 
         return page;
@@ -101,10 +119,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserInfoById(String id) {
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", id));
-        // 关联班级
         if (user != null) {
-            Classes classes = classesService.getCLassesByUid(user.getId());
-            user.setClasses(classes);
+            // 关联角色
+            relevanceHandler(user, true, true);
+
         }
         return user;
     }
@@ -189,9 +207,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMessageMapper.selectList(queryWrapper);
     }
 
-    // 获取活跃用户列表 前5 serviceImpl todo 待实现
+    // 获取活跃用户列表 前5 serviceImpl
     @Override
     public List<User> getActiveUserList() {
-        return null;
+        // 得到根据学习数最多desc排序的 userVocabulary 列表
+        List<UserVocabulary> mostStudyVocList = userVocabularyMapper.getMostStudyVocList();
+        System.out.println(mostStudyVocList);
+        ArrayList<User> list = new ArrayList<>();
+        for (UserVocabulary userVocabulary : mostStudyVocList) {
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", userVocabulary.getUid()));
+            user.setStudyTotal(userVocabulary.getStudyTotal());
+            list.add(user);
+        }
+        return list;
     }
+
+
+
+    // security 测试
+    //@Resource
+    //private DBUserDetailsManager dbUserDetailsManager;
+    //
+    //@Override
+    //public void saveUserDetails(User user) {
+    //    //System.out.println("加密前：");
+    //    //System.out.println(user.getPassword());
+    //
+    //    UserDetails userDetails = org.springframework.security.core.userdetails.User
+    //            .withUsername(user.getUsername())
+    //            .password(new BCryptPasswordEncoder().encode(user.getPassword()))
+    //            .build();
+    //    dbUserDetailsManager.createUser(userDetails);
+    //
+    //    //System.out.println("加密后：");
+    //    //System.out.println(userDetails.getPassword());
+    //}
 }

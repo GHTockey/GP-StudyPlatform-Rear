@@ -26,4 +26,8 @@ public class User {
     private List<Role> roleList; // 角色列表
     @TableField(exist = false)
     private Classes classes; // 班级
+
+    // 以下字段不存入数据库 (仅用于前端展示)
+    @TableField(exist = false)
+    private Integer studyTotal = 0; // 学习总数
 }

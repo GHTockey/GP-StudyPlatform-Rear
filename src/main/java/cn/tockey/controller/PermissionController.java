@@ -40,7 +40,7 @@ public class PermissionController {
     // 根据用户id获取权限 controller
     @GetMapping("/user/{uid}")
     BaseResult<List<Permission>> getPermissionByUid(@PathVariable String uid) {
-        List<Permission> permissionList = permissionService.getPermissionByUid(uid);
+        List<Permission> permissionList = permissionService.getPagePermissionListByUid(uid);
         if (permissionList != null) {
             return BaseResult.ok("获取成功", permissionList);
         }

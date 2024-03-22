@@ -35,6 +35,8 @@ public interface VocabularyService extends IService<Vocabulary> {
     Integer userCancelRelevanceVoc(UserVocabulary userVocabulary);
     // 获取用户学习的词集列表
     List<Vocabulary> getUserRelevanceVocListByUid(String uid);
-    // 获取学习数最多的词集列表 (前5)
+    // 获取学习数最多的词集列表
     List<Vocabulary> getMostStudyVocList();
+    // 更新用户的词集学习数
+    Integer updateVocStudyTotal(String uid, String vid);
 }

@@ -2,6 +2,8 @@ package cn.tockey.controller;
 
 
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.WebSocketServer;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
@@ -32,21 +34,25 @@ public class UserController {
     private UserRoleService userRoleService;
     @Resource
     private RoleService roleService;
-    @Resource
-    private WebSocketServer webSocketServer;
 
     // 登录
     @PostMapping("/login")
     BaseResult<String> login(@RequestBody UserVo loginUser) {
-        //webSocketServer.sendToOne('');
         User user = userService.login(loginUser);
         if (user != null) {
             User userDetail = userService.getUserInfoById(user.getId());
-            userDetail.setPassword(null);
             System.out.println("用户登录："+user);
-            String token = userService.generateToken(userDetail);
-            System.out.println("token:"+token);
-            return BaseResult.ok("登录成功", userDetail).append("token", token);
+            //String token = userService.generateToken(userDetail); // 生成 token
+
+            // sa-token
+            StpUtil.login(userDetail.getId()); // 登录
+            SaTokenInfo saToken = StpUtil.getTokenInfo();
+
+            List<String> permissionList = StpUtil.getPermissionList();
+            List<String> roleList = StpUtil.getRoleList();
+
+            System.out.println("token:"+saToken.getTokenValue());
+            return BaseResult.ok("登录成功", userDetail).append("token", saToken.getTokenValue()).append("permissionList", permissionList).append("roleList", roleList);
         }
         return BaseResult.error("登录失败,用户名或密码错误");
     }
@@ -186,5 +192,31 @@ public class UserController {
     BaseResult<List<UserMessage>> getUnreadMessage(@PathVariable String uid) {
         List<UserMessage> list = userService.getUnreadMessage(uid);
         return BaseResult.ok("获取成功", list);
+    }
+
+    // 获取活跃用户列表 前5
+    @GetMapping("/activeUserList")
+    BaseResult<List<User>> getActiveUserList() {
+        List<User> list = userService.getActiveUserList();
+        return BaseResult.ok("获取成功", list);
+    }
+
+
+    // sa-token 测试
+    // 测试登录，浏览器访问： http://localhost:9081/user/doLogin?username=zhang&password=123456
+    @RequestMapping("doLogin")
+    public String doLogin(String username, String password) {
+        // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
+        if("zhang".equals(username) && "123456".equals(password)) {
+            StpUtil.login(10001);
+            return "登录成功";
+        }
+        return "登录失败";
+    }
+
+    // 查询登录状态，浏览器访问： http://localhost:9081/user/isLogin
+    @RequestMapping("isLogin")
+    public String isLogin() {
+        return "当前会话是否登录：" + StpUtil.isLogin();
     }
 }

@@ -15,23 +15,23 @@ public class LoginInterceptors implements HandlerInterceptor {
     @Resource
     private JwtProperties jwtProperties;
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //return HandlerInterceptor.super.preHandle(request, response, handler);
-        // 从请求头中获取token
-        String token = request.getHeader("Authorization");
-        // 解析token
-        try {
-            JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), Object.class);
-            // 如果解析成功，返回true，放行
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 如果解析失败，返回false，拦截
-            response.setStatus(401);
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write("无效的 token");
-            return false;
-        }
-    }
+    //@Override
+    //public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    //    //return HandlerInterceptor.super.preHandle(request, response, handler);
+    //    // 从请求头中获取token
+    //    String token = request.getHeader("Authorization");
+    //    // 解析token
+    //    try {
+    //        JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), Object.class);
+    //        // 如果解析成功，返回true，放行
+    //        return true;
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //        // 如果解析失败，返回false，拦截
+    //        response.setStatus(401);
+    //        response.setContentType("application/json;charset=utf-8");
+    //        response.getWriter().write("无效的 token");
+    //        return false;
+    //    }
+    //}
 }

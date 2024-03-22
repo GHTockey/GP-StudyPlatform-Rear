@@ -207,15 +207,22 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
         return list;
     }
 
-    // 获取学习数最多的词集列表 (前5) serviceImpl
+    // 获取学习数最多的词集列表 serviceImpl
     @Override
     public List<Vocabulary> getMostStudyVocList() {
-        List<Vocabulary> list = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().orderByDesc("stu_num").last("limit 5"));
+        List<Vocabulary> list = vocabularyMapper.selectList(new QueryWrapper<Vocabulary>().orderByDesc("stu_num"));
         for (Vocabulary vocabulary : list) {
             relevanceHandler(vocabulary, false);
         }
         return list;
     }
 
-
+    // 更新词集学习数 serviceImpl
+    @Override
+    public Integer updateVocStudyTotal(String uid, String vid) {
+        UserVocabulary userVocabulary = userVocabularyMapper.selectOne(new QueryWrapper<UserVocabulary>().eq("uid", uid).eq("vid", vid));
+        userVocabulary.setStudyTotal(userVocabulary.getStudyTotal()+1);
+        int updated = userVocabularyMapper.update(userVocabulary, new QueryWrapper<UserVocabulary>().eq("uid", uid).eq("vid", vid));
+        return updated;
+    }
 }

@@ -4,7 +4,10 @@ import cn.tockey.domain.UserVocabulary;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.service.VocabularyService;
 import cn.tockey.vo.BaseResult;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +29,8 @@ public class VocabularyController {
     private VocabularyService vocabularyService;
 
     // 添加词集
-    //@ApiOperation("添加词集")
+    @Operation(summary = "添加词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @PostMapping
     BaseResult<HashMap<String, Object>> addVocabulary(@RequestBody Vocabulary vocabulary) {
         String id = vocabularyService.addVocabulary(vocabulary);
@@ -41,7 +45,8 @@ public class VocabularyController {
 
 
     // 修改词集
-    //@ApiOperation("修改词集")
+    @Operation(summary = "修改词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @PutMapping
     BaseResult<String> updVocabulary(@RequestBody Vocabulary vocabulary) {
         boolean updateResult = vocabularyService.updVocabulary(vocabulary);
@@ -54,7 +59,8 @@ public class VocabularyController {
 
 
     // 删除词集
-    //@ApiOperation("删除词集")
+    @Operation(summary = "删除词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @DeleteMapping("/{id}")
     BaseResult<String> delVocabulary(@PathVariable Integer id) {
         boolean deleteResult = vocabularyService.delVocabulary(id);
@@ -67,7 +73,8 @@ public class VocabularyController {
 
 
     // 获取词集
-    //@ApiOperation("获取词集")
+    @Operation(summary = "获取词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/{id}")
     BaseResult<Vocabulary> getVocabulary(@PathVariable Integer id) {
         Vocabulary vocabulary = vocabularyService.getVocabularyById(id);
@@ -78,7 +85,8 @@ public class VocabularyController {
         }
     }
 
-    //@ApiOperation("获取词集列表")
+    @Operation(summary = "获取词集列表", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/list")
     BaseResult<List<Vocabulary>> getVocabularyList() {
         List<Vocabulary> result = vocabularyService.getVocabularyList();
@@ -91,7 +99,8 @@ public class VocabularyController {
 
 
     // 获取用户的词集列表
-    //@ApiOperation("获取用户的词集列表")
+    @Operation(summary = "获取用户的词集列表", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/list/{uid}")
     BaseResult<List<Vocabulary>> getUserVocabularyListByUid(@PathVariable String uid) {
         List<Vocabulary> result = vocabularyService.getUserVocabularyListByUid(uid);
@@ -103,6 +112,8 @@ public class VocabularyController {
     }
 
     // 获取用户学习的词集列表
+    @Operation(summary = "获取用户学习的词集列表", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/learn/{uid}")
     BaseResult<List<Vocabulary>> getUserRelevanceVocListByUid(@PathVariable String uid) {
         List<Vocabulary> result = vocabularyService.getUserRelevanceVocListByUid(uid);
@@ -114,7 +125,8 @@ public class VocabularyController {
     }
 
     // 搜索词集
-    //@ApiOperation("搜索词集")
+    @Operation(summary = "搜索词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/search/{keyword}")
     BaseResult<List<Vocabulary>> searchVocabulary(@PathVariable String keyword) {
         List<Vocabulary> vocabularyList = vocabularyService.searchVocabulary(keyword);
@@ -122,6 +134,8 @@ public class VocabularyController {
     }
 
     // 用户学习词集
+    @Operation(summary = "用户学习词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @PostMapping("/learn")
     BaseResult<String> learnVocabulary(@RequestBody UserVocabulary userVocabulary) {
         Integer i = vocabularyService.userRelevanceVoc(userVocabulary);
@@ -130,6 +144,8 @@ public class VocabularyController {
     }
 
     // 用户取消学习词集
+    @Operation(summary = "用户取消学习词集", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @PutMapping("/cancel")
     BaseResult<String> cancelLearnVocabulary(@RequestBody UserVocabulary userVocabulary) {
         Integer i = vocabularyService.userCancelRelevanceVoc(userVocabulary);
@@ -137,7 +153,9 @@ public class VocabularyController {
         return BaseResult.error("失败");
     }
 
-    // 获取学习数最多的词集列表 (前5)
+    // 获取学习数最多的词集列表
+    @Operation(summary = "获取学习数最多的词集列表", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
     @GetMapping("/most")
     BaseResult<List<Vocabulary>> getMostStudyVocList() {
         List<Vocabulary> result = vocabularyService.getMostStudyVocList();
@@ -147,4 +165,15 @@ public class VocabularyController {
             return BaseResult.error("获取失败");
         }
     }
+
+    // 更新用户的词集学习数
+    @Operation(summary = "更新用户的词集学习数", responses = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = BaseResult.class)))})
+    @PutMapping("/updateStudyTotal")
+    BaseResult<String> updateVocStudyTotal(@RequestBody UserVocabulary userVocabulary) {
+        Integer i = vocabularyService.updateVocStudyTotal(userVocabulary.getUid(), userVocabulary.getVid());
+        if (i > 0) return BaseResult.ok("更新成功");
+        return BaseResult.error("更新失败");
+    }
+
 }

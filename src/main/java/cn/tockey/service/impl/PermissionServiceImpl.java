@@ -73,14 +73,21 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
 
-    // 根据用户id获取权限列表 serviceImpl
+    // 根据用户id获取权限列表 serviceImpl (仅type=page)
     @Override
-    public List<Permission> getPermissionByUid(String uid) {
+    public List<Permission> getPagePermissionListByUid(String uid) {
         // 前端自行递归处理数据 24 01-19 22:30
-        List<Permission> permissionList = permissionMapper.getPermissionByUid(uid);
+        List<Permission> permissionList = permissionMapper.getPagePermissionListByUid(uid);
         // 关联图标
         permGetRelevanceIcon(permissionList);
         return permissionList;
+    }
+
+    // 根据用户id获取权限列表 serviceImpl (all)
+    @Override
+    public List<Permission> getAllPermissionListByUid(String uid) {
+        List<Permission> allPermissionList = permissionMapper.getAllPermissionListByUid(uid);
+        return allPermissionList;
     }
 
     // 根据角色id获取权限列表 serviceImpl

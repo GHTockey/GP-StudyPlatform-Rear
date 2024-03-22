@@ -10,4 +10,5 @@ import lombok.Data;
 public class UserVocabulary {
     private String uid;
     private String vid;
+    private Integer studyTotal; // 学习总次数
 }

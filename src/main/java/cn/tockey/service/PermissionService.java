@@ -14,8 +14,10 @@ import java.util.List;
  * @since 2024-01-16
  */
 public interface PermissionService extends IService<Permission> {
-    // 根据用户id获取权限列表 service
-    List<Permission> getPermissionByUid(String uid);
+    // 根据用户id获取权限列表 service (仅type=page)
+    List<Permission> getPagePermissionListByUid(String uid);
+    // 根据用户id获取权限列表 service (all)
+    List<Permission> getAllPermissionListByUid(String uid);
 
     // 根据角色id获取权限列表 service
     List<Permission> getPermissionByRid(Integer rid);

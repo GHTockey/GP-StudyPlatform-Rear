@@ -5,15 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/DBUserDetailsManager.javaT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/JsonLoginFilter.javaT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSecurityConfig.javaT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/StpInterfaceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/IndexController.javaT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/LoginController.javaT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/VocabularyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/VocabularyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/interceptors/LoginInterceptors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/interceptors/LoginInterceptors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/PermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/PermissionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/RoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/VocabularyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/VocabularyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/RoleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" afterDir="false" />
     </list>
@@ -30,8 +50,8 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -78,10 +98,11 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;last_directory_selection&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/domain_module/src/main/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/src/main/resources/templates&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,7 +111,7 @@
     &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17089844&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34157833&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;12c2b515dd899b502b2c018aa05f9ccf&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -105,11 +126,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\src\main\resources\templates" />
       <recent name="E:\毕业设计\项目\code\GraduationProjectRear\src\main\resources" />
       <recent name="E:\毕业设计\项目\code\GraduationProjectRear" />
       <recent name="E:\毕业设计\项目\code\GraduationProjectRear\UserService" />
       <recent name="E:\毕业设计\项目\code\GraduationProjectRear\ClassesService\src\main\java\cn\tockey" />
-      <recent name="E:\毕业设计\项目\code\GraduationProjectRear\GatewayService\src\main\java\cn\tockey" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -156,6 +177,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Spring Boot.DemoApplication" />
+      <item itemvalue="应用程序.HTMLParse" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.DemoApplication" />
@@ -292,7 +317,24 @@
       <workItem from="1709855933685" duration="5127000" />
       <workItem from="1709968319490" duration="5820000" />
       <workItem from="1710055908697" duration="3632000" />
-      <workItem from="1710115454457" duration="8596000" />
+      <workItem from="1710115454457" duration="9467000" />
+      <workItem from="1710201603295" duration="10820000" />
+      <workItem from="1710290713196" duration="1273000" />
+      <workItem from="1710386516044" duration="1790000" />
+      <workItem from="1710404150239" duration="1528000" />
+      <workItem from="1710463335636" duration="652000" />
+      <workItem from="1710513678044" duration="403000" />
+      <workItem from="1710584492568" duration="245000" />
+      <workItem from="1710584747515" duration="1605000" />
+      <workItem from="1710586368597" duration="294000" />
+      <workItem from="1710664351860" duration="948000" />
+      <workItem from="1710726058274" duration="1195000" />
+      <workItem from="1710767324616" duration="915000" />
+      <workItem from="1710835290237" duration="14104000" />
+      <workItem from="1710936947134" duration="4350000" />
+      <workItem from="1711004805044" duration="237000" />
+      <workItem from="1711005126831" duration="14657000" />
+      <workItem from="1711089965689" duration="4319000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />

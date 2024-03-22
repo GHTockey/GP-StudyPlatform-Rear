@@ -17,10 +17,16 @@ import java.util.List;
  */
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
-    // 根据角色id获取权限 mapper
+    // 根据uid获取权限列表 mapper (仅type为page)
     @Select("SELECT distinct permission.* FROM user_role userRole\n" +
             "JOIN role_permission rolePerm ON userRole.rid=rolePerm.rid\n" +
             "JOIN permission ON rolePerm.pid = permission.id\n" +
             "WHERE userRole.uid = #{uid} and permission.type = 'page'")
-    List<Permission> getPermissionByUid(String uid);
+    List<Permission> getPagePermissionListByUid(String uid);
+    // 根据uid获取权限列表 mapper (所有)
+    @Select("SELECT distinct permission.* FROM user_role userRole\n" +
+            "JOIN role_permission rolePerm ON userRole.rid=rolePerm.rid\n" +
+            "JOIN permission ON rolePerm.pid = permission.id\n" +
+            "WHERE userRole.uid = #{uid}")
+    List<Permission> getAllPermissionListByUid(String uid);
 }

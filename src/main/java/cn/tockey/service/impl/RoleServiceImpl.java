@@ -76,4 +76,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         }
 
     }
+
+    // 根据用户ID获取角色列表 serviceImpl (仅type=page)
+    @Override
+    public List<Role> getRoleListByUid(String uid) {
+        List<UserRole> userRoleList = userRoleMapper.selectList(new QueryWrapper<UserRole>().eq("uid", uid));
+        ArrayList<Role> roleList = new ArrayList<>();
+        for (UserRole userRole : userRoleList) {
+            Role role = roleMapper.selectById(userRole.getRid());
+            roleList.add(role);
+        }
+        return roleList;
+    }
+
 }
