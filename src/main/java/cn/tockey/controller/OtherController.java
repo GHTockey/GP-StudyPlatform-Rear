@@ -1,5 +1,6 @@
 package cn.tockey.controller;
 
+import cn.tockey.domain.GithubUser;
 import cn.tockey.service.OtherService;
 import cn.tockey.vo.BaseResult;
 import jakarta.annotation.Resource;
@@ -23,6 +24,16 @@ public class OtherController {
             e.printStackTrace();
             return BaseResult.error("上传失败");
         }
+    }
 
+    @GetMapping("/oauth/user")
+    BaseResult<Object> getOAuthUserInfo(@RequestParam String type, @RequestParam String oKey){
+        switch (type.toUpperCase()) {
+            case "GITHUB":
+                return BaseResult.ok("获取成功",otherService.getOAuthUserInfo(oKey, type, GithubUser.class));
+            case "GITEE":
+                return BaseResult.ok("zzz");
+            default: return BaseResult.error("获取失败");
+        }
     }
 }

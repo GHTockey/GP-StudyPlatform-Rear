@@ -2,6 +2,7 @@ package cn.tockey.service;
 
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserMessage;
+import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,6 +35,14 @@ public interface UserService extends IService<User> {
     List<UserMessage> getUnreadMessage(String uid);
     // 获取学习数最多的用户列表
     List<User> getActiveUserList();
+    // 第三方账号绑定
+    Integer oAuthAccountBinding(User oAuthUser, String oKey, String type);
+    // 通过 token 获取用户信息
+    User getUserInfoByToken(String token);
+    // OAuth 注册登录
+    User oAuthRegisterLogin(OAuthRegisterUserVo oAuthRegisterUserVo, String oKey, String type);
+    // 检查用户名是否可用
+    Boolean checkUsername(String username);
 
     // security 测试
     //void saveUserDetails(User user);

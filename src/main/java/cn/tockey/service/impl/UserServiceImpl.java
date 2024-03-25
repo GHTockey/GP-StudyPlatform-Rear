@@ -1,5 +1,7 @@
 package cn.tockey.service.impl;
 
+import cn.dev33.satoken.secure.BCrypt;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.WebSocketServer;
 import cn.tockey.domain.*;
 import cn.tockey.mapper.UserClassesMapper;
@@ -12,6 +14,7 @@ import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.config.JwtProperties;
 import cn.tockey.utils.JwtUtils;
+import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserVo;
 import com.alibaba.fastjson2.JSON;
@@ -19,6 +22,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,6 +49,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private WebSocketServer webSocketServer;
     @Resource
     private UserVocabularyMapper userVocabularyMapper;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
 
     // 关联处理程序
@@ -80,6 +86,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     // 注册
     @Override
     public Integer register(User registerUser) {
+        // 加密
+        registerUser.setPassword(BCrypt.hashpw(registerUser.getPassword(), BCrypt.gensalt()));
         int inserted = userMapper.insert(registerUser);
         return inserted;
     }
@@ -222,6 +230,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return list;
     }
 
+    // 第三方账号绑定 serviceImpl
+    @Override
+    public Integer oAuthAccountBinding(User oAuthUser, String oKey, String type) {
+        User targerUser = userMapper.selectOne(new QueryWrapper<User>().eq("username", oAuthUser.getUsername()));
+        // 进行绑定
+        if (type.equalsIgnoreCase("GITHUB")) {
+            GithubUser githubUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(oKey), GithubUser.class);
+            targerUser.setGithubAccountBingId(githubUser.getLogin());
+        } else if (type.equalsIgnoreCase("GITEE")) {
+            //targerUser.setGiteeId(oKey);
+        } else {
+            return 0;
+        }
+
+        return userMapper.updateById(targerUser);
+    }
+
+    // 通过 token 获取用户信息 serviceImpl
+    @Override
+    public User getUserInfoByToken(String token) {
+        User redisUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(token), User.class);
+        stringRedisTemplate.delete(token);
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", redisUser.getId()));
+        // 关联
+        relevanceHandler(user, true, true);
+        return user;
+    }
+
+    // OAuth 注册登录 serviceImpl
+    @Override
+    public User oAuthRegisterLogin(OAuthRegisterUserVo oAuthRegisterUserVo, String oKey, String type) {
+        User newUser = new User();
+        newUser.setUsername(oAuthRegisterUserVo.getUsername());
+        // 加密
+        newUser.setPassword(BCrypt.hashpw(oAuthRegisterUserVo.getPassword(), BCrypt.gensalt()));// 密码是否匹配：BCrypt.checkpw(明文,密文)
+        newUser.setAvatar(oAuthRegisterUserVo.getAvatar());
+        newUser.setEmail(oAuthRegisterUserVo.getEmail());
+        if(type.equalsIgnoreCase("GITHUB")) newUser.setGithubAccountBingId(oAuthRegisterUserVo.getUsername());
+        // ...
+        userMapper.insert(newUser);
+
+        // 删除 Redis 缓存
+        stringRedisTemplate.delete(oKey);
+        return newUser;
+    }
+
+    // 检查用户名是否可用 serviceImpl
+    @Override
+    public Boolean checkUsername(String username) {
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+        return user == null;
+    }
 
 
     // security 测试

@@ -13,6 +13,7 @@ import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
+import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -38,21 +39,22 @@ public class UserController {
     // 登录
     @PostMapping("/login")
     BaseResult<String> login(@RequestBody UserVo loginUser) {
-        User user = userService.login(loginUser);
+        User user = userService.login(loginUser); // 内部已经判断用户名密码是否正确
         if (user != null) {
             User userDetail = userService.getUserInfoById(user.getId());
-            System.out.println("用户登录："+user);
+            //System.out.println("用户登录："+user);
             //String token = userService.generateToken(userDetail); // 生成 token
 
             // sa-token
             StpUtil.login(userDetail.getId()); // 登录
             SaTokenInfo saToken = StpUtil.getTokenInfo();
 
-            List<String> permissionList = StpUtil.getPermissionList();
-            List<String> roleList = StpUtil.getRoleList();
+            //List<String> permissionList = StpUtil.getPermissionList();
+            //List<String> roleList = StpUtil.getRoleList();
 
             System.out.println("token:"+saToken.getTokenValue());
-            return BaseResult.ok("登录成功", userDetail).append("token", saToken.getTokenValue()).append("permissionList", permissionList).append("roleList", roleList);
+            //return BaseResult.ok("登录成功", userDetail).append("token", saToken.getTokenValue()).append("permissionList", permissionList).append("roleList", roleList);
+            return BaseResult.ok("登录成功", userDetail).append("token", saToken.getTokenValue());
         }
         return BaseResult.error("登录失败,用户名或密码错误");
     }
@@ -201,22 +203,67 @@ public class UserController {
         return BaseResult.ok("获取成功", list);
     }
 
+    // 第三方账号与本地账号绑定
+    @PostMapping("/oauth/bind")
+    BaseResult<String> oAuthAccountBinding(@RequestBody User oAuthUser, @RequestParam String oKey, @RequestParam String type) {
+        // 检验
+        User user = userService.getOne(new QueryWrapper<User>().eq("username", oAuthUser.getUsername()));
+        if (user == null) return BaseResult.error("用户不存在");
+        if(!oAuthUser.getPassword().equals(user.getPassword())) {
+            return BaseResult.error("用户名密码错误");
+        }
+        // 执行绑定
+        Integer integer = userService.oAuthAccountBinding(oAuthUser, oKey, type);
+        if (integer != 0) {
+            StpUtil.login(user.getId());
+            String token = StpUtil.getTokenInfo().getTokenValue();
+            System.out.println("第三方账号已绑定-登录成功："+ user.getUsername());
+            return BaseResult.ok("绑定成功", user).append("token", token);
+        }
+        return BaseResult.error("绑定失败");
+    }
+
+    // 通过 token 获取用户信息
+    @GetMapping("/token/{token}")
+    BaseResult<User> getUserInfoByToken(@PathVariable String token) {
+        User user = userService.getUserInfoByToken(token);
+        if (user == null) return BaseResult.error("token无效");
+        return BaseResult.ok("获取成功", user);
+    }
+
+    // OAuth 注册登录
+    @PostMapping("/oauth/register/login")
+    BaseResult<User> oAuthLogin(@RequestBody OAuthRegisterUserVo oAuthUser, @RequestParam String oKey, @RequestParam String type) {
+        // 校验
+        if (checkUsername(oAuthUser.getUsername()).getData()) return BaseResult.error("用户名已存在");
+
+        User user = userService.oAuthRegisterLogin(oAuthUser, oKey, type);
+        if (user != null) {
+            StpUtil.login(user.getId());
+            String token = StpUtil.getTokenInfo().getTokenValue();
+            System.out.println("第三方账号[github]注册并登录成功："+ user.getUsername());
+            return BaseResult.ok("登录成功", user).append("token", token);
+        } else {
+            return BaseResult.error("注册失败");
+        }
+    }
+
 
     // sa-token 测试
     // 测试登录，浏览器访问： http://localhost:9081/user/doLogin?username=zhang&password=123456
-    @RequestMapping("doLogin")
-    public String doLogin(String username, String password) {
-        // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
-        if("zhang".equals(username) && "123456".equals(password)) {
-            StpUtil.login(10001);
-            return "登录成功";
-        }
-        return "登录失败";
-    }
-
-    // 查询登录状态，浏览器访问： http://localhost:9081/user/isLogin
-    @RequestMapping("isLogin")
-    public String isLogin() {
-        return "当前会话是否登录：" + StpUtil.isLogin();
-    }
+    //@RequestMapping("doLogin")
+    //public String doLogin(String username, String password) {
+    //    // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
+    //    if("zhang".equals(username) && "123456".equals(password)) {
+    //        StpUtil.login(10001);
+    //        return "登录成功";
+    //    }
+    //    return "登录失败";
+    //}
+    //
+    //// 查询登录状态，浏览器访问： http://localhost:9081/user/isLogin
+    //@RequestMapping("isLogin")
+    //public String isLogin() {
+    //    return "当前会话是否登录：" + StpUtil.isLogin();
+    //}
 }

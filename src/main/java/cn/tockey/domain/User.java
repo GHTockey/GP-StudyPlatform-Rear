@@ -19,6 +19,11 @@ public class User {
     private String sex;
     private String email;
 
+    private String githubAccountBingId;
+    private String giteeAccountBingId;
+    private String weixinAccountBingId;
+    private String qqAccountBingId;
+
     // 关联
     @TableField(exist = false)
     private List<Permission> permissionList; // 权限列表

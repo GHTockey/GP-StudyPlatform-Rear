@@ -5,37 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/DBUserDetailsManager.javaT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/JsonLoginFilter.javaT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSecurityConfig.javaT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/StpInterfaceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/IndexController.javaT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/LoginController.javaT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/RestTemplateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GitHubOAuth2Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GithubUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/OAuthRegisterUserVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/VocabularyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/VocabularyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/interceptors/LoginInterceptors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/interceptors/LoginInterceptors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/PermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/PermissionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/VocabularyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/VocabularyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/RoleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +33,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -84,43 +68,43 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;last_directory_selection&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/domain_module/src/main/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/src/main/resources/templates&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17089844&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.34157833&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;12c2b515dd899b502b2c018aa05f9ccf&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_directory_selection": "E:/毕业设计/项目/code/GraduationProjectRear/domain_module/src/main/java",
+    "last_opened_file_path": "E:/传智课堂/code/第五学期_Java/Java.lnk",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.17089844",
+    "project.structure.side.proportion": "0.34157833",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "12c2b515dd899b502b2c018aa05f9ccf",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
   </component>
@@ -334,7 +318,29 @@
       <workItem from="1710936947134" duration="4350000" />
       <workItem from="1711004805044" duration="237000" />
       <workItem from="1711005126831" duration="14657000" />
-      <workItem from="1711089965689" duration="4319000" />
+      <workItem from="1711089965689" duration="15948000" />
+      <workItem from="1711257308570" duration="3028000" />
+      <workItem from="1711266077461" duration="8000" />
+      <workItem from="1711266120085" duration="105000" />
+      <workItem from="1711266259529" duration="68000" />
+      <workItem from="1711266338567" duration="22000" />
+      <workItem from="1711266430947" duration="617000" />
+      <workItem from="1711267056385" duration="2034000" />
+      <workItem from="1711278897255" duration="588000" />
+      <workItem from="1711279497546" duration="1110000" />
+      <workItem from="1711280616458" duration="50000" />
+      <workItem from="1711281017262" duration="115000" />
+      <workItem from="1711281141790" duration="5000" />
+      <workItem from="1711281230399" duration="323000" />
+      <workItem from="1711281560980" duration="45000" />
+      <workItem from="1711281668067" duration="13000" />
+      <workItem from="1711281845920" duration="7717000" />
+      <workItem from="1711327809175" duration="642000" />
+      <workItem from="1711333738672" duration="1000" />
+      <workItem from="1711351903853" duration="1881000" />
+      <workItem from="1711353810262" duration="4562000" />
+      <workItem from="1711359009924" duration="96000" />
+      <workItem from="1711359116381" duration="7924000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />
@@ -439,5 +445,9 @@
     <MESSAGE value="完成：词集" />
     <MESSAGE value="完成：词集获取时关联数据的业务封装" />
     <option name="LAST_COMMIT_MESSAGE" value="完成：词集获取时关联数据的业务封装" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
