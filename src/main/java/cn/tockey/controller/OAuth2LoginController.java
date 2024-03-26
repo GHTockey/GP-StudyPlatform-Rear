@@ -3,10 +3,13 @@ package cn.tockey.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.RestTemplateConfig;
 import cn.tockey.config.oauth2.GitHubOAuth2Config;
+import cn.tockey.config.oauth2.GiteeOAuth2Config;
+import cn.tockey.domain.GiteeUser;
 import cn.tockey.domain.GithubUser;
 import cn.tockey.domain.User;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
+import cn.tockey.vo.GiteeAccessVo;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.annotation.Resource;
@@ -26,6 +29,8 @@ public class OAuth2LoginController {
     @Resource
     private GitHubOAuth2Config gitHubOAuth2Config;
     @Resource
+    private GiteeOAuth2Config giteeOAuth2Config;
+    @Resource
     private RestTemplateConfig restTemplateConfig;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -34,16 +39,17 @@ public class OAuth2LoginController {
 
     @GetMapping("/redirect/github")
     String redirect(@RequestParam("code") String code) {
-        String url = "https://github.com/login/oauth/access_token";
+        String githubURL = "https://github.com/login/oauth/access_token";
 
+        // 封装参数
         LinkedMultiValueMap<String,String> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("client_id", gitHubOAuth2Config.getClientId());
         paramMap.add("client_secret", gitHubOAuth2Config.getClientSecret());
         paramMap.add("code", code);
 
         //RestTemplate restTemplate = new RestTemplate();
-        //String content = restTemplate.postForObject(url, paramMap, String.class); // 请求HTTPS报错 unable to find valid certification path to requested target
-        String content = restTemplateConfig.restTemplateHttps().postForObject(url, paramMap, String.class);
+        //String content = restTemplate.postForObject(githubURL, paramMap, String.class); // 请求HTTPS报错 unable to find valid certification path to requested target
+        String content = restTemplateConfig.restTemplateHttps().postForObject(githubURL, paramMap, String.class);
 
         // 处理数据 获取 access_token
         int start = content.indexOf("=");
@@ -77,10 +83,50 @@ public class OAuth2LoginController {
             // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
             return "redirect:http://localhost:5173/thirdLogin?okey=" + keyName + "&type=GitHub";
         }
+    }
+
+    @GetMapping("/redirect/gitee")
+    String redirectGitee(@RequestParam("code") String code){
+        String giteeURL = "https://gitee.com/oauth/token";
+
+        // 封装参数 https://gitee.com/oauth/token?grant_type={authorization_code}&code={}&client_id={}&redirect_uri={}
+        //LinkedMultiValueMap<String,String> paramMap = new LinkedMultiValueMap<>();
+        //paramMap.add("grant_type", "authorization_code");
+        //paramMap.add("client_id", giteeOAuth2Config.getClientId());
+        //paramMap.add("client_secret", giteeOAuth2Config.getClientSecret());
+        //paramMap.add("code", code);
+        //GiteeAccessVo giteeAccessVo = restTemplateConfig.restTemplateHttps().postForObject(giteeURL, paramMap, GiteeAccessVo.class);
+        String targetURL = "https://gitee.com/oauth/token?grant_type=authorization_code&code="+code+"&client_id="+giteeOAuth2Config.getClientId()+"&redirect_uri="+giteeOAuth2Config.getRedirectUri()+"&client_secret="+giteeOAuth2Config.getClientSecret();
+        System.out.println(targetURL);
+        GiteeAccessVo giteeAccessVo = restTemplateConfig.restTemplateHttps().postForObject(targetURL, null, GiteeAccessVo.class);
 
 
-        // 使前端重定向至首页
-        //return "redirect:/thirdLogin";
+        // 通过 access_token 获取第三方用户信息
+        String url2 = "https://gitee.com/api/v5/user";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "token " + giteeAccessVo.getAccess_token());
+        HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<GiteeUser> giteeUserResponseEntity = restTemplateConfig.restTemplateHttps().exchange(url2, HttpMethod.GET, httpEntity, GiteeUser.class);
+        GiteeUser giteeUser = giteeUserResponseEntity.getBody();
+        System.out.println(giteeUser.getLogin()+" gitee 正在登录");
+
+
+        // 查询数据库是否有该用户，有则直接登录(传数据给前端)，没有则跳转到第三方绑定页面
+        User user = userService.getOne(new QueryWrapper<User>().eq("gitee_account_bing_id", giteeUser.getLogin()));
+        if (user != null) {
+            StpUtil.login(user.getId());
+            String token = StpUtil.getTokenInfo().getTokenValue();
+            System.out.println("第三方账号[gitee]登录成功："+ user.getUsername());
+            // 存到Redis
+            stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(user), 3, TimeUnit.MINUTES);
+            return "redirect:http://localhost:5173?token=" + token;
+        } else {
+            String keyName = "oauth_"+ giteeUser.getLogin();
+            String gitHubUserJSON = JSON.toJSONString(giteeUser);
+            stringRedisTemplate.opsForValue().set(keyName, gitHubUserJSON, 3, TimeUnit.HOURS);
+            // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
+            return "redirect:http://localhost:5173/thirdLogin?okey=" + keyName + "&type=Gitee";
+        }
     }
 }
 
