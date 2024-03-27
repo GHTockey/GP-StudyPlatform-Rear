@@ -2,6 +2,7 @@ package cn.tockey.controller;
 
 import cn.tockey.config.oauth2.GitHubOAuth2Config;
 import cn.tockey.config.oauth2.GiteeOAuth2Config;
+import cn.tockey.domain.GiteeUser;
 import cn.tockey.domain.GithubUser;
 import cn.tockey.service.OtherService;
 import cn.tockey.vo.BaseResult;
@@ -32,13 +33,14 @@ public class OtherController {
         }
     }
 
+    // 获取 OAuth 用户信息 controller
     @GetMapping("/oauth/user")
     BaseResult<Object> getOAuthUserInfo(@RequestParam String type, @RequestParam String oKey){
         switch (type.toUpperCase()) {
             case "GITHUB":
                 return BaseResult.ok("获取成功",otherService.getOAuthUserInfo(oKey, type, GithubUser.class));
             case "GITEE":
-                return BaseResult.ok("zzz");
+                return BaseResult.ok("获取成功", otherService.getOAuthUserInfo(oKey, type, GiteeUser.class));
             default: return BaseResult.error("获取失败");
         }
     }

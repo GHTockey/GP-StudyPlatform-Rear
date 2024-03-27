@@ -223,14 +223,6 @@ public class UserController {
         return BaseResult.error("绑定失败");
     }
 
-    // 通过 token 获取用户信息
-    @GetMapping("/token/{token}")
-    BaseResult<User> getUserInfoByToken(@PathVariable String token) {
-        User user = userService.getUserInfoByToken(token);
-        if (user == null) return BaseResult.error("token无效");
-        return BaseResult.ok("获取成功", user);
-    }
-
     // OAuth 注册登录
     @PostMapping("/oauth/register/login")
     BaseResult<User> oAuthLogin(@RequestBody OAuthRegisterUserVo oAuthUser, @RequestParam String oKey, @RequestParam String type) {
@@ -241,11 +233,19 @@ public class UserController {
         if (user != null) {
             StpUtil.login(user.getId());
             String token = StpUtil.getTokenInfo().getTokenValue();
-            System.out.println("第三方账号[github]注册并登录成功："+ user.getUsername());
+            System.out.println("第三方账号["+type+"]注册并登录成功："+ user.getUsername());
             return BaseResult.ok("登录成功", user).append("token", token);
         } else {
             return BaseResult.error("注册失败");
         }
+    }
+
+    // 通过 token 获取用户信息
+    @GetMapping("/token/{token}")
+    BaseResult<User> getUserInfoByToken(@PathVariable String token) {
+        User user = userService.getUserInfoByToken(token);
+        if (user == null) return BaseResult.error("token无效");
+        return BaseResult.ok("获取成功", user);
     }
 
 

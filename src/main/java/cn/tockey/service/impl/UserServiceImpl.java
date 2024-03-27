@@ -18,6 +18,7 @@ import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserVo;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -78,8 +79,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User login(UserVo loginUser) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", loginUser.getUsername());
-        queryWrapper.eq("password", loginUser.getPassword());
+        //queryWrapper.eq("password", loginUser.getPassword());
         User user = userMapper.selectOne(queryWrapper);
+        if (user != null) {
+            // 密码是否匹配
+            if (BCrypt.checkpw(loginUser.getPassword(), user.getPassword())) {
+                // 关联
+                relevanceHandler(user, true, true);
+            } else {
+                user = null;
+            }
+        }
         return user;
     }
 
@@ -239,7 +249,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             GithubUser githubUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(oKey), GithubUser.class);
             targerUser.setGithubAccountBingId(githubUser.getLogin());
         } else if (type.equalsIgnoreCase("GITEE")) {
-            //targerUser.setGiteeId(oKey);
+            GiteeUser giteeUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(oKey), GiteeUser.class);
+            targerUser.setGiteeAccountBingId(giteeUser.getLogin());
         } else {
             return 0;
         }
@@ -268,6 +279,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         newUser.setAvatar(oAuthRegisterUserVo.getAvatar());
         newUser.setEmail(oAuthRegisterUserVo.getEmail());
         if(type.equalsIgnoreCase("GITHUB")) newUser.setGithubAccountBingId(oAuthRegisterUserVo.getUsername());
+        if(type.equalsIgnoreCase("GITEE")) newUser.setGiteeAccountBingId(oAuthRegisterUserVo.getUsername());
         // ...
         userMapper.insert(newUser);
 

@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GiteeOAuth2Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GiteeUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/GiteeAccessVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GitHubOAuth2Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GitHubOAuth2Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +331,8 @@
       <workItem from="1711359009924" duration="96000" />
       <workItem from="1711359116381" duration="8248000" />
       <workItem from="1711411341772" duration="38000" />
-      <workItem from="1711455991462" duration="4691000" />
+      <workItem from="1711455991462" duration="4899000" />
+      <workItem from="1711497946808" duration="3584000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />
