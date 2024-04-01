@@ -42,15 +42,10 @@ public class BaseResult<T> {
         this.data = data;
     }
 
-    /**
-     * 快捷成功BaseResult对象
-     * @param message
-     * @return
-     */
+
     public static BaseResult ok(String message){
         return new BaseResult<>(BaseResult.OK , message);
     }
-
     public static BaseResult ok(String message, Object data){
         return new BaseResult<>(BaseResult.OK , message, data );
     }

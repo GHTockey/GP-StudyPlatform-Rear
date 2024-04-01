@@ -8,7 +8,6 @@ import cn.tockey.domain.GiteeUser;
 import cn.tockey.domain.GithubUser;
 import cn.tockey.domain.User;
 import cn.tockey.service.UserService;
-import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.GiteeAccessVo;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 //@RestController // Controller + ResponseBody 的组合注解；前者用于定义控制器类，后者用于将方法返回值转换为 JSON 格式
-@RequestMapping("/oauth")
 @Controller
+@RequestMapping("/oauth")
 public class OAuth2LoginController {
     @Resource
     private GitHubOAuth2Config gitHubOAuth2Config;
@@ -77,11 +76,11 @@ public class OAuth2LoginController {
             stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(user), 3, TimeUnit.MINUTES);
             return "redirect:http://localhost:5173?token=" + token;
         } else {
-            String keyName = "oauth_"+ githubUser.getLogin();
+            String oKey = "oauth_github_"+ githubUser.getLogin();
             String gitHubUserJSON = JSON.toJSONString(githubUser);
-            stringRedisTemplate.opsForValue().set(keyName, gitHubUserJSON, 3, TimeUnit.HOURS);
+            stringRedisTemplate.opsForValue().set(oKey, gitHubUserJSON, 3, TimeUnit.HOURS);
             // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
-            return "redirect:http://localhost:5173/thirdLogin?okey=" + keyName + "&type=GitHub";
+            return "redirect:http://localhost:5173/thirdLogin?okey=" + oKey + "&type=GitHub";
         }
     }
 
@@ -97,7 +96,7 @@ public class OAuth2LoginController {
         //paramMap.add("code", code);
         //GiteeAccessVo giteeAccessVo = restTemplateConfig.restTemplateHttps().postForObject(giteeURL, paramMap, GiteeAccessVo.class);
         String targetURL = "https://gitee.com/oauth/token?grant_type=authorization_code&code="+code+"&client_id="+giteeOAuth2Config.getClientId()+"&redirect_uri="+giteeOAuth2Config.getRedirectUri()+"&client_secret="+giteeOAuth2Config.getClientSecret();
-        System.out.println(targetURL);
+        //System.out.println(targetURL);
         GiteeAccessVo giteeAccessVo = restTemplateConfig.restTemplateHttps().postForObject(targetURL, null, GiteeAccessVo.class);
 
 
@@ -113,29 +112,26 @@ public class OAuth2LoginController {
 
         // 查询数据库是否有该用户，有则直接登录(传数据给前端)，没有则跳转到第三方绑定页面
         User user = userService.getOne(new QueryWrapper<User>().eq("gitee_account_bing_id", giteeUser.getLogin()));
-        if (user != null) {
+        if (user != null) { // 有绑定，直接登录
             StpUtil.login(user.getId());
             String token = StpUtil.getTokenInfo().getTokenValue();
             System.out.println("第三方账号[gitee]登录成功："+ user.getUsername());
             // 存到Redis
             stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(user), 3, TimeUnit.MINUTES);
-            return "redirect:http://localhost:5173?token=" + token;
-        } else {
-            String keyName = "oauth_"+ giteeUser.getLogin();
+            return "redirect:http://localhost:5173?token=" + token; // 重定向前端首页
+        } else { // 没有绑定，跳转到绑定页面
+            String oKey = "oauth_gitee_"+ giteeUser.getLogin(); // 临时将用户信息存到 Redis
             String gitHubUserJSON = JSON.toJSONString(giteeUser);
-            stringRedisTemplate.opsForValue().set(keyName, gitHubUserJSON, 3, TimeUnit.HOURS);
+            stringRedisTemplate.opsForValue().set(oKey, gitHubUserJSON, 3, TimeUnit.HOURS);
             // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
-            return "redirect:http://localhost:5173/thirdLogin?okey=" + keyName + "&type=Gitee";
+            return "redirect:http://localhost:5173/thirdLogin?okey=" + oKey + "&type=Gitee";
         }
     }
 }
 
-/*
-        //System.out.println("content: " + content);
-        // 小结(搞了很久.服了)：http 请求返回的永远都是 null，https 请求返回的是正常的数据
-        // 但是使用 HTTPS 请求时，会报错：unable to find valid certification path to requested target (证书认证失败)
-        // 为了解决这个问题，需要忽略证书认证或者添加证书 (这边使用忽略证书认证的方式)
-        // 对于springBoot3.x，需要引入依赖：org.apache.httpcomponents:httpclient5
-        // 然后在 RestTemplateConfig.java 中添加一个方法，用于创建一个忽略证书认证的 RestTemplate 对象
-        // 然后在这里使用这个对象进行请求 (https://blog.csdn.net/u011974797/article/details/132192109)
-* */
+// 小结(搞了很久.服了)：http 请求返回的永远都是 null，https 请求返回的是正常的数据
+// 但是使用 HTTPS 请求时，会报错：unable to find valid certification path to requested target (证书认证失败)
+// 为了解决这个问题，需要忽略证书认证或者添加证书 (这边使用忽略证书认证的方式)
+// 对于springBoot3.x，需要引入依赖：org.apache.httpcomponents:httpclient5
+// 然后在 RestTemplateConfig.java 中添加一个方法，用于创建一个忽略证书认证的 RestTemplate 对象
+// 然后在这里使用这个对象进行请求 (https://blog.csdn.net/u011974797/article/details/132192109)

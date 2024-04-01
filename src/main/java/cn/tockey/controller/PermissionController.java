@@ -9,6 +9,7 @@ import cn.tockey.service.RolePermissionService;
 import cn.tockey.service.RoleService;
 import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class PermissionController {
     private IconService iconService;
 
     // 根据用户id获取权限 controller
+    @Operation(summary = "根据用户id获取权限")
     @GetMapping("/user/{uid}")
     BaseResult<List<Permission>> getPermissionByUid(@PathVariable String uid) {
         List<Permission> permissionList = permissionService.getPagePermissionListByUid(uid);
@@ -48,6 +50,7 @@ public class PermissionController {
     }
 
     // 根据角色id获取权限 controller
+    @Operation(summary = "根据角色id获取权限")
     @GetMapping("/role/{rid}")
     BaseResult<List<Permission>> getPermissionByRid(@PathVariable Integer rid) {
         List<Permission> permissionList = permissionService.getPermissionByRid(rid);
@@ -58,6 +61,7 @@ public class PermissionController {
     }
 
     // 获取权限列表
+    @Operation(summary = "获取权限列表")
     @GetMapping("/list")
     BaseResult<List<Permission>> getPermissionList() {
         List<Permission> permissionList = permissionService.getPermissionList();
@@ -68,6 +72,7 @@ public class PermissionController {
     }
 
     // 添加权限
+    @Operation(summary = "添加权限")
     @PostMapping
     BaseResult<String> addPermission(@RequestBody Permission permission) {
         Permission exitsPermName = permissionService.getOne(new QueryWrapper<Permission>().eq("name", permission.getName()));
@@ -80,6 +85,7 @@ public class PermissionController {
     }
 
     // 获取权限
+    @Operation(summary = "获取权限")
     @GetMapping("/{id}")
     BaseResult<Permission> getPermission(@PathVariable String id) {
         Permission permission = permissionService.getOne(new QueryWrapper<Permission>().eq("id", id));
@@ -88,6 +94,7 @@ public class PermissionController {
     }
 
     // 修改权限
+    @Operation(summary = "修改权限")
     @PutMapping
     BaseResult<String> updPermission(@RequestBody Permission permission) {
         if (permission.getId() == null) return BaseResult.error("id不能为空");
@@ -97,6 +104,7 @@ public class PermissionController {
     }
 
     // 获取所有的父级id
+    @Operation(summary = "获取所有的父级id")
     @GetMapping("/parents/{id}")
     BaseResult<List<Integer>> getAllPidById(@PathVariable Integer id) {
         List<Integer> allPidById = permissionService.getAllPidById(id);
@@ -104,6 +112,7 @@ public class PermissionController {
     }
 
     // 获取所有的子级id
+    @Operation(summary = "获取所有的子级id")
     @GetMapping("/Descendant/{id}")
     BaseResult<List<Integer>> getAllChildIdById(@PathVariable Integer id) {
         List<Integer> allChildIdById = permissionService.getAllChildIdById(id);
@@ -111,6 +120,7 @@ public class PermissionController {
     }
 
     // 删除权限
+    @Operation(summary = "删除权限")
     @DeleteMapping("/{id}")
     BaseResult<String> deletePermission(@PathVariable String id) {
         // 检查是否有角色使用该权限

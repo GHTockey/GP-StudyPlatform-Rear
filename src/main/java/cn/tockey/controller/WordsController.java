@@ -3,6 +3,7 @@ package cn.tockey.controller;
 import cn.tockey.domain.Words;
 import cn.tockey.service.WordsService;
 import cn.tockey.vo.BaseResult;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class WordsController {
     private WordsService wordsService;
 
     // 新增新的词语
+    @Operation(summary = "新增新的词语")
     @PostMapping
     BaseResult<String> generateNewWord(@RequestBody Words words){
         String id = wordsService.generateNewWord(words);
@@ -33,6 +35,7 @@ public class WordsController {
     }
 
     // 删除词语
+    @Operation(summary = "删除词语")
     @DeleteMapping("/{id}")
     BaseResult<String> delWordsById(@PathVariable String id) {
         Integer i = wordsService.delWordsById(id);

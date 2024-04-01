@@ -6,6 +6,7 @@ import cn.tockey.service.IconService;
 import cn.tockey.service.PermIconService;
 import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class IconController {
     private PermIconService permIconService;
 
     // 获取图标列表
+    @Operation(summary = "获取图标列表")
     @GetMapping("/list")
     BaseResult<List<Icon>> getIconList(){
         //List<Icon> iconList = iconService.list();
@@ -37,6 +39,7 @@ public class IconController {
     }
 
     // 添加图标
+    @Operation(summary = "添加图标")
     @PostMapping
     BaseResult<String> addIcon(@RequestBody Icon icon){
         //icon.setUpdateTime(null);
@@ -47,6 +50,7 @@ public class IconController {
     }
 
     // 删除图标
+    @Operation(summary = "删除图标")
     @DeleteMapping("/{ids}")
     BaseResult<String> deleteIcon(@PathVariable Integer[] ids){
         // 删除前检查 权限关联
@@ -62,6 +66,7 @@ public class IconController {
     }
 
     // 修改图标
+    @Operation(summary = "修改图标")
     @PutMapping
     BaseResult<String> updateIcon(@RequestBody Icon icon){
         //boolean updated = iconService.updateById(icon);
@@ -71,6 +76,7 @@ public class IconController {
     }
 
     // 获取图标 【根据id】
+    @Operation(summary = "获取图标")
     @GetMapping("/{id}")
     BaseResult<Icon> getIconById(@PathVariable Integer id){
         //Icon icon = iconService.getById(id);
@@ -82,6 +88,7 @@ public class IconController {
 
     // 权限关联图标表
     // 权限移除图标
+    @Operation
     @DeleteMapping("/perm/{permId}")
     BaseResult<String> removePermIcon(@PathVariable String permId){
         //boolean removed = permIconService.remove(new QueryWrapper<PermIcon>().eq("perm_id", permId));
@@ -90,6 +97,7 @@ public class IconController {
         return BaseResult.error("移除失败");
     }
     // 权限使用图标 【添加】
+    @Operation(summary = "权限使用图标")
     @PostMapping("/perm")
     BaseResult<String> addPermIcon(@RequestBody PermIcon permIcon){
         PermIcon exitsPermIcon = permIconService.getOne(new QueryWrapper<PermIcon>().eq("perm_id", permIcon.getPermId()).eq("icon_id", permIcon.getIconId()));
@@ -101,6 +109,7 @@ public class IconController {
         return BaseResult.error("添加失败");
     }
     // 获取权限使用的图标 【根据权限id】
+    @Operation(summary = "获取权限使用的图标")
     @GetMapping("/perm/{permId}")
     BaseResult<PermIcon> getPermIconIdByPermId(@PathVariable String permId){
         //PermIcon permIcon = permIconService.getOne(new QueryWrapper<PermIcon>().eq("perm_id", permId));

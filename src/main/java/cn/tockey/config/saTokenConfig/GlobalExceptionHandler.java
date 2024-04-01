@@ -3,6 +3,7 @@ package cn.tockey.config.saTokenConfig;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaResult;
 import cn.tockey.vo.BaseResult;
+import cn.tockey.vo.MyResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
 
     // 此方法和上面的方法区别在于，这里是拦截 SaTokenException 异常
     @ExceptionHandler(SaTokenException.class)
-    public BaseResult handlerSaTokenException(SaTokenException e) {
+    public MyResult<String> handlerSaTokenException(SaTokenException e) {
 
         System.out.println("SaTokenException 异常拦截：" + e.getCode());
         // 根据不同异常细分状态码返回不同的提示
@@ -29,6 +30,7 @@ public class GlobalExceptionHandler {
         //        return
         //}
 
-        return new BaseResult(e.getCode(), e.getMessage());
+        //return new BaseResult(e.getCode(), e.getMessage());
+        return new MyResult<String>(e.getCode(),e.getMessage()); // 返回专用状态码
     }
 }

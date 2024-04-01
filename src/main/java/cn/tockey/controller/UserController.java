@@ -12,12 +12,10 @@ import cn.tockey.domain.UserRole;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
-import cn.tockey.vo.BaseResult;
-import cn.tockey.vo.OAuthRegisterUserVo;
-import cn.tockey.vo.UserListVo;
-import cn.tockey.vo.UserVo;
+import cn.tockey.vo.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +35,7 @@ public class UserController {
     private RoleService roleService;
 
     // 登录
+    @Operation(summary = "登录")
     @PostMapping("/login")
     BaseResult<String> login(@RequestBody UserVo loginUser) {
         User user = userService.login(loginUser); // 内部已经判断用户名密码是否正确
@@ -60,6 +59,7 @@ public class UserController {
     }
 
     // 注册
+    @Operation(summary = "注册")
     @PostMapping("/register")
     BaseResult<String> register(@RequestBody User registerUser) {
         int registerResult = userService.register(registerUser);
@@ -71,6 +71,7 @@ public class UserController {
     }
 
     // 检查用户名是否存在
+    @Operation(summary = "检查用户名是否存在")
     @GetMapping("/checkUsername/{username}")
     BaseResult<Boolean> checkUsername(@PathVariable String username) {
         User user = userService.getOne(new QueryWrapper<User>().eq("username", username));
@@ -82,6 +83,7 @@ public class UserController {
     }
 
     // 根据ID获取用户
+    @Operation(summary = "根据ID获取用户")
     @GetMapping("/{id}")
     BaseResult<User> getUserInfoById(@PathVariable String id){
         User user = userService.getUserInfoById(id);
@@ -90,6 +92,7 @@ public class UserController {
     }
 
     // 搜索用户
+    @Operation(summary = "搜索用户")
     @GetMapping("/search/{keyword}")
     BaseResult<List<User>> searchUser(@PathVariable String keyword) {
         List<User> userList = userService.list(new QueryWrapper<User>().like("username", keyword));
@@ -97,6 +100,7 @@ public class UserController {
     }
 
     // 获取用户列表
+    @Operation(summary = "获取用户列表")
     @PostMapping("/list/{num}/{size}")
     BaseResult<Page<User>> getUserList(@PathVariable int num, @PathVariable int size, @RequestBody UserListVo userListVo) {
         Page<User> page = userService.getUserList(num, size, userListVo);
@@ -104,6 +108,7 @@ public class UserController {
     }
 
     // 添加用户
+    @Operation(summary = "添加用户")
     @PostMapping
     BaseResult<String> addUser(@RequestBody User user) {
         int saved = userService.register(user);
@@ -119,6 +124,7 @@ public class UserController {
     }
 
     // 修改用户
+    @Operation(summary = "修改用户")
     @PutMapping
     BaseResult<String> updateUser(@RequestBody User user) {
         boolean updated = userService.updateById(user);
@@ -136,6 +142,7 @@ public class UserController {
     }
 
     // 删除用户
+    @Operation(summary = "删除用户")
     @DeleteMapping("/{id}")
     BaseResult<String> deleteUser(@PathVariable String id) {
         // 检查关联角色
@@ -153,6 +160,7 @@ public class UserController {
     }
 
     // 根据ID列表获取用户列表 controller
+    @Operation(summary = "根据ID列表获取用户列表")
     @PostMapping("/list")
     BaseResult<List<User>> getUserListByIdList(@RequestBody List<String> ids){
         List<User> userList = userService.getUserListByIdList(ids);
@@ -160,6 +168,7 @@ public class UserController {
     }
 
     // 根据班级ID获取成员列表
+    @Operation(summary = "根据班级ID获取成员列表")
     @GetMapping("/list/byCid/{cid}")
     BaseResult<List<User>> getUserListByCid(@PathVariable Integer cid){
         List<User> list = userService.getUserListByCid(cid);
@@ -168,13 +177,16 @@ public class UserController {
 
     // 【聊天记录】
     // 新增聊天记录
+    @Operation(summary = "新增聊天记录")
     @PostMapping("/chatRecord")
     BaseResult<String> addChatRecord(@RequestBody UserMessage userMessage) {
         int saved = userService.addChatRecord(userMessage);
         if (saved != 0) return BaseResult.ok("添加成功");
         return BaseResult.error("添加失败");
     }
+
     // 获取聊天记录
+    @Operation(summary = "获取聊天记录")
     @GetMapping("/chatRecord/{fromUid}/{toUid}")
     BaseResult<List<UserMessage>> getChatRecord(@PathVariable String fromUid, @PathVariable String toUid) {
         List<UserMessage> list = userService.getChatRecord(fromUid, toUid);
@@ -182,6 +194,7 @@ public class UserController {
     }
 
     // 将未读消息置为已读
+    @Operation(summary = "将未读消息置为已读")
     @PutMapping("/chatRecord/read/{fromUid}/{toUid}")
     BaseResult<String> setRead(@PathVariable String fromUid, @PathVariable String toUid) {
         int updated = userService.setRead(fromUid, toUid);
@@ -190,6 +203,7 @@ public class UserController {
     }
 
     // 获取未读消息
+    @Operation(summary = "获取未读消息")
     @GetMapping("/chatRecord/unread/{uid}")
     BaseResult<List<UserMessage>> getUnreadMessage(@PathVariable String uid) {
         List<UserMessage> list = userService.getUnreadMessage(uid);
@@ -197,6 +211,7 @@ public class UserController {
     }
 
     // 获取活跃用户列表 前5
+    @Operation(summary = "获取活跃用户列表")
     @GetMapping("/activeUserList")
     BaseResult<List<User>> getActiveUserList() {
         List<User> list = userService.getActiveUserList();
@@ -204,6 +219,7 @@ public class UserController {
     }
 
     // 第三方账号与本地账号绑定
+    @Operation(summary = "第三方账号与本地账号绑定")
     @PostMapping("/oauth/bind")
     BaseResult<String> oAuthAccountBinding(@RequestBody User oAuthUser, @RequestParam String oKey, @RequestParam String type) {
         // 检验
@@ -224,6 +240,7 @@ public class UserController {
     }
 
     // OAuth 注册登录
+    @Operation(summary = "OAuth 注册登录")
     @PostMapping("/oauth/register/login")
     BaseResult<User> oAuthLogin(@RequestBody OAuthRegisterUserVo oAuthUser, @RequestParam String oKey, @RequestParam String type) {
         // 校验
@@ -241,11 +258,20 @@ public class UserController {
     }
 
     // 通过 token 获取用户信息
+    @Operation(summary = "通过 token 获取用户信息")
     @GetMapping("/token/{token}")
     BaseResult<User> getUserInfoByToken(@PathVariable String token) {
         User user = userService.getUserInfoByToken(token);
         if (user == null) return BaseResult.error("token无效");
         return BaseResult.ok("获取成功", user);
+    }
+
+
+    // 测试
+    @Operation(summary = "测试")
+    @GetMapping("/test")
+    MyResult<String> test() {
+        return MyResult.ok("测试").put("ccc", "ddd");
     }
 
 

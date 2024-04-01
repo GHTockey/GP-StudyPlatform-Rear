@@ -9,6 +9,7 @@ import cn.tockey.config.JwtProperties;
 import cn.tockey.utils.JwtUtils;
 import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,7 @@ public class ClassesController {
 
 
     // 添加班级
+    @Operation(summary = "添加班级")
     @PostMapping
     BaseResult<String> addClasses(@RequestBody Classes classes) throws Exception {
         User currentUser = parseUserByToken(httpServletRequest.getHeader("Authorization"));
@@ -58,6 +60,7 @@ public class ClassesController {
     }
 
     // 根据ID获取班级信息
+    @Operation(summary = "根据ID获取班级信息")
     @GetMapping("/{id}")
     BaseResult<Classes> getClassesById(@PathVariable String id) {
         Classes classes = classesService.getClassesById(id);
@@ -66,6 +69,7 @@ public class ClassesController {
     }
 
     // 删除班级
+    @Operation(summary = "删除班级")
     @DeleteMapping("/{id}")
     BaseResult<String> deleteClasses(@PathVariable String id) {
         Integer deleteResult = classesService.delClassesById(id);
@@ -74,6 +78,7 @@ public class ClassesController {
     }
 
     // 修改班级
+    @Operation(summary = "修改班级")
     @PutMapping
     BaseResult<String> updateClasses(@RequestBody Classes classes) {
         Integer updateResult = classesService.updClasses(classes);
@@ -82,6 +87,7 @@ public class ClassesController {
     }
 
     // 搜索班级
+    @Operation(summary = "搜索班级")
     @GetMapping("/search/{keyword}")
     BaseResult<List<Classes>> searchClasses(@PathVariable String keyword) {
         List<Classes> classesList = classesService.searchClassesList(keyword);
@@ -89,6 +95,7 @@ public class ClassesController {
     }
 
     // 获取班级列表
+    @Operation(summary = "获取班级列表")
     @GetMapping("/list")
     BaseResult<List<Classes>> getClassesList() {
         List<Classes> classesList = classesService.getClassesList();
@@ -96,6 +103,7 @@ public class ClassesController {
     }
 
     // 根据班级ID获取所有成员的词集列表
+    @Operation(summary = "根据班级ID获取所有成员的词集列表")
     @GetMapping("/user/voc/list/{cid}")
     BaseResult<List<Vocabulary>> getVocListByClassesUser(@PathVariable String cid){
         List<Vocabulary> list = classesService.getVocListByClassesUser(cid);
@@ -103,6 +111,7 @@ public class ClassesController {
     }
 
     // 班级移除用户 【关联表】
+    @Operation(summary = "班级移除用户")
     @PostMapping("/user/remove")
     BaseResult<String> classesRemUser(@RequestBody UserClasses userClasses){
         Integer i = classesService.classesRemUser(userClasses);
@@ -111,6 +120,7 @@ public class ClassesController {
     }
 
     // 用户加入班级 【关联表】
+    @Operation(summary = "用户加入班级")
     @PostMapping("/user/push")
     BaseResult<String> userAddClasses(@RequestBody UserClasses userClasses){
         // 限制一个用户只能加入一个班级
@@ -122,6 +132,7 @@ public class ClassesController {
     }
 
     // 根据用户ID获取班级
+    @Operation(summary = "根据用户ID获取班级")
     @GetMapping("/user/{uid}")
     BaseResult<Classes> getCLassesByUid(@PathVariable String uid){
         Classes classes = classesService.getCLassesByUid(uid);

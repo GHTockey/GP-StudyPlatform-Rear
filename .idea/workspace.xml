@@ -5,10 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/TceRedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/EmailCodeVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/MyResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/ClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/ClassesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/IconController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/IconController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/PermissionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/RoleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/WordsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/WordsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/BaseResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/BaseResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/tockey/cloudtoboottest/CloudToBootTestApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +38,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -84,7 +101,7 @@
     &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17089844&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34157833&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;12c2b515dd899b502b2c018aa05f9ccf&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -109,6 +126,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="cn.tockey.service.impl" />
       <recent name="cn.tockey.mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -332,7 +350,14 @@
       <workItem from="1711359116381" duration="8248000" />
       <workItem from="1711411341772" duration="38000" />
       <workItem from="1711455991462" duration="4899000" />
-      <workItem from="1711497946808" duration="3584000" />
+      <workItem from="1711497946808" duration="5026000" />
+      <workItem from="1711584129068" duration="2000" />
+      <workItem from="1711597576443" duration="2088000" />
+      <workItem from="1711609324147" duration="23000" />
+      <workItem from="1711609396367" duration="7999000" />
+      <workItem from="1711619055785" duration="5066000" />
+      <workItem from="1711954764373" duration="5851000" />
+      <workItem from="1711973068079" duration="3258000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />

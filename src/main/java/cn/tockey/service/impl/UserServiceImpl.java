@@ -1,7 +1,6 @@
 package cn.tockey.service.impl;
 
 import cn.dev33.satoken.secure.BCrypt;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.WebSocketServer;
 import cn.tockey.domain.*;
 import cn.tockey.mapper.UserClassesMapper;
@@ -18,7 +17,6 @@ import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
 import cn.tockey.vo.UserVo;
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -248,13 +246,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (type.equalsIgnoreCase("GITHUB")) {
             GithubUser githubUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(oKey), GithubUser.class);
             targerUser.setGithubAccountBingId(githubUser.getLogin());
+            // 删除 Redis 缓存
+            stringRedisTemplate.delete(oKey);
         } else if (type.equalsIgnoreCase("GITEE")) {
             GiteeUser giteeUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(oKey), GiteeUser.class);
             targerUser.setGiteeAccountBingId(giteeUser.getLogin());
+            // 删除 Redis 缓存
+            stringRedisTemplate.delete(oKey);
         } else {
             return 0;
         }
-
         return userMapper.updateById(targerUser);
     }
 
@@ -262,6 +263,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserInfoByToken(String token) {
         User redisUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(token), User.class);
+        if (redisUser == null) return null;
         stringRedisTemplate.delete(token);
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", redisUser.getId()));
         // 关联

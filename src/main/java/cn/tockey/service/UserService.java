@@ -43,7 +43,4 @@ public interface UserService extends IService<User> {
     User oAuthRegisterLogin(OAuthRegisterUserVo oAuthRegisterUserVo, String oKey, String type);
     // 检查用户名是否可用
     Boolean checkUsername(String username);
-
-    // security 测试
-    //void saveUserDetails(User user);
 }

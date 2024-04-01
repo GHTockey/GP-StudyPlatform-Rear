@@ -11,6 +11,7 @@ import cn.tockey.service.UserService;
 import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.SetRolePermVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +40,14 @@ public class RoleController {
     private RolePermissionService rolePermissionService;
 
     // 获取角色列表
+    @Operation(summary = "获取角色列表")
     @GetMapping("/list")
     BaseResult<List<Role>> getRoleList() {
         return BaseResult.ok("获取成功", roleService.getRoleList());
     }
 
     // 修改角色
+    @Operation(summary = "修改角色")
     @PutMapping
     BaseResult<String> updateRole(@RequestBody Role role) {
         boolean updated = roleService.updateById(role);
@@ -53,6 +56,7 @@ public class RoleController {
     }
 
     // 添加角色
+    @Operation(summary = "添加角色")
     @PostMapping
     BaseResult<String> addRole(@RequestBody Role role) {
         boolean saved = roleService.save(role);
@@ -61,6 +65,7 @@ public class RoleController {
     }
 
     // 删除角色
+    @Operation(summary = "删除角色")
     @DeleteMapping("/{rid}")
     BaseResult<String> deleteRole(@PathVariable String rid) {
         // 检查关联用户
@@ -84,6 +89,7 @@ public class RoleController {
     }
 
     // 设置角色权限
+    @Operation(summary = "设置角色权限")
     @PostMapping("/perm/set/{rid}")
     BaseResult<String> setRolePermission(
             @PathVariable Integer rid,
