@@ -33,8 +33,6 @@ public class OtherServiceImpl implements OtherService {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private JavaMailSender mailSender;
-    @Resource
-    private TceRedisConfig tceRedisConfig;
 
     private static final String SENDER = "tockey@yeah.net"; // 发送者;
 
@@ -74,13 +72,10 @@ public class OtherServiceImpl implements OtherService {
     public EmailCodeVo sendEmailVerificationCode(String to) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-            // 生成验证码 4位数
+            // 生成验证码
             String code = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));
-            // 缓存 1分钟
-            //stringRedisTemplate.opsForValue().set(tceRedisConfig.getEmailCodeKey() + to, code, 1, TimeUnit.MINUTES);
-            EmailCodeVo emailCodeVo = new EmailCodeVo(to, code, new Date(System.currentTimeMillis() + 60000));
-            stringRedisTemplate.opsForValue().set(tceRedisConfig.getEmailCodeKey() + to, JSON.toJSONString(emailCodeVo), 1, TimeUnit.MINUTES);
 
+            // 发送邮件
             //true表示需要创建一个multipart message
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(SENDER);
@@ -121,6 +116,11 @@ public class OtherServiceImpl implements OtherService {
                     "</body>\n" +
                     "</html>", true);
             mailSender.send(message);
+
+            // 缓存 1分钟
+            //stringRedisTemplate.opsForValue().set(tceRedisConfig.getEmailCodeKey() + to, code, 1, TimeUnit.MINUTES);
+            EmailCodeVo emailCodeVo = new EmailCodeVo(to, code, new Date(System.currentTimeMillis() + 60000));
+            stringRedisTemplate.opsForValue().set(TceRedisConfig.emailCodeKey + to, JSON.toJSONString(emailCodeVo), 1, TimeUnit.MINUTES);
             return emailCodeVo;
         } catch (MessagingException e) {
             System.out.println("发送MimeMessage时发生异常！"+e.getMessage());

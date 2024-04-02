@@ -1,5 +1,7 @@
 package cn.tockey.service.impl;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserVocabulary;
 import cn.tockey.domain.Vocabulary;
@@ -9,8 +11,6 @@ import cn.tockey.mapper.VocabularyMapper;
 import cn.tockey.mapper.WordsMapper;
 import cn.tockey.service.UserService;
 import cn.tockey.service.VocabularyService;
-import cn.tockey.config.JwtProperties;
-import cn.tockey.utils.JwtUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
@@ -36,19 +36,15 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     @Resource
     private WordsMapper wordsMapper;
     @Resource
-    private JwtProperties jwtProperties;
-    @Resource
-    private HttpServletRequest httpServletRequest;
-    @Resource
     private UserService userService;
     @Resource
     private UserVocabularyMapper userVocabularyMapper;
 
     // jwt 解析用户信息
-    public User parseUserByToken(String token) throws Exception {
-        User user = JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), User.class);
-        System.out.println("token解析；当前用户："+user);
-        return user;
+    public String parseUserIdByToken() {
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        System.out.println("token解析；当前用户："+ tokenInfo.getLoginId());
+        return (String) tokenInfo.getLoginId();
     }
     // 词集的关联程序
     private void relevanceHandler(Vocabulary vocabulary, Boolean isRelevanceWord) {
@@ -77,10 +73,9 @@ public class VocabularyServiceImpl extends ServiceImpl<VocabularyMapper, Vocabul
     @Override
     public String addVocabulary(Vocabulary vocabulary) {
         try {
-            User currentUser = parseUserByToken(httpServletRequest.getHeader("Authorization"));
             // 拼接数据
             vocabulary.setId(null);
-            vocabulary.setAuthorId(currentUser.getId());
+            vocabulary.setAuthorId(parseUserIdByToken());
             vocabulary.setCount(vocabulary.getWordsList().size()); // 数量
             vocabulary.setCreateTime(new Date()); // 创建时间
             int insertResult = vocabularyMapper.insert(vocabulary);

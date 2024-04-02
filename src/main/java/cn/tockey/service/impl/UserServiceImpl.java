@@ -11,11 +11,10 @@ import cn.tockey.service.ClassesService;
 import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
-import cn.tockey.config.JwtProperties;
-import cn.tockey.utils.JwtUtils;
 import cn.tockey.vo.OAuthRegisterUserVo;
 import cn.tockey.vo.UserListVo;
-import cn.tockey.vo.UserVo;
+import cn.tockey.vo.UseLoginVo;
+import cn.tockey.vo.UserRegisterVo;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,8 +31,6 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private UserMapper userMapper;
-    @Resource
-    private JwtProperties jwtProperties;
     @Resource
     private UserRoleService userRoleService;
     @Resource
@@ -74,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 登录
     @Override
-    public User login(UserVo loginUser) {
+    public User login(UseLoginVo loginUser) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", loginUser.getUsername());
         //queryWrapper.eq("password", loginUser.getPassword());
@@ -93,18 +90,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 注册
     @Override
-    public Integer register(User registerUser) {
-        // 加密
-        registerUser.setPassword(BCrypt.hashpw(registerUser.getPassword(), BCrypt.gensalt()));
-        int inserted = userMapper.insert(registerUser);
-        return inserted;
-    }
+    public Integer register(UserRegisterVo registerUser) {
+        User newUser = new User();
+        newUser.setUsername(registerUser.getUsername());
+        newUser.setEmail(registerUser.getEmail());
+        newUser.setPassword(BCrypt.hashpw(registerUser.getPassword(), BCrypt.gensalt()));
 
-    // 生成token
-    @Override
-    public String generateToken(User user) {
-        String token = JwtUtils.generateToken(user, jwtProperties.getExpire(), jwtProperties.getPrivateKey());
-        return token;
+
+        int inserted = userMapper.insert(newUser);
+        return inserted;
     }
 
     // 获取用户列表

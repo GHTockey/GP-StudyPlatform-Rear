@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserRegVo {
+public class UserRegisterVo {
     private String username;
     private String password;
-    private String avatar;
     private String email;
+    private String code;
 }

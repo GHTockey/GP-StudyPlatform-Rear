@@ -4,7 +4,7 @@ package cn.tockey.controller;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.tockey.config.WebSocketServer;
+import cn.tockey.config.TceRedisConfig;
 import cn.tockey.domain.Role;
 import cn.tockey.domain.User;
 import cn.tockey.domain.UserMessage;
@@ -13,10 +13,12 @@ import cn.tockey.service.RoleService;
 import cn.tockey.service.UserRoleService;
 import cn.tockey.service.UserService;
 import cn.tockey.vo.*;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,16 +35,17 @@ public class UserController {
     private UserRoleService userRoleService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     // 登录
     @Operation(summary = "登录")
     @PostMapping("/login")
-    BaseResult<String> login(@RequestBody UserVo loginUser) {
+    BaseResult<String> login(@RequestBody UseLoginVo loginUser) {
         User user = userService.login(loginUser); // 内部已经判断用户名密码是否正确
         if (user != null) {
             User userDetail = userService.getUserInfoById(user.getId());
             //System.out.println("用户登录："+user);
-            //String token = userService.generateToken(userDetail); // 生成 token
 
             // sa-token
             StpUtil.login(userDetail.getId()); // 登录
@@ -61,12 +64,24 @@ public class UserController {
     // 注册
     @Operation(summary = "注册")
     @PostMapping("/register")
-    BaseResult<String> register(@RequestBody User registerUser) {
+    MyResult<String> register(@RequestBody UserRegisterVo registerUser) {
+        // 验证用户名是否存在
+        User user = userService.getOne(new QueryWrapper<User>().eq("username", registerUser.getUsername()));
+        if (user != null) return MyResult.error("用户名已存在");
+        // 验证邮箱验证码
+        String strObj = stringRedisTemplate.opsForValue().get(TceRedisConfig.emailCodeKey + registerUser.getEmail());
+        if (strObj == null) return MyResult.error("验证码无效或已过期");
+        //stringRedisTemplate.delete(TceRedisConfig.emailCodeKey + registerUser.getEmail()); // 删除验证码缓存
+        EmailCodeVo emailCodeVo = JSON.parseObject(strObj, EmailCodeVo.class);
+        if (!emailCodeVo.getCode().equals(registerUser.getCode())) return MyResult.error("验证码错误");
+
+        stringRedisTemplate.delete(TceRedisConfig.emailCodeKey + registerUser.getEmail()); // 删除验证码缓存
+
         int registerResult = userService.register(registerUser);
         if (registerResult != 0) {
-            return BaseResult.ok("注册成功");
+            return MyResult.ok("注册成功");
         } else {
-            return BaseResult.error("注册失败");
+            return MyResult.error("注册失败");
         }
     }
 
@@ -111,7 +126,8 @@ public class UserController {
     @Operation(summary = "添加用户")
     @PostMapping
     BaseResult<String> addUser(@RequestBody User user) {
-        int saved = userService.register(user);
+        UserRegisterVo registerVo = new UserRegisterVo(user.getUsername(), user.getPassword(), user.getEmail(), null);
+        int saved = userService.register(registerVo);
         // 处理角色关联
         if (user.getRoleList() != null && !user.getRoleList().isEmpty()) {
             for (Role role : user.getRoleList()) {
@@ -271,6 +287,10 @@ public class UserController {
     @Operation(summary = "测试")
     @GetMapping("/test")
     MyResult<String> test() {
+        // 解析 token
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        System.out.println("tokenInfo:"+tokenInfo);
+
         return MyResult.ok("测试").put("ccc", "ddd");
     }
 

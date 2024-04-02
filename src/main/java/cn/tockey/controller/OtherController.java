@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/other")
@@ -31,8 +32,6 @@ public class OtherController {
     private GitHubOAuth2Config gitHubOAuth2Config;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private TceRedisConfig tceRedisConfig;
 
     @Operation(summary = "上传图片")
     @PostMapping("/image/upload")
@@ -77,16 +76,17 @@ public class OtherController {
     @PostMapping("/mail/send")
     MyResult<Date> sendSimpleMailMessage2(@RequestParam String to) {
         // 先判断是否已经发送过验证码
-        String strObj = stringRedisTemplate.opsForValue().get(tceRedisConfig.getEmailCodeKey() + to);
+        String strObj = stringRedisTemplate.opsForValue().get(TceRedisConfig.emailCodeKey + to);
         EmailCodeVo emailCodeVo = JSON.parseObject(strObj, EmailCodeVo.class);
         if (emailCodeVo != null) {
-            return MyResult.ok("短时间内请勿重复发送，请检查邮箱", emailCodeVo.getExpireTime());
+            return MyResult.ok("该邮箱短时间内已发送过验证码，请勿频繁发送", emailCodeVo.getExpireTime());
         }
 
         EmailCodeVo sendEmailCodeVoResult = otherService.sendEmailVerificationCode(to);
         if (sendEmailCodeVoResult == null) {
             return MyResult.error("发送失败");
         }
+
         return MyResult.ok("发送成功", sendEmailCodeVoResult.getExpireTime());
     }
 }

@@ -1,17 +1,15 @@
 package cn.tockey.controller;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.domain.Classes;
-import cn.tockey.domain.User;
 import cn.tockey.domain.UserClasses;
 import cn.tockey.domain.Vocabulary;
 import cn.tockey.service.ClassesService;
 import cn.tockey.service.UserClassesService;
-import cn.tockey.config.JwtProperties;
-import cn.tockey.utils.JwtUtils;
 import cn.tockey.vo.BaseResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,17 +29,13 @@ public class ClassesController {
     private ClassesService classesService;
     @Resource
     private UserClassesService userClassesService;
-    @Resource
-    private JwtProperties jwtProperties;
-    @Resource
-    private HttpServletRequest httpServletRequest;
 
 
     // jwt 解析用户信息
-    public User parseUserByToken(String token) throws Exception {
-        User user = JwtUtils.getObjectFromToken(token, jwtProperties.getPublicKey(), User.class);
-        System.out.println("token解析；当前用户："+user);
-        return user;
+    public String parseUserIdByToken() throws Exception {
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        System.out.println("token解析；当前用户id："+tokenInfo.getLoginId());
+        return (String) tokenInfo.getLoginId();
     }
 
 
@@ -49,9 +43,8 @@ public class ClassesController {
     @Operation(summary = "添加班级")
     @PostMapping
     BaseResult<String> addClasses(@RequestBody Classes classes) throws Exception {
-        User currentUser = parseUserByToken(httpServletRequest.getHeader("Authorization"));
         // 检查是否已加入班级
-        List<UserClasses> userClasses = userClassesService.list(new QueryWrapper<UserClasses>().eq("uid", currentUser.getId()));
+        List<UserClasses> userClasses = userClassesService.list(new QueryWrapper<UserClasses>().eq("uid", parseUserIdByToken()));
         if (!userClasses.isEmpty()) return BaseResult.error("你已加入班级，不可创建");
 
         Classes classesResult = classesService.addClasses(classes);

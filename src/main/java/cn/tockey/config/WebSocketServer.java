@@ -29,7 +29,7 @@ public class WebSocketServer {
     private String uid;
     private Session session;
     //@Resource
-    //private UserMessageService userMessageService; // 注入无效：null。原因
+    //private UserMessageService userMessageService; // 注入无效：null。原因: WebSocketServer是一个独立的类，不受Spring管理
     // 解决:
     private static UserMessageService userMessageService;
     @Autowired
