@@ -36,6 +36,10 @@ public class OAuth2LoginController {
     @Resource
     private UserService userService;
 
+    // 前端首页地址
+    //private final String FORE_INDEX_URL = "http://localhost:5173";
+    private final String FORE_INDEX_URL = "http://gp.tockey.cn";
+
     @GetMapping("/redirect/github")
     String redirect(@RequestParam("code") String code) {
         String githubURL = "https://github.com/login/oauth/access_token";
@@ -48,6 +52,7 @@ public class OAuth2LoginController {
 
         //RestTemplate restTemplate = new RestTemplate();
         //String content = restTemplate.postForObject(githubURL, paramMap, String.class); // 请求HTTPS报错 unable to find valid certification path to requested target
+        System.out.println("开始请求accessToken");
         String content = restTemplateConfig.restTemplateHttps().postForObject(githubURL, paramMap, String.class);
 
         // 处理数据 获取 access_token
@@ -61,6 +66,7 @@ public class OAuth2LoginController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "token " + access_token);
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
+        System.out.println("开始请求用户数据");
         ResponseEntity<GithubUser> githubUserResponseEntity = restTemplateConfig.restTemplateHttps().exchange(url2, HttpMethod.GET, httpEntity, GithubUser.class);
         GithubUser githubUser = githubUserResponseEntity.getBody();
         System.out.println(githubUser.getLogin()+" github 正在登录");
@@ -74,13 +80,16 @@ public class OAuth2LoginController {
             System.out.println("第三方账号[github]登录成功："+ user.getUsername());
             // 存到Redis
             stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(user), 3, TimeUnit.MINUTES);
-            return "redirect:http://localhost:5173?token=" + token;
+            // 重定向至首页
+            String targetUrl = FORE_INDEX_URL + "?token=" + token;
+            return "redirect:"+ targetUrl;
         } else {
             String oKey = "oauth_github_"+ githubUser.getLogin();
             String gitHubUserJSON = JSON.toJSONString(githubUser);
             stringRedisTemplate.opsForValue().set(oKey, gitHubUserJSON, 3, TimeUnit.HOURS);
             // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
-            return "redirect:http://localhost:5173/thirdLogin?okey=" + oKey + "&type=GitHub";
+            String targetUrl = FORE_INDEX_URL + "/thirdLogin?okey=" + oKey + "&type=GitHub";
+            return "redirect:"+ targetUrl;
         }
     }
 
@@ -118,18 +127,18 @@ public class OAuth2LoginController {
             System.out.println("第三方账号[gitee]登录成功："+ user.getUsername());
             // 存到Redis
             stringRedisTemplate.opsForValue().set(token, JSON.toJSONString(user), 3, TimeUnit.MINUTES);
-            return "redirect:http://localhost:5173?token=" + token; // 重定向前端首页
+            return "redirect:"+ FORE_INDEX_URL +"?token=" + token; // 重定向前端首页
         } else { // 没有绑定，跳转到绑定页面
             String oKey = "oauth_gitee_"+ giteeUser.getLogin(); // 临时将用户信息存到 Redis
             String gitHubUserJSON = JSON.toJSONString(giteeUser);
             stringRedisTemplate.opsForValue().set(oKey, gitHubUserJSON, 3, TimeUnit.HOURS);
             // 重定向至第三方登录页面，并在 URL 中附带参数 （由用户来决定绑定已有账号或者注册)
-            return "redirect:http://localhost:5173/thirdLogin?okey=" + oKey + "&type=Gitee";
+            return "redirect:"+ FORE_INDEX_URL +"/thirdLogin?okey=" + oKey + "&type=Gitee";
         }
     }
 }
 
-// 小结(搞了很久.服了)：http 请求返回的永远都是 null，https 请求返回的是正常的数据
+// 小结(搞了很久)：http 请求返回的永远都是 null，https 请求返回的是正常的数据
 // 但是使用 HTTPS 请求时，会报错：unable to find valid certification path to requested target (证书认证失败)
 // 为了解决这个问题，需要忽略证书认证或者添加证书 (这边使用忽略证书认证的方式)
 // 对于springBoot3.x，需要引入依赖：org.apache.httpcomponents:httpclient5

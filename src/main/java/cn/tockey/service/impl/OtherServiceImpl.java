@@ -27,14 +27,13 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class OtherServiceImpl implements OtherService {
+    private static final String SENDER = "tockey@yeah.net"; // 发送者;
     @Resource
     private MyQiniuProperties myQiniuProperties;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private JavaMailSender mailSender;
-
-    private static final String SENDER = "tockey@yeah.net"; // 发送者;
 
     @Override
     public String uploadImage(MultipartFile file) throws IOException {
@@ -86,32 +85,37 @@ public class OtherServiceImpl implements OtherService {
                     "<head>\n" +
                     "   <meta charset=\"UTF-8\">\n" +
                     "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                    "   <style>\n" +
-                      "      body {\n" +
-                        "         font-size: 16px;\n" +
-                        "         font-family: 'Microsoft YaHei', sans-serif;\n" +
-                        "         background-color: #f5f5f5;\n" +
-                        "         margin: 0;\n" +
-                        "         padding: 0;\n" +
-                        "         color: #333;\n" +
-                        "      }\n" +
-                        "      div {\n" +
-                        "         width: 100%;\n" +
-                        "         height: 100%;\n" +
-                        "         display: flex;\n" +
-                        "         justify-content: center;\n" +
-                        "         align-items: center;\n" +
-                        "      }\n" +
-                        "      p {\n" +
-                        "         font-size: 20px;\n" +
-                        "         font-weight: bold;\n" +
-                        "      }\n " +
-                    "   </style>\n" +
                     "   <title>Document</title>\n" +
+                    "   <style>\n" +
+                    "      * {\n" +
+                    "         margin: 0;\n" +
+                    "         padding: 0;\n" +
+                    "      }\n" +
+                    "\n" +
+                    "      html,\n" +
+                    "      body,\n" +
+                    "      .container {\n" +
+                    "         width: 100%;\n" +
+                    "         height: 100%;\n" +
+                    "      }\n" +
+                    "   </style>\n" +
                     "</head>\n" +
+                    "\n" +
                     "<body>\n" +
-                    "   <div>\n" +
-                    "      <p>"+ code +"</p>" +
+                    "   <div class=\"container\" style=\"display: grid; place-content: center; padding: 100px 0;\">\n" +
+                    "      <div class=\"box\"\n" +
+                    "         style=\"box-sizing: border-box;padding: 20px;width: 450px;border-radius: 10px;box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;\">\n" +
+                    "         <img src=\"https://img.tockey.cn/pic/logo.svg\" alt=\"logo\" style=\"width: 110px;\">\n" +
+                    "         <div style=\"margin-top: 20px;\">\n" +
+                    "            <!-- <p>Hi；<span style=\"color: rgb(0, 127, 177);\">XXX</span>!</p> -->\n" +
+                    "            <p style=\"font-size: 16px;font-weight: 600;\">您的验证码为</p>\n" +
+                    "            <div class=\"code\"\n" +
+                    "               style=\"margin: 10px 0;color: rgb(0, 183, 255);font-size: 23px;font-weight: 600;border-radius: 8px;padding: 10px 0;text-align: center;background-color: rgb(228, 228, 228);\">\n" +
+                    "               "+ code +"</div>\n" +
+                    "            <p style=\"font-size: 15px;color: gray;\">请在指定页面输入验证码完成验证。</p>\n" +
+                    "            <p style=\"font-size: 15px;color: gray;\">如非本人操作，请忽略此邮件。</p>\n" +
+                    "         </div>\n" +
+                    "      </div>\n" +
                     "   </div>\n" +
                     "</body>\n" +
                     "</html>", true);
@@ -123,7 +127,7 @@ public class OtherServiceImpl implements OtherService {
             stringRedisTemplate.opsForValue().set(TceRedisConfig.emailCodeKey + to, JSON.toJSONString(emailCodeVo), 1, TimeUnit.MINUTES);
             return emailCodeVo;
         } catch (MessagingException e) {
-            System.out.println("发送MimeMessage时发生异常！"+e.getMessage());
+            System.out.println("发送MimeMessage时发生异常！" + e.getMessage());
         }
         return null;
     }

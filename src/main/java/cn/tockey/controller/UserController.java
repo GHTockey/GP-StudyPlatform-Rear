@@ -1,7 +1,6 @@
 package cn.tockey.controller;
 
 
-
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.TceRedisConfig;

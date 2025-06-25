@@ -5,22 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeacace3-0adc-483b-85b9-841a9a20219e" name="更改" comment="完成：班级获取时关联数据的业务封装">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserRegisterVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/WebsitesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Website.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/WebsitesMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/xml/WebsitesMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/WebsitesService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/WebsitesServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/JwtProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/DemoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/MyQiniuProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/MyQiniuProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/MybatisPlusConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/MybatisPlusConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/RestTemplateConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/TceRedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/TceRedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.javaT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.javaT" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebConfig.javaT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/WebSocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/ClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/ClassesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GitHubOAuth2Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GitHubOAuth2Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GiteeOAuth2Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/oauth2/GiteeOAuth2Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/SaTokenConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/StpInterfaceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/config/saTokenConfig/StpInterfaceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OAuth2LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/OtherController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/interceptors/LoginInterceptors.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GiteeUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GiteeUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GithubUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/GithubUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Icon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Icon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/PermIcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/PermIcon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/UserVocabulary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Vocabulary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Words.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/domain/Words.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/mapper/UserVocabularyMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/OtherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/PermissionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/OtherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/PermissionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/service/impl/VocabularyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserRegVo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UseLoginVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/HTMLParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/HTMLParse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/JwtUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/RsaUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/utils/RsaUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/BaseResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/BaseResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/EmailCodeVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/EmailCodeVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/GiteeAccessVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/GiteeAccessVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/MyResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/MyResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/OAuthRegisterUserVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/OAuthRegisterUserVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/SetRolePermVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/SetRolePermVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UseLoginVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UseLoginVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserListVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserListVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserRegisterVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/tockey/vo/UserRegisterVo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,13 +88,20 @@
   <component name="JRebelWorkspace">
     <option name="jrebelEnabledAutocompile" value="true" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="D:/EXE/Java/maven/apache-maven-3.9.5" />
+        <option name="customMavenHome" value="$PROJECT_DIR$/../../maven/apache-maven-3.9.9" />
+        <option name="localRepository" value="$PROJECT_DIR$/../../maven/mvn_repository" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="$USER_HOME$/.m2/settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -79,6 +128,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Debug&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
@@ -86,8 +136,9 @@
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;E:/毕业设计/项目/code/GraduationProjectRear/domain_module/src/main/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/传智课堂/code/第五学期_Java/Java.lnk&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/tockey/Desktop/tce_desktop/dev/gp/GraduationProjectRear&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -96,7 +147,7 @@
     &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17089844&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34157833&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;12c2b515dd899b502b2c018aa05f9ccf&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -106,6 +157,9 @@
     ]
   }
 }</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
   </component>
@@ -134,6 +188,17 @@
       <set>
         <option value="SpringBootApplicationConfigurationType" />
       </set>
+    </option>
+    <option name="hiddenConfigurations">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <set>
+              <option value="DemoApplication" />
+            </set>
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.DemoApplication">
@@ -173,6 +238,14 @@
         <item itemvalue="应用程序.HTMLParse" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -356,7 +429,49 @@
       <workItem from="1712020568792" duration="2000" />
       <workItem from="1712027969809" duration="43000" />
       <workItem from="1712039622970" duration="513000" />
-      <workItem from="1712040142761" duration="10838000" />
+      <workItem from="1712040142761" duration="12426000" />
+      <workItem from="1712104021643" duration="8000" />
+      <workItem from="1712471645775" duration="5356000" />
+      <workItem from="1712494473766" duration="1671000" />
+      <workItem from="1712538619407" duration="1000" />
+      <workItem from="1712559341376" duration="7176000" />
+      <workItem from="1712624716629" duration="10000" />
+      <workItem from="1712644299831" duration="2443000" />
+      <workItem from="1712926665907" duration="764000" />
+      <workItem from="1713150174093" duration="2000" />
+      <workItem from="1713401930290" duration="10000" />
+      <workItem from="1713425584486" duration="684000" />
+      <workItem from="1713446219105" duration="794000" />
+      <workItem from="1713781143901" duration="28000" />
+      <workItem from="1713877299626" duration="322000" />
+      <workItem from="1713950391216" duration="3661000" />
+      <workItem from="1714050496167" duration="2669000" />
+      <workItem from="1714124227185" duration="2297000" />
+      <workItem from="1714136006831" duration="720000" />
+      <workItem from="1714212293988" duration="4415000" />
+      <workItem from="1714216866433" duration="57000" />
+      <workItem from="1714227626986" duration="1252000" />
+      <workItem from="1714228895575" duration="201000" />
+      <workItem from="1714229105409" duration="461000" />
+      <workItem from="1742479585848" duration="212000" />
+      <workItem from="1742919335737" duration="4000" />
+      <workItem from="1744177001012" duration="32000" />
+      <workItem from="1744344890435" duration="1309000" />
+      <workItem from="1744346421092" duration="515000" />
+      <workItem from="1744346942279" duration="3277000" />
+      <workItem from="1744356772914" duration="12902000" />
+      <workItem from="1744603909531" duration="199000" />
+      <workItem from="1744604113462" duration="8201000" />
+      <workItem from="1744699985781" duration="16810000" />
+      <workItem from="1744865087038" duration="2270000" />
+      <workItem from="1744948841412" duration="21000" />
+      <workItem from="1744949894540" duration="118000" />
+      <workItem from="1745235963086" duration="2404000" />
+      <workItem from="1745298679342" duration="3273000" />
+      <workItem from="1745576546026" duration="89000" />
+      <workItem from="1745730026955" duration="3099000" />
+      <workItem from="1747294557229" duration="37000" />
+      <workItem from="1750830626413" duration="2961000" />
     </task>
     <task id="LOCAL-00001" summary="完成：ClassesService 模块的CURD">
       <option name="closed" value="true" />

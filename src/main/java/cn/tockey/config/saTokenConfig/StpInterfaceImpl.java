@@ -41,6 +41,7 @@ public class StpInterfaceImpl implements StpInterface {
         ArrayList<String> list = new ArrayList<>();
         List<Permission> permissionList = permissionService.getAllPermissionListByUid(StpUtil.getLoginId().toString());
         for (Permission permission : permissionList) {
+            //System.out.println(permission.getPath());
             list.add(permission.getPath());
         }
         return list;

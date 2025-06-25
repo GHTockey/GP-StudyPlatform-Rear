@@ -29,6 +29,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                             "/user/token/**", // 放行 通过token获取用户数据API
                             "/other/login/**", // 放行 获取第三方登录链接API
                             "/other/mail/send", // 放行 邮件发送API
+                            "/website/**", // 放行 获取网站信息API
                             "/oauth/**" // 放行 oauth2
                     ).check(r -> StpUtil.checkLogin()); // 登录校验
 
@@ -36,7 +37,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
             //SaRouter.match("/user/**", r -> StpUtil.checkRole("admin"));
             // 权限模块鉴权
             SaRouter.match("/permission/**", r -> StpUtil.checkRole("admin")); // 只有拥有 admin 角色的用户才能访问
-            SaRouter.match("/permission/**", r -> StpUtil.checkPermission("permission")); // 只有拥有 permission 权限的用户才能访问
+            SaRouter.match("/permission/**", r -> StpUtil.checkPermission("/perm")); // 只有拥有 permission 权限的用户才能访问
         })).addPathPatterns("/**"); // 拦截所有路由
     }
 }
