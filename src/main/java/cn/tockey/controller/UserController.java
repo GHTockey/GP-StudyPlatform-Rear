@@ -1,6 +1,7 @@
 package cn.tockey.controller;
 
 
+import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.tockey.config.TceRedisConfig;
@@ -240,9 +241,17 @@ public class UserController {
         // 检验
         User user = userService.getOne(new QueryWrapper<User>().eq("username", oAuthUser.getUsername()));
         if (user == null) return BaseResult.error("用户不存在");
-        if(!oAuthUser.getPassword().equals(user.getPassword())) {
-            return BaseResult.error("用户名密码错误");
+
+//        System.out.println("数据库密码："+user.getPassword());
+//        System.out.println("输入密码："+oAuthUser.getPassword());
+        // 加密和数据库密码进行比对
+        if(!BCrypt.checkpw(oAuthUser.getPassword(), user.getPassword())){
+            return BaseResult.error("输入的用户名或密码错误");
         }
+//        if(!oAuthUser.getPassword().equals(user.getPassword())) {
+//            return BaseResult.error("输入的用户名或密码错误");
+//        }
+
         // 执行绑定
         Integer integer = userService.oAuthAccountBinding(oAuthUser, oKey, type);
         if (integer != 0) {

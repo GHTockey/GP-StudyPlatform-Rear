@@ -75,6 +75,11 @@ public class OtherController {
     @Operation(summary = "发送邮件")
     @PostMapping("/mail/send")
     MyResult<Date> sendSimpleMailMessage2(@RequestParam String to) {
+        // 邮箱
+        if (to.isEmpty()) {
+            return MyResult.error("请输入邮箱");
+        }
+
         // 先判断是否已经发送过验证码
         String strObj = stringRedisTemplate.opsForValue().get(TceRedisConfig.emailCodeKey + to);
         EmailCodeVo emailCodeVo = JSON.parseObject(strObj, EmailCodeVo.class);

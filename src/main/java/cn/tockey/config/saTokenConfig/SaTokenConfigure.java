@@ -18,7 +18,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
             // 对所有路由进行登录鉴权
             SaRouter
                     .match("/**") // 匹配所有路由
-                    .notMatch( // 不匹配以下路由
+                    .notMatch( // 但不匹配以下路由
                             "/user/login", // 放行登录接口
                             "/user/register", // 放行注册接口
                             // 放行 swagger
@@ -28,6 +28,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                             "/websocket/**", // 放行 websocket
                             "/user/token/**", // 放行 通过token获取用户数据API
                             "/other/login/**", // 放行 获取第三方登录链接API
+                            "/other/oauth/**", // 放行 通过 oKey 获取授权用户信息
+                            "/user/oauth/**", // 放行 使用第三方账号注册本平台、绑定本平台用户
                             "/other/mail/send", // 放行 邮件发送API
                             "/website/**", // 放行 获取网站信息API
                             "/oauth/**" // 放行 oauth2

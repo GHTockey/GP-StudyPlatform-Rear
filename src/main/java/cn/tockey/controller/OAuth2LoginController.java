@@ -37,8 +37,8 @@ public class OAuth2LoginController {
     private UserService userService;
 
     // 前端首页地址
-    //private final String FORE_INDEX_URL = "http://localhost:5173";
-    private final String FORE_INDEX_URL = "http://gp.tockey.cn";
+    private final String FORE_INDEX_URL = "http://localhost:5213";
+//    private final String FORE_INDEX_URL = "https://gp.tockey.cn";
 
     @GetMapping("/redirect/github")
     String redirect(@RequestParam("code") String code) {
