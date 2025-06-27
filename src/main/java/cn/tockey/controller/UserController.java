@@ -269,6 +269,10 @@ public class UserController {
     BaseResult<User> oAuthLogin(@RequestBody OAuthRegisterUserVo oAuthUser, @RequestParam String oKey, @RequestParam String type) {
         // 校验
         if (checkUsername(oAuthUser.getUsername()).getData()) return BaseResult.error("用户名已存在");
+        // 密码限制
+        if(oAuthUser.getPassword().length() < 6 || oAuthUser.getPassword().length() > 16) {
+            return BaseResult.error("密码至少 6~16 位");
+        }
 
         User user = userService.oAuthRegisterLogin(oAuthUser, oKey, type);
         if (user != null) {

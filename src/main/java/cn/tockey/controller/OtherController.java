@@ -6,6 +6,7 @@ import cn.tockey.config.oauth2.GiteeOAuth2Config;
 import cn.tockey.domain.GiteeUser;
 import cn.tockey.domain.GithubUser;
 import cn.tockey.service.OtherService;
+import cn.tockey.utils.EmailValidatorUtil;
 import cn.tockey.vo.BaseResult;
 import cn.tockey.vo.EmailCodeVo;
 import cn.tockey.vo.MyResult;
@@ -32,6 +33,8 @@ public class OtherController {
     private GitHubOAuth2Config gitHubOAuth2Config;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private EmailValidatorUtil emailValidatorUtil;
 
     @Operation(summary = "上传图片")
     @PostMapping("/image/upload")
@@ -75,9 +78,9 @@ public class OtherController {
     @Operation(summary = "发送邮件")
     @PostMapping("/mail/send")
     MyResult<Date> sendSimpleMailMessage2(@RequestParam String to) {
-        // 邮箱
-        if (to.isEmpty()) {
-            return MyResult.error("请输入邮箱");
+        // 检查邮箱
+        if(!emailValidatorUtil.isValidEmail(to)){
+            return MyResult.error("请输入正确的邮箱地址");
         }
 
         // 先判断是否已经发送过验证码
